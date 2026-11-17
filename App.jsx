@@ -1,0 +1,491 @@
+import React, { useState, useMemo } from 'react';
+import { 
+  LayoutDashboard, Package, ArrowDownToLine, ArrowUpFromLine, 
+  ClipboardList, History, Search, Plus, Bell, User, Calendar, 
+  AlertTriangle, CheckCircle2
+} from 'lucide-react';
+import { 
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  BarChart, Bar
+} from 'recharts';
+
+// --- THEME COLORS ---
+const COLORS = {
+  primary: '#1A472A',
+  secondary: '#2A623D',
+  lightGreen: '#E8F1EB',
+  black: '#101513',
+  darkGrey: '#242A26',
+  white: '#FFFFFF',
+  bgLight: '#F7F9F7',
+  warning: '#F59E0B',
+  danger: '#EF4444'
+};
+
+// --- DEMO DATA ---
+const initialCages = [
+  { id: '1', ref: 'CAGE P01', designation: 'Armature fut Pieu D1000', diameter: 1000, length: 12.5, minStock: 5, currentStock: 12, totalReceived: 45, totalUsed: 33 },
+  { id: '2', ref: 'CAGE P02', designation: 'Armature fut Pieu D1200', diameter: 1200, length: 14.0, minStock: 5, currentStock: 8, totalReceived: 20, totalUsed: 12 },
+  { id: '3', ref: 'CAGE P03', designation: 'Cage liaison radier', diameter: 800, length: 6.0, minStock: 10, currentStock: 15, totalReceived: 30, totalUsed: 15 },
+  { id: '4', ref: 'CAGE P04', designation: 'Cage spéciale renfort', diameter: 1000, length: 8.5, minStock: 2, currentStock: 1, totalReceived: 5, totalUsed: 4 },
+];
+
+const initialMovements = [
+  { id: 'm1', date: '2026-11-01T08:30:00', cageRef: 'CAGE P01', type: 'RECEIPT', qty: 10, user: 'A. Dupont', note: 'BL-4920' },
+  { id: 'm2', date: '2026-11-02T10:15:00', cageRef: 'CAGE P03', type: 'RECEIPT', qty: 15, user: 'A. Dupont', note: 'BL-4921' },
+  { id: 'm3', date: '2026-11-03T14:00:00', cageRef: 'CAGE P01', type: 'USAGE', qty: 4, user: 'M. Martin', note: 'Pieux P12, P13' },
+  { id: 'm4', date: '2026-11-04T09:00:00', cageRef: 'CAGE P02', type: 'USAGE', qty: 2, user: 'M. Martin', note: 'Phase 1' },
+];
+
+// --- COMPONENTS ---
+
+// 1. Sidebar Item
+const NavItem = ({ icon: Icon, label, active, onClick }) => (
+  <button 
+    onClick={onClick}
+    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+      active 
+      ? 'bg-[#2A623D] text-white shadow-md' 
+      : 'text-[#E8F1EB] hover:bg-[#1A472A] hover:bg-opacity-50'
+    }`}
+  >
+    <Icon size={20} />
+    <span className="font-medium">{label}</span>
+  </button>
+);
+
+// 2. Dashboard Card
+const KPICard = ({ title, value, icon: Icon, alert }) => (
+  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+    <div>
+      <p className="text-sm font-medium text-gray-500 mb-1">{title}</p>
+      <p className={`text-3xl font-bold ${alert ? 'text-red-500' : 'text-[#101513]'}`}>{value}</p>
+    </div>
+    <div className={`p-3 rounded-lg ${alert ? 'bg-red-50 text-red-500' : 'bg-[#E8F1EB] text-[#1A472A]'}`}>
+      <Icon size={24} />
+    </div>
+  </div>
+);
+
+// --- MAIN APP COMPONENT ---
+export default function App() {
+  const [currentView, setCurrentView] = useState('dashboard');
+  const [cages, setCages] = useState(initialCages);
+  const [movements, setMovements] = useState(initialMovements);
+  
+  // States for forms
+  const [toastMessage, setToastMessage] = useState(null);
+
+  // Derived Data
+  const totalStock = cages.reduce((acc, c) => acc + c.currentStock, 0);
+  const alertsCount = cages.filter(c => c.currentStock < c.minStock).length;
+  
+  const todayStr = new Date().toISOString().split('T')[0];
+  const receiptsToday = movements.filter(m => m.type === 'RECEIPT' && m.date.startsWith(todayStr)).reduce((acc, m) => acc + m.qty, 0);
+  const usageToday = movements.filter(m => m.type === 'USAGE' && m.date.startsWith(todayStr)).reduce((acc, m) => acc + m.qty, 0);
+
+  // Chart Data preparation
+  const chartData = useMemo(() => {
+    // Generate last 7 days dummy data based on movements
+    const days = [];
+    for(let i=6; i>=0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+      
+      const dayRec = movements.filter(m => m.type === 'RECEIPT' && m.date.startsWith(dateStr)).reduce((a,b)=>a+b.qty,0);
+      const dayUsg = movements.filter(m => m.type === 'USAGE' && m.date.startsWith(dateStr)).reduce((a,b)=>a+b.qty,0);
+      
+      days.push({ name: dateStr.split('-').slice(1).join('/'), entrees: dayRec, sorties: dayUsg });
+    }
+    return days;
+  }, [movements]);
+
+  // Handlers
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const handleReceipt = (cageRef, qty, note) => {
+    if(!cageRef || qty <= 0) return;
+    
+    // Update Stock
+    setCages(prev => prev.map(c => 
+      c.ref === cageRef ? { ...c, currentStock: c.currentStock + qty, totalReceived: c.totalReceived + qty } : c
+    ));
+
+    // Log Movement
+    const newMovement = {
+      id: Math.random().toString(36).substr(2, 9),
+      date: new Date().toISOString(),
+      cageRef,
+      type: 'RECEIPT',
+      qty,
+      user: 'A. Dupont (Connecté)',
+      note
+    };
+    setMovements(prev => [newMovement, ...prev]);
+    showToast(`Réception validée : +${qty} ${cageRef}`);
+    setCurrentView('stock');
+  };
+
+  const handleUsage = (cageRef, qty, note) => {
+    if(!cageRef || qty <= 0) return;
+    
+    // Verify stock
+    const cage = cages.find(c => c.ref === cageRef);
+    if(cage.currentStock < qty) {
+      alert("Erreur : Stock physique insuffisant pour cette sortie.");
+      return;
+    }
+
+    // Update Stock
+    setCages(prev => prev.map(c => 
+      c.ref === cageRef ? { ...c, currentStock: c.currentStock - qty, totalUsed: c.totalUsed + qty } : c
+    ));
+
+    // Log Movement
+    const newMovement = {
+      id: Math.random().toString(36).substr(2, 9),
+      date: new Date().toISOString(),
+      cageRef,
+      type: 'USAGE',
+      qty,
+      user: 'A. Dupont (Connecté)',
+      note
+    };
+    setMovements(prev => [newMovement, ...prev]);
+    showToast(`Sortie enregistrée : -${qty} ${cageRef}`);
+    setCurrentView('stock');
+  };
+
+  // --- VIEWS RENDERERS ---
+
+  const renderDashboard = () => (
+    <div className="space-y-6 fade-in">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold text-[#101513]">Tableau de Bord</h2>
+          <p className="text-gray-500">Chantier : Gare de Paris - Ligne 15</p>
+        </div>
+        <div className="flex gap-3">
+          <button onClick={() => setCurrentView('usage')} className="px-4 py-2 bg-white text-[#101513] border border-gray-200 rounded-lg shadow-sm font-medium hover:bg-gray-50 flex items-center gap-2">
+            <ArrowUpFromLine size={18} className="text-red-500"/>
+            Sortie Rapide
+          </button>
+          <button onClick={() => setCurrentView('receipt')} className="px-4 py-2 bg-[#1A472A] text-white rounded-lg shadow-sm font-medium hover:bg-[#2A623D] transition flex items-center gap-2">
+            <ArrowDownToLine size={18} />
+            Nouvelle Réception
+          </button>
+        </div>
+      </div>
+
+      {/* KPIs */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <KPICard title="Stock Total (Cages)" value={totalStock} icon={Package} />
+        <KPICard title="Réceptions du jour" value={receiptsToday} icon={ArrowDownToLine} />
+        <KPICard title="Cages Utilisées (jour)" value={usageToday} icon={ArrowUpFromLine} />
+        <KPICard title="Alertes Stock Faible" value={alertsCount} icon={AlertTriangle} alert={alertsCount > 0} />
+      </div>
+
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 className="text-lg font-bold text-[#101513] mb-4">Évolution des Mouvements (7 jours)</h3>
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB"/>
+                <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                <YAxis axisLine={false} tickLine={false} />
+                <Tooltip cursor={{fill: '#F7F9F7'}} />
+                <Bar dataKey="entrees" name="Réceptions" fill="#2A623D" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="sorties" name="Sorties" fill="#EF4444" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <h3 className="text-lg font-bold text-[#101513] mb-4">Derniers Mouvements</h3>
+          <div className="space-y-4">
+            {movements.slice(0, 4).map(mov => (
+              <div key={mov.id} className="flex items-center justify-between p-3 bg-[#F7F9F7] rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div className={`p-2 rounded-full ${mov.type === 'RECEIPT' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                    {mov.type === 'RECEIPT' ? <ArrowDownToLine size={16} /> : <ArrowUpFromLine size={16} />}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-sm text-[#101513]">{mov.cageRef}</p>
+                    <p className="text-xs text-gray-500">{new Date(mov.date).toLocaleString('fr-FR', {dateStyle:'short', timeStyle:'short'})}</p>
+                  </div>
+                </div>
+                <div className={`font-bold ${mov.type === 'RECEIPT' ? 'text-green-600' : 'text-red-600'}`}>
+                  {mov.type === 'RECEIPT' ? '+' : '-'}{mov.qty}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderStock = () => (
+    <div className="space-y-6 fade-in h-full flex flex-col">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold text-[#101513]">Stock Actuel</h2>
+          <p className="text-gray-500">Vue en temps réel des disponibilités sur chantier</p>
+        </div>
+        <div className="relative">
+          <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
+          <input type="text" placeholder="Rechercher une référence..." className="pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2A623D] w-64"/>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex-1">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-[#F7F9F7] text-gray-600 text-sm border-b border-gray-200">
+              <th className="p-4 font-medium">Référence</th>
+              <th className="p-4 font-medium">Désignation</th>
+              <th className="p-4 font-medium text-center">Reçues (Total)</th>
+              <th className="p-4 font-medium text-center">Utilisées (Total)</th>
+              <th className="p-4 font-medium text-center">Stock Physique</th>
+              <th className="p-4 font-medium text-center">Statut</th>
+              <th className="p-4 font-medium text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100 text-sm">
+            {cages.map(cage => {
+              const statusColor = cage.currentStock === 0 ? 'bg-red-100 text-red-700' : 
+                                  cage.currentStock <= cage.minStock ? 'bg-orange-100 text-orange-700' : 
+                                  'bg-green-100 text-green-700';
+              const statusText = cage.currentStock === 0 ? 'Rupture' : 
+                                 cage.currentStock <= cage.minStock ? 'Stock Faible' : 'Satisfaisant';
+
+              return (
+                <tr key={cage.id} className="hover:bg-gray-50 transition">
+                  <td className="p-4 font-bold text-[#101513]">{cage.ref}</td>
+                  <td className="p-4 text-gray-600">{cage.designation} <br/><span className="text-xs text-gray-400">Ø{cage.diameter} - L:{cage.length}m</span></td>
+                  <td className="p-4 text-center text-gray-500">{cage.totalReceived}</td>
+                  <td className="p-4 text-center text-gray-500">{cage.totalUsed}</td>
+                  <td className="p-4 text-center font-bold text-lg">{cage.currentStock}</td>
+                  <td className="p-4 text-center">
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColor}`}>
+                      {statusText}
+                    </span>
+                  </td>
+                  <td className="p-4 text-right">
+                     <button onClick={() => setCurrentView('receipt')} className="text-[#2A623D] hover:underline text-xs font-medium mr-3">+ Réception</button>
+                     <button onClick={() => setCurrentView('usage')} className="text-red-500 hover:underline text-xs font-medium">- Sortie</button>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
+  const FormComponent = ({ title, type, onSubmit, cages }) => {
+    const [ref, setRef] = useState(cages[0]?.ref || '');
+    const [qty, setQty] = useState('');
+    const [note, setNote] = useState('');
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      onSubmit(ref, parseInt(qty, 10), note);
+    };
+
+    const selectedCage = cages.find(c => c.ref === ref);
+    const isReceipt = type === 'RECEIPT';
+
+    return (
+      <div className="max-w-2xl mx-auto mt-8 fade-in">
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+          <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
+            <div className={`p-3 rounded-xl ${isReceipt ? 'bg-[#E8F1EB] text-[#1A472A]' : 'bg-red-50 text-red-500'}`}>
+              {isReceipt ? <ArrowDownToLine size={28} /> : <ArrowUpFromLine size={28} />}
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-[#101513]">{title}</h2>
+              <p className="text-gray-500 text-sm">Remplissez les informations ci-dessous pour mettre à jour le stock.</p>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="grid grid-cols-2 gap-5">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Chantier</label>
+                <input type="text" disabled value="Gare de Paris - Ligne 15" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-500 cursor-not-allowed"/>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                <input type="date" disabled value={todayStr} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-500 cursor-not-allowed"/>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-[#101513] mb-1">Référence de la Cage *</label>
+              <select value={ref} onChange={e => setRef(e.target.value)} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2A623D] focus:border-transparent bg-white">
+                {cages.map(c => <option key={c.id} value={c.ref}>{c.ref} - {c.designation}</option>)}
+              </select>
+              {!isReceipt && selectedCage && (
+                <p className="text-sm mt-1 text-gray-500">Stock disponible actuel : <strong className={selectedCage.currentStock > 0 ? 'text-green-600' : 'text-red-500'}>{selectedCage.currentStock}</strong></p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-[#101513] mb-1">Quantité {isReceipt ? 'réceptionnée' : 'utilisée'} *</label>
+              <input type="number" min="1" max={!isReceipt && selectedCage ? selectedCage.currentStock : undefined} required value={qty} onChange={e => setQty(e.target.value)} className="w-full p-3 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2A623D] focus:border-transparent font-bold text-[#101513]" placeholder="Ex: 5" />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{isReceipt ? 'N° Bon de Livraison (facultatif)' : 'Observation / N° de Pieu (facultatif)'}</label>
+              <input type="text" value={note} onChange={e => setNote(e.target.value)} className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2A623D] focus:border-transparent" placeholder={isReceipt ? 'BL-...' : 'Pieu n°...'} />
+            </div>
+
+            <div className="pt-4 mt-6 border-t border-gray-100 flex justify-end gap-3">
+              <button type="button" onClick={() => setCurrentView('stock')} className="px-6 py-3 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 font-medium">Annuler</button>
+              <button type="submit" className={`px-6 py-3 text-white rounded-lg font-bold shadow-md transition ${isReceipt ? 'bg-[#1A472A] hover:bg-[#2A623D]' : 'bg-red-600 hover:bg-red-700'}`}>
+                Valider {isReceipt ? 'la réception' : 'la sortie'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  };
+
+  const renderHistory = () => (
+    <div className="space-y-6 fade-in h-full flex flex-col">
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold text-[#101513]">Historique des Mouvements</h2>
+          <p className="text-gray-500">Traçabilité complète des entrées et sorties</p>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex-1">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-[#F7F9F7] text-gray-600 text-sm border-b border-gray-200">
+              <th className="p-4 font-medium">Date & Heure</th>
+              <th className="p-4 font-medium">Type</th>
+              <th className="p-4 font-medium">Référence</th>
+              <th className="p-4 font-medium text-center">Quantité</th>
+              <th className="p-4 font-medium">Utilisateur</th>
+              <th className="p-4 font-medium">Observation / BL</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100 text-sm">
+            {movements.map(mov => (
+              <tr key={mov.id} className="hover:bg-gray-50 transition">
+                <td className="p-4 text-gray-600">{new Date(mov.date).toLocaleString('fr-FR')}</td>
+                <td className="p-4">
+                  <span className={`px-2 py-1 rounded text-xs font-semibold flex items-center gap-1 w-max ${mov.type === 'RECEIPT' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                    {mov.type === 'RECEIPT' ? <><ArrowDownToLine size={12}/> Réception</> : <><ArrowUpFromLine size={12}/> Sortie</>}
+                  </span>
+                </td>
+                <td className="p-4 font-bold text-[#101513]">{mov.cageRef}</td>
+                <td className={`p-4 text-center font-bold ${mov.type === 'RECEIPT' ? 'text-green-600' : 'text-red-600'}`}>
+                  {mov.type === 'RECEIPT' ? '+' : '-'}{mov.qty}
+                </td>
+                <td className="p-4 text-gray-500">{mov.user}</td>
+                <td className="p-4 text-gray-500 italic">{mov.note || '-'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="flex h-screen bg-[#F7F9F7] font-sans text-gray-900 overflow-hidden">
+      
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="absolute top-6 right-6 bg-[#101513] text-white px-6 py-4 rounded-lg shadow-2xl z-50 flex items-center gap-3 animate-fade-in-down">
+          <CheckCircle2 className="text-[#2A623D]" />
+          <span className="font-medium">{toastMessage}</span>
+        </div>
+      )}
+
+      {/* Sidebar */}
+      <aside className="w-64 bg-[#101513] flex flex-col shadow-xl z-10">
+        <div className="p-6">
+          <div className="flex items-center gap-3 text-white">
+            <div className="w-8 h-8 bg-[#2A623D] rounded-md flex items-center justify-center font-bold text-xl">C</div>
+            <h1 className="text-xl font-bold tracking-wider">CAGESTOCK</h1>
+          </div>
+          <p className="text-[#2A623D] text-xs font-semibold mt-1 tracking-widest uppercase">Soletanche Bachy</p>
+        </div>
+
+        <nav className="flex-1 px-4 space-y-2 mt-4 overflow-y-auto">
+          <div className="text-xs font-semibold text-gray-500 mb-2 px-2 uppercase tracking-wider">Menu Principal</div>
+          <NavItem icon={LayoutDashboard} label="Tableau de bord" active={currentView === 'dashboard'} onClick={() => setCurrentView('dashboard')} />
+          <NavItem icon={Package} label="Stock actuel" active={currentView === 'stock'} onClick={() => setCurrentView('stock')} />
+          <NavItem icon={ArrowDownToLine} label="Nouvelle réception" active={currentView === 'receipt'} onClick={() => setCurrentView('receipt')} />
+          <NavItem icon={ArrowUpFromLine} label="Sorties de stock" active={currentView === 'usage'} onClick={() => setCurrentView('usage')} />
+          
+          <div className="text-xs font-semibold text-gray-500 mb-2 px-2 mt-8 uppercase tracking-wider">Catalogue & Données</div>
+          <NavItem icon={ClipboardList} label="Références" active={currentView === 'catalog'} onClick={() => setCurrentView('stock')} />
+          <NavItem icon={History} label="Historique" active={currentView === 'history'} onClick={() => setCurrentView('history')} />
+        </nav>
+
+        <div className="p-4 border-t border-gray-800">
+          <div className="flex items-center gap-3 text-white px-2">
+            <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center">
+              <User size={20} />
+            </div>
+            <div>
+              <p className="text-sm font-medium">A. Dupont</p>
+              <p className="text-xs text-gray-400">Chef de chantier</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col h-full overflow-hidden relative">
+        {/* Topbar */}
+        <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8 shrink-0">
+          <div className="flex items-center gap-2 text-[#1A472A] font-medium bg-[#E8F1EB] px-3 py-1.5 rounded-md text-sm">
+            <span className="w-2 h-2 rounded-full bg-[#2A623D] animate-pulse"></span>
+            Chantier Actif : Gare de Paris - Ligne 15
+          </div>
+          <div className="flex items-center gap-5 text-gray-500">
+            <div className="flex items-center gap-2 text-sm font-medium">
+              <Calendar size={18} /> {new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'})}
+            </div>
+            <button className="relative p-2 hover:bg-gray-100 rounded-full transition">
+              <Bell size={20} />
+              {alertsCount > 0 && <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></span>}
+            </button>
+          </div>
+        </header>
+
+        {/* Dynamic View Area */}
+        <div className="p-8 overflow-y-auto flex-1 bg-[#F7F9F7]">
+          {currentView === 'dashboard' && renderDashboard()}
+          {currentView === 'stock' && renderStock()}
+          {currentView === 'receipt' && <FormComponent title="Nouvelle Réception" type="RECEIPT" cages={cages} onSubmit={handleReceipt} />}
+          {currentView === 'usage' && <FormComponent title="Sortie de Stock (Cages Utilisées)" type="USAGE" cages={cages} onSubmit={handleUsage} />}
+          {currentView === 'history' && renderHistory()}
+        </div>
+      </main>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in-down { animation: fadeInDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+      `}} />
+    </div>
+  );
+}
