@@ -1,150 +1,2521 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAGESTOCK - Soletanche Bachy</title>
-  
-  <!-- 1. Design (Tailwind) -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAGESTOCK — Soletanche Bachy Fondations Spéciales</title>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- 2. React (Moteur de base uniquement, très stable) -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  
-  <!-- 3. Traducteur de code -->
-  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Police Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Icônes Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            serpentard: {
+              DEFAULT: '#1A472A',
+              secondary: '#2A623D',
+              light: '#E8F1EB',
+              dark: '#101513',
+              surface: '#242A26',
+              offwhite: '#F7F9F7'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.4); border-radius: 9999px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.7); }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-view { animation: fadeSlideIn 0.22s ease-out forwards; }
+  </style>
 </head>
-<body class="bg-[#F7F9F7] m-0 p-0 overflow-hidden">
-  
-  <div id="root"></div>
+<body class="bg-[#F7F9F7] text-[#101513] dark:bg-[#101513] dark:text-white antialiased selection:bg-[#1A472A] selection:text-white">
 
-  <script type="text/babel">
-    const { useState, useMemo } = React;
-    const { createRoot } = ReactDOM;
+  <!-- Conteneur Principal -->
+  <div id="app" class="flex h-screen overflow-hidden"></div>
 
-    // --- ICÔNES INTÉGRÉES (Plus aucun téléchargement externe) ---
-    const IconDash = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>;
-    const IconPack = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>;
-    const IconIn = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>;
-    const IconOut = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>;
-    const IconHist = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>;
-    const IconAlert = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>;
+  <!-- Conteneur Modales & Notifications Toast -->
+  <div id="modal-root"></div>
+  <div id="toast-root" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    // --- DONNÉES ---
-    const initialCages = [
-      { id: '1', ref: 'CAGE P01', designation: 'Armature fut Pieu D1000', currentStock: 12, minStock: 5 },
-      { id: '2', ref: 'CAGE P02', designation: 'Armature fut Pieu D1200', currentStock: 8, minStock: 5 },
-      { id: '3', ref: 'CAGE P03', designation: 'Cage liaison radier', currentStock: 15, minStock: 10 },
-      { id: '4', ref: 'CAGE P04', designation: 'Cage spéciale renfort', currentStock: 1, minStock: 2 },
+  <script>
+    // =========================================================================
+    // 1. DONNÉES DE DÉMONSTRATION & ÉTAT PERSISTANT (LOCALSTORAGE)
+    // =========================================================================
+    const STORAGE_KEY = 'CAGESTOCK_SBFS_V1';
+
+    const DEFAULT_PROJECTS = [
+      {
+        id: 'PRJ-01',
+        code: 'L15-GPE-04',
+        name: 'Gare de Paris - Ligne 15 Sud',
+        location: 'Issy-les-Moulineaux (92)',
+        startDate: '2026-03-15',
+        status: 'En cours'
+      },
+      {
+        id: 'PRJ-02',
+        code: 'VGP-91-02',
+        name: 'Viaduc Grand Paris Sud',
+        location: 'Évry-Courcouronnes (91)',
+        startDate: '2026-06-01',
+        status: 'En cours'
+      }
     ];
 
-    const initialMovements = [
-      { id: 'm1', date: new Date().toISOString(), cageRef: 'CAGE P01', type: 'RECEIPT', qty: 10, note: 'BL-4920' },
-      { id: 'm2', date: new Date().toISOString(), cageRef: 'CAGE P03', type: 'RECEIPT', qty: 15, note: 'BL-4921' },
-      { id: 'm3', date: new Date().toISOString(), cageRef: 'CAGE P01', type: 'USAGE', qty: 4, note: 'Pieux P12' },
+    const DEFAULT_USERS = [
+      { id: 'USR-1', name: 'Marc Lefebvre', role: 'ADMIN', title: 'Conducteur de Travaux Principal', email: 'm.lefebvre@soletanche-bachy.demo' },
+      { id: 'USR-2', name: 'Karim Benali', role: 'OPERATIONAL', title: 'Chef de Chantier / Magasinier', email: 'k.benali@soletanche-bachy.demo' },
+      { id: 'USR-3', name: 'Claire Moreau', role: 'VIEWER', title: 'Ingénieure Méthodes & Structures', email: 'c.moreau@soletanche-bachy.demo' }
     ];
 
-    // --- COMPOSANTS ---
-    const NavItem = ({ icon: Icon, label, active, onClick }) => (
-      <button onClick={onClick} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition ${active ? 'bg-[#2A623D] text-white shadow-md' : 'text-[#E8F1EB] hover:bg-[#1A472A]'}`}>
-        <Icon /> <span>{label}</span>
-      </button>
-    );
-
-    const Card = ({ title, value, alert, icon: Icon }) => (
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center">
-        <div>
-          <p className="text-gray-500 text-sm font-medium">{title}</p>
-          <p className={`text-3xl font-bold mt-1 ${alert ? 'text-red-500' : 'text-[#101513]'}`}>{value}</p>
-        </div>
-        <div className={`p-3 rounded-lg ${alert ? 'bg-red-50 text-red-500' : 'bg-green-50 text-[#1A472A]'}`}>
-          <Icon />
-        </div>
-      </div>
-    );
-
-    // --- APP ---
-    function App() {
-      const [view, setView] = useState('dashboard');
-      const [cages, setCages] = useState(initialCages);
-      const [movements, setMovements] = useState(initialMovements);
-      const [msg, setMsg] = useState('');
-
-      const totalStock = cages.reduce((a, c) => a + c.currentStock, 0);
-      const alertsCount = cages.filter(c => c.currentStock < c.minStock).length;
-
-      const handleAction = (type, ref, qty, note) => {
-        const cage = cages.find(c => c.ref === ref);
-        if (type === 'USAGE' && cage.currentStock < qty) return alert("Stock insuffisant !");
-        
-        setCages(cages.map(c => c.ref === ref ? { ...c, currentStock: type === 'RECEIPT' ? c.currentStock + qty : c.currentStock - qty } : c));
-        setMovements([{ id: Math.random().toString(), date: new Date().toISOString(), cageRef: ref, type, qty, note }, ...movements]);
-        
-        setMsg(`${type === 'RECEIPT' ? 'Réception' : 'Sortie'} validée : ${qty}x ${ref}`);
-        setTimeout(() => setMsg(''), 3000);
-        setView('stock');
+    function buildDefaultData() {
+      const now = new Date();
+      const isoDaysAgo = (days, hour = 8, min = 30) => {
+        const d = new Date(now);
+        d.setDate(d.getDate() - days);
+        d.setHours(hour, min, 0, 0);
+        return d.toISOString();
       };
 
-      const FormView = ({ type }) => {
-        const [ref, setRef] = useState(cages[0].ref);
-        const [qty, setQty] = useState('');
-        const isReceipt = type === 'RECEIPT';
-        
-        return (
-          <div className="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-sm mt-8 border border-gray-200">
-            <h2 className="text-2xl font-bold mb-6 text-[#101513]">{isReceipt ? 'Nouvelle Réception' : 'Nouvelle Sortie'}</h2>
-            <form onSubmit={e => { e.preventDefault(); handleAction(type, ref, parseInt(qty), ''); }}>
-              <div className="mb-4">
-                <label className="block text-sm font-bold mb-2">Référence</label>
-                <select value={ref} onChange={e => setRef(e.target.value)} className="w-full p-3 border rounded-lg bg-white font-medium">
-                  {cages.map(c => <option key={c.id} value={c.ref}>{c.ref} ({c.currentStock} en stock)</option>)}
-                </select>
+      const references = [
+        {
+          id: 'REF-101', projectId: 'PRJ-01', ref: 'CAGE P01',
+          designation: 'Cage principale pieu foré Ø1000 - Tronçon pied',
+          type: 'Pieu foré', diameter: 900, length: 12.5, weight: 1480,
+          planNumber: 'EXE-ARM-P01', planRevision: 'C',
+          supplier: 'Armatures Île-de-France',
+          plannedQty: 80, minStock: 6, reservedQty: 4,
+          zone: 'Zone A — Nord Foreuse',
+          notes: 'Étriers renforcés en tête sur 2,50 m. Tubes soniques x3.',
+          status: 'ACTIVE'
+        },
+        {
+          id: 'REF-102', projectId: 'PRJ-01', ref: 'CAGE P02',
+          designation: 'Cage supérieure pieu foré Ø1000 - Recouvrement',
+          type: 'Pieu foré', diameter: 900, length: 11.0, weight: 1290,
+          planNumber: 'EXE-ARM-P02', planRevision: 'B',
+          supplier: 'Armatures Île-de-France',
+          plannedQty: 80, minStock: 5, reservedQty: 2,
+          zone: 'Zone A — Nord Foreuse',
+          notes: 'Manchons filetés M24 en partie basse.',
+          status: 'ACTIVE'
+        },
+        {
+          id: 'REF-103', projectId: 'PRJ-01', ref: 'CAGE P03',
+          designation: 'Cage pieu sécant primaire Ø880',
+          type: 'Pieu sécant', diameter: 780, length: 14.0, weight: 1620,
+          planNumber: 'EXE-ARM-P03', planRevision: 'D',
+          supplier: 'SiderArmature Pro',
+          plannedQty: 50, minStock: 8, reservedQty: 0,
+          zone: 'Zone B — Paroi Est',
+          notes: 'Cage critique pour avancement paroi moulée / pieux sécants.',
+          status: 'ACTIVE'
+        },
+        {
+          id: 'REF-104', projectId: 'PRJ-01', ref: 'CAGE P04',
+          designation: 'Cage spéciale renfort culée Sud Ø1200',
+          type: 'Pieu gros diamètre', diameter: 1100, length: 13.5, weight: 2350,
+          planNumber: 'EXE-ARM-P04', planRevision: 'A',
+          supplier: 'SiderArmature Pro',
+          plannedQty: 24, minStock: 4, reservedQty: 0,
+          zone: 'Zone C — Aire Grue',
+          notes: 'Double nappe HA32.',
+          status: 'ACTIVE'
+        },
+        {
+          id: 'REF-105', projectId: 'PRJ-01', ref: 'CAGE B01',
+          designation: 'Cage barrette de fondation 2800x1000',
+          type: 'Barrette', diameter: 920, length: 15.0, weight: 2890,
+          planNumber: 'EXE-ARM-B01', planRevision: 'B',
+          supplier: 'Armatures Île-de-France',
+          plannedQty: 16, minStock: 2, reservedQty: 0,
+          zone: 'Zone C — Aire Grue',
+          notes: 'Livraison par convoi exceptionnel uniquement.',
+          status: 'ACTIVE'
+        },
+        {
+          id: 'REF-106', projectId: 'PRJ-01', ref: 'CAGE OLD-09',
+          designation: 'Prototype cage essai statique (phase 0)',
+          type: 'Essai', diameter: 800, length: 9.0, weight: 950,
+          planNumber: 'PRO-ARM-09', planRevision: '0',
+          supplier: 'Armatures Île-de-France',
+          plannedQty: 2, minStock: 0, reservedQty: 0,
+          zone: 'Archives',
+          notes: 'Phase d’essai terminée.',
+          status: 'ARCHIVED'
+        },
+        // Chantier 2 : Viaduc Grand Paris Sud
+        {
+          id: 'REF-201', projectId: 'PRJ-02', ref: 'CAGE V01',
+          designation: 'Cage pile P1-P4 Ø1500',
+          type: 'Pieu gros diamètre', diameter: 1380, length: 16.0, weight: 3120,
+          planNumber: 'VGP-ARM-01', planRevision: 'B',
+          supplier: 'SiderArmature Pro',
+          plannedQty: 40, minStock: 6, reservedQty: 4,
+          zone: 'Plateforme Pile 2',
+          notes: 'Cages assemblées avec réservation inclinomètre.',
+          status: 'ACTIVE'
+        },
+        {
+          id: 'REF-202', projectId: 'PRJ-02', ref: 'CAGE V02',
+          designation: 'Cage micropieu / pieu culée Ø600',
+          type: 'Pieu foré', diameter: 520, length: 10.5, weight: 640,
+          planNumber: 'VGP-ARM-02', planRevision: 'A',
+          supplier: 'Armatures Île-de-France',
+          plannedQty: 60, minStock: 10, reservedQty: 0,
+          zone: 'Zone Sud',
+          notes: '',
+          status: 'ACTIVE'
+        }
+      ];
+
+      // Mouvements chronologiques (permettent de calculer l'historique exact avant/après)
+      const rawMovements = [
+        { id: 'MV-1001', projectId: 'PRJ-01', refId: 'REF-101', type: 'RECEIPT', qty: 18, date: isoDaysAgo(6, 7, 45), user: 'Karim Benali', supplier: 'Armatures Île-de-France', bl: 'BL-2026-881', comment: 'Livraison semi-remorque n°1' },
+        { id: 'MV-1002', projectId: 'PRJ-01', refId: 'REF-102', type: 'RECEIPT', qty: 14, date: isoDaysAgo(6, 8, 15), user: 'Karim Benali', supplier: 'Armatures Île-de-France', bl: 'BL-2026-881', comment: 'Livraison semi-remorque n°1' },
+        { id: 'MV-1003', projectId: 'PRJ-01', refId: 'REF-103', type: 'RECEIPT', qty: 12, date: isoDaysAgo(5, 9, 10), user: 'Karim Benali', supplier: 'SiderArmature Pro', bl: 'BL-SA-412', comment: 'Stock tampon paroi Est' },
+        { id: 'MV-1004', projectId: 'PRJ-01', refId: 'REF-101', type: 'USAGE', qty: 6, date: isoDaysAgo(4, 15, 30), user: 'Karim Benali', pile: 'Pieux P01 à P06', zone: 'Plot Nord', comment: 'Bétonnage continu' },
+        { id: 'MV-1005', projectId: 'PRJ-01', refId: 'REF-102', type: 'USAGE', qty: 6, date: isoDaysAgo(4, 16, 0), user: 'Karim Benali', pile: 'Pieux P01 à P06', zone: 'Plot Nord', comment: 'Couplage cages supérieures' },
+        { id: 'MV-1006', projectId: 'PRJ-01', refId: 'REF-104', type: 'RECEIPT', qty: 5, date: isoDaysAgo(3, 10, 20), user: 'Marc Lefebvre', supplier: 'SiderArmature Pro', bl: 'BL-SA-429', comment: 'Contrôle soudures OK' },
+        { id: 'MV-1007', projectId: 'PRJ-01', refId: 'REF-103', type: 'USAGE', qty: 9, date: isoDaysAgo(2, 14, 10), user: 'Karim Benali', pile: 'Pieux sécants S10-S18', zone: 'Paroi Est', comment: 'Cadence soutenue' },
+        { id: 'MV-1008', projectId: 'PRJ-01', refId: 'REF-104', type: 'USAGE', qty: 3, date: isoDaysAgo(2, 17, 0), user: 'Karim Benali', pile: 'Culée C01-C03', zone: 'Culée Sud', comment: '' },
+        { id: 'MV-1009', projectId: 'PRJ-01', refId: 'REF-105', type: 'RECEIPT', qty: 4, date: isoDaysAgo(1, 8, 50), user: 'Karim Benali', supplier: 'Armatures Île-de-France', bl: 'BL-2026-904', comment: 'Convoi matin' },
+        { id: 'MV-1010', projectId: 'PRJ-01', refId: 'REF-105', type: 'USAGE', qty: 4, date: isoDaysAgo(1, 16, 40), user: 'Karim Benali', pile: 'Barrettes B01-B04', zone: 'Noyau central', comment: 'Pose terminée' },
+        { id: 'MV-1011', projectId: 'PRJ-01', refId: 'REF-101', type: 'RECEIPT', qty: 8, date: isoDaysAgo(0, 7, 30), user: 'Karim Benali', supplier: 'Armatures Île-de-France', bl: 'BL-2026-918', comment: 'Réception du matin (8 cages)' },
+        { id: 'MV-1012', projectId: 'PRJ-01', refId: 'REF-106', type: 'RECEIPT', qty: 2, date: isoDaysAgo(25, 9, 0), user: 'Marc Lefebvre', supplier: 'Armatures Île-de-France', bl: 'BL-ESSAI-01', comment: 'Essais préalables' },
+        { id: 'MV-1013', projectId: 'PRJ-01', refId: 'REF-106', type: 'USAGE', qty: 2, date: isoDaysAgo(20, 14, 0), user: 'Marc Lefebvre', pile: 'Pieu Essai PE1', zone: 'Zone Essai', comment: 'Essai validé' },
+        // Mouvements Chantier 2
+        { id: 'MV-2001', projectId: 'PRJ-02', refId: 'REF-201', type: 'RECEIPT', qty: 14, date: isoDaysAgo(3, 8, 0), user: 'Marc Lefebvre', supplier: 'SiderArmature Pro', bl: 'BL-VGP-12', comment: 'Approvisionnement Pile 2' },
+        { id: 'MV-2002', projectId: 'PRJ-02', refId: 'REF-201', type: 'USAGE', qty: 4, date: isoDaysAgo(1, 15, 0), user: 'Marc Lefebvre', pile: 'P2-A à P2-D', zone: 'Pile 2', comment: '' },
+        { id: 'MV-2003', projectId: 'PRJ-02', refId: 'REF-202', type: 'RECEIPT', qty: 18, date: isoDaysAgo(0, 8, 10), user: 'Karim Benali', supplier: 'Armatures Île-de-France', bl: 'BL-VGP-15', comment: 'Livraison complète' }
+      ];
+
+      // Recalcul propre des stockBefore / stockAfter chronologique
+      const movements = recalculateMovementChain(rawMovements);
+
+      const forecasts = [
+        { refId: 'REF-101', nextDeliveryDate: isoDaysAgo(-2).split('T')[0], nextDeliveryQty: 12, note: 'Camion prévu mercredi 8h00' },
+        { refId: 'REF-103', nextDeliveryDate: isoDaysAgo(-1).split('T')[0], nextDeliveryQty: 10, note: 'Réapprovisionnement urgent paroi Est' },
+        { refId: 'REF-104', nextDeliveryDate: isoDaysAgo(-4).split('T')[0], nextDeliveryQty: 6, note: 'En cours de façonnage atelier' },
+        { refId: 'REF-105', nextDeliveryDate: isoDaysAgo(-3).split('T')[0], nextDeliveryQty: 4, note: 'Autorisation convoi validée' }
+      ];
+
+      const inventories = [
+        {
+          id: 'INV-2026-01',
+          projectId: 'PRJ-01',
+          date: isoDaysAgo(5, 17, 30),
+          user: 'Marc Lefebvre',
+          status: 'VALIDATED',
+          notes: 'Contrôle hebdomadaire fin de semaine — Aucun écart constaté.',
+          lines: [
+            { refId: 'REF-101', ref: 'CAGE P01', theoretical: 18, counted: 18, diff: 0, justification: 'Conforme' },
+            { refId: 'REF-102', ref: 'CAGE P02', theoretical: 14, counted: 14, diff: 0, justification: 'Conforme' },
+            { refId: 'REF-103', ref: 'CAGE P03', theoretical: 12, counted: 12, diff: 0, justification: 'Conforme' }
+          ]
+        }
+      ];
+
+      return {
+        projects: DEFAULT_PROJECTS,
+        activeProjectId: 'PRJ-01',
+        currentUserId: 'USR-1',
+        darkMode: false,
+        references,
+        movements,
+        forecasts,
+        inventories
+      };
+    }
+
+    function recalculateMovementChain(movements) {
+      const sorted = [...movements].sort((a, b) => new Date(a.date) - new Date(b.date));
+      const stockMap = {};
+      return sorted.map(m => {
+        const before = stockMap[m.refId] || 0;
+        let delta = 0;
+        if (['RECEIPT', 'RETURN', 'ADJUSTMENT_POS'].includes(m.type)) delta = m.qty;
+        else if (['USAGE', 'ADJUSTMENT_NEG'].includes(m.type)) delta = -m.qty;
+        else if (m.type === 'CORRECTION') delta = m.signedQty !== undefined ? m.signedQty : -m.qty;
+        const after = before + delta;
+        stockMap[m.refId] = after;
+        return { ...m, stockBefore: before, stockAfter: after };
+      });
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.references && parsed.movements) return parsed;
+        }
+      } catch (e) {
+        console.warn('Erreur lecture localStorage, réinitialisation.', e);
+      }
+      const fresh = buildDefaultData();
+      saveState(fresh);
+      return fresh;
+    }
+
+    function saveState(nextState) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+      } catch (e) {
+        console.error('Impossible de sauvegarder dans localStorage', e);
+      }
+    }
+
+    // =========================================================================
+    // 2. ÉTAT GLOBAL DE L'INTERFACE
+    // =========================================================================
+    let appState = loadState();
+    let ui = {
+      route: 'dashboard', // dashboard | stock | receipt | usage | catalog | forecasts | history | inventory | reports | settings
+      mobileMenuOpen: false,
+      // Filtres Stock
+      stockSearch: '',
+      stockFilter: 'ALL', // ALL | AVAILABLE | LOW | OUT | ARCHIVED
+      stockSortBy: 'ref',
+      stockSortDir: 'asc',
+      // Réception multi-lignes
+      receiptForm: {
+        date: new Date().toISOString().split('T')[0],
+        supplier: 'Armatures Île-de-France',
+        bl: '',
+        zone: '',
+        comment: '',
+        attachmentName: '',
+        lines: [{ refId: '', qty: '' }]
+      },
+      // Sortie multi-lignes
+      usageForm: {
+        date: new Date().toISOString().split('T')[0],
+        pile: '',
+        zone: '',
+        comment: '',
+        lines: [{ refId: '', qty: '' }]
+      },
+      // Catalogue
+      catalogSearch: '',
+      catalogShowArchived: false,
+      // Historique
+      historySearch: '',
+      historyTypeFilter: 'ALL',
+      historyRefFilter: 'ALL',
+      // Inventaire en cours
+      inventoryDraft: {} // refId -> { counted: string, justification: string }
+    };
+
+    function setState(updater) {
+      appState = typeof updater === 'function' ? updater(appState) : { ...appState, ...updater };
+      saveState(appState);
+      render();
+    }
+
+    function setUI(updater) {
+      ui = typeof updater === 'function' ? updater(ui) : { ...ui, ...updater };
+      render();
+    }
+
+    // =========================================================================
+    // 3. CALCULS MÉTIER RIGOUREUX (STOCK, RÉCEPTIONS, SORTIES, ALERTES)
+    // =========================================================================
+    function getActiveProject() {
+      return appState.projects.find(p => p.id === appState.activeProjectId) || appState.projects[0];
+    }
+
+    function getCurrentUser() {
+      return DEFAULT_USERS.find(u => u.id === appState.currentUserId) || DEFAULT_USERS[0];
+    }
+
+    function canOperate() {
+      const role = getCurrentUser().role;
+      return role === 'ADMIN' || role === 'OPERATIONAL';
+    }
+
+    function isAdmin() {
+      return getCurrentUser().role === 'ADMIN';
+    }
+
+    function getProjectReferences(includeArchived = true) {
+      return appState.references.filter(r => r.projectId === appState.activeProjectId && (includeArchived || r.status === 'ACTIVE'));
+    }
+
+    function getProjectMovements() {
+      return appState.movements
+        .filter(m => m.projectId === appState.activeProjectId)
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
+    function computeCageMetrics(refObj) {
+      const mvs = appState.movements.filter(m => m.refId === refObj.id);
+      let totalReceived = 0;
+      let totalUsed = 0;
+      let totalReturns = 0;
+      let totalAdjustments = 0;
+      let lastReceiptDate = null;
+
+      mvs.forEach(m => {
+        if (m.type === 'RECEIPT') {
+          totalReceived += m.qty;
+          if (!lastReceiptDate || new Date(m.date) > new Date(lastReceiptDate)) {
+            lastReceiptDate = m.date;
+          }
+        } else if (m.type === 'USAGE') {
+          totalUsed += m.qty;
+        } else if (m.type === 'RETURN') {
+          totalReturns += m.qty;
+        } else if (m.type === 'ADJUSTMENT_POS') {
+          totalAdjustments += m.qty;
+        } else if (m.type === 'ADJUSTMENT_NEG') {
+          totalAdjustments -= m.qty;
+        } else if (m.type === 'CORRECTION') {
+          const s = m.signedQty !== undefined ? m.signedQty : -m.qty;
+          totalAdjustments += s;
+          if (m.affectsReceived) totalReceived += s;
+        }
+      });
+
+      const physicalStock = totalReceived - totalUsed + totalReturns + totalAdjustments;
+      const reservedQty = refObj.reservedQty || 0;
+      const availableStock = Math.max(0, physicalStock - reservedQty);
+      const remainingToDeliver = (refObj.plannedQty || 0) - totalReceived;
+
+      let statusCode = 'OK'; // OK | LOW | OUT | ARCHIVED
+      let statusLabel = 'Satisfaisant';
+      if (refObj.status === 'ARCHIVED') {
+        statusCode = 'ARCHIVED';
+        statusLabel = 'Archivée';
+      } else if (physicalStock <= 0) {
+        statusCode = 'OUT';
+        statusLabel = 'Rupture';
+      } else if (physicalStock <= (refObj.minStock || 0)) {
+        statusCode = 'LOW';
+        statusLabel = 'Stock faible';
+      }
+
+      return {
+        ...refObj,
+        totalReceived,
+        totalUsed,
+        totalReturns,
+        totalAdjustments,
+        physicalStock,
+        reservedQty,
+        availableStock,
+        remainingToDeliver,
+        lastReceiptDate,
+        statusCode,
+        statusLabel,
+        movementCount: mvs.length
+      };
+    }
+
+    function getProjectAlerts() {
+      const refs = getProjectReferences(false).map(computeCageMetrics);
+      const alerts = [];
+      refs.forEach(r => {
+        if (r.physicalStock <= 0) {
+          alerts.push({
+            id: `ALT-OUT-${r.id}`,
+            severity: 'danger',
+            title: `Rupture de stock : ${r.ref}`,
+            message: `Stock physique à 0 cage (seuil minimal : ${r.minStock}). Approvisionnement requis.`,
+            refId: r.id
+          });
+        } else if (r.physicalStock <= r.minStock) {
+          alerts.push({
+            id: `ALT-LOW-${r.id}`,
+            severity: 'warning',
+            title: `Stock faible : ${r.ref}`,
+            message: `${r.physicalStock} cage(s) restante(s) pour un seuil minimal de ${r.minStock}.`,
+            refId: r.id
+          });
+        }
+        if (r.plannedQty > 0 && r.remainingToDeliver < 0) {
+          alerts.push({
+            id: `ALT-OVR-${r.id}`,
+            severity: 'warning',
+            title: `Dépassement des prévisions : ${r.ref}`,
+            message: `${r.totalReceived} cages réceptionnées pour ${r.plannedQty} prévues (+${Math.abs(r.remainingToDeliver)} cages).`,
+            refId: r.id
+          });
+        }
+      });
+      return alerts;
+    }
+
+    // =========================================================================
+    // 4. UTILITAIRES (DATES EUROPE/PARIS, CSV, TOASTS)
+    // =========================================================================
+    function formatDateTimeFR(isoString) {
+      if (!isoString) return '—';
+      try {
+        return new Intl.DateTimeFormat('fr-FR', {
+          timeZone: 'Europe/Paris',
+          day: '2-digit', month: '2-digit', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        }).format(new Date(isoString));
+      } catch {
+        return isoString;
+      }
+    }
+
+    function formatDateFR(isoString) {
+      if (!isoString) return '—';
+      try {
+        return new Intl.DateTimeFormat('fr-FR', {
+          timeZone: 'Europe/Paris',
+          day: '2-digit', month: '2-digit', year: 'numeric'
+        }).format(new Date(isoString));
+      } catch {
+        return isoString;
+      }
+    }
+
+    function escapeHTML(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function showToast(title, description = '', type = 'success') {
+      const root = document.getElementById('toast-root');
+      const el = document.createElement('div');
+      const colors = type === 'error'
+        ? 'bg-red-950 border-red-700 text-white'
+        : type === 'warning'
+        ? 'bg-amber-950 border-amber-600 text-white'
+        : 'bg-[#101513] border-[#2A623D] text-white';
+
+      el.className = `pointer-events-auto flex items-start gap-3 px-4 py-3.5 rounded-xl border shadow-2xl max-w-sm transition-all duration-300 transform translate-y-2 opacity-0 ${colors}`;
+      el.innerHTML = `
+        <div class="mt-0.5 shrink-0 ${type === 'error' ? 'text-red-400' : type === 'warning' ? 'text-amber-400' : 'text-emerald-400'}">
+          <i data-lucide="${type === 'error' ? 'alert-circle' : type === 'warning' ? 'alert-triangle' : 'check-circle-2'}" class="w-5 h-5"></i>
+        </div>
+        <div class="flex-1 text-sm">
+          <p class="font-semibold">${escapeHTML(title)}</p>
+          ${description ? `<p class="text-xs text-gray-300 mt-0.5">${escapeHTML(description)}</p>` : ''}
+        </div>
+      `;
+      root.appendChild(el);
+      if (window.lucide) window.lucide.createIcons();
+      requestAnimationFrame(() => {
+        el.classList.remove('translate-y-2', 'opacity-0');
+      });
+      setTimeout(() => {
+        el.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => el.remove(), 300);
+      }, 3800);
+    }
+
+    function downloadCSV(filename, headers, rows) {
+      const sep = ';'; // Standard Excel français
+      const csvContent = '\uFEFF' + [
+        headers.join(sep),
+        ...rows.map(r => r.map(cell => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(sep))
+      ].join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Export CSV généré', `Fichier téléchargé : ${filename}`);
+    }
+
+    function exportStockCSV() {
+      const project = getActiveProject();
+      const metrics = getProjectReferences(true).map(computeCageMetrics);
+      const headers = [
+        'Chantier', 'Référence', 'Désignation', 'Type', 'Diamètre (mm)', 'Longueur (m)',
+        'Total Reçu', 'Total Utilisé', 'Stock Physique', 'Réservées', 'Disponible Non Réservé',
+        'Quantité Prévue', 'Reste à Livrer', 'Seuil Alerte', 'Zone de Stockage', 'Statut'
+      ];
+      const rows = metrics.map(m => [
+        project.name, m.ref, m.designation, m.type, m.diameter, m.length,
+        m.totalReceived, m.totalUsed, m.physicalStock, m.reservedQty, m.availableStock,
+        m.plannedQty, m.remainingToDeliver, m.minStock, m.zone, m.statusLabel
+      ]);
+      downloadCSV(`CAGESTOCK_Stock_${project.code}_${new Date().toISOString().split('T')[0]}.csv`, headers, rows);
+    }
+
+    function exportMovementsCSV(onlyReceipts = false) {
+      const project = getActiveProject();
+      const refMap = Object.fromEntries(appState.references.map(r => [r.id, r]));
+      let mvs = getProjectMovements();
+      if (onlyReceipts) mvs = mvs.filter(m => m.type === 'RECEIPT');
+      const headers = [
+        'ID Mouvement', 'Date & Heure', 'Chantier', 'Référence', 'Désignation',
+        'Nature', 'Quantité', 'Stock Avant', 'Stock Après', 'Utilisateur',
+        'Fournisseur', 'N° BL / Pieu', 'Commentaire'
+      ];
+      const rows = mvs.map(m => {
+        const ref = refMap[m.refId] || {};
+        return [
+          m.id, formatDateTimeFR(m.date), project.name, ref.ref || m.refId, ref.designation || '',
+          getMovementTypeLabel(m.type), m.signedQty !== undefined ? m.signedQty : (['USAGE', 'ADJUSTMENT_NEG'].includes(m.type) ? -m.qty : m.qty),
+          m.stockBefore, m.stockAfter, m.user, m.supplier || '', m.bl || m.pile || '', m.comment || ''
+        ];
+      });
+      const prefix = onlyReceipts ? 'Receptions' : 'Mouvements';
+      downloadCSV(`CAGESTOCK_${prefix}_${project.code}_${new Date().toISOString().split('T')[0]}.csv`, headers, rows);
+    }
+
+    function exportInventoriesCSV() {
+      const project = getActiveProject();
+      const invs = appState.inventories.filter(i => i.projectId === appState.activeProjectId);
+      const headers = ['ID Inventaire', 'Date', 'Chantier', 'Responsable', 'Référence', 'Stock Théorique', 'Stock Physique Compté', 'Écart', 'Justification'];
+      const rows = [];
+      invs.forEach(inv => {
+        inv.lines.forEach(l => {
+          rows.push([inv.id, formatDateTimeFR(inv.date), project.name, inv.user, l.ref, l.theoretical, l.counted, l.diff, l.justification]);
+        });
+      });
+      downloadCSV(`CAGESTOCK_Inventaires_${project.code}_${new Date().toISOString().split('T')[0]}.csv`, headers, rows);
+    }
+
+    function getMovementTypeLabel(type) {
+      const map = {
+        RECEIPT: 'Entrée / Réception',
+        USAGE: 'Sortie / Utilisation',
+        RETURN: 'Retour en stock',
+        ADJUSTMENT_POS: 'Ajustement positif',
+        ADJUSTMENT_NEG: 'Ajustement négatif',
+        CORRECTION: 'Correction traçable'
+      };
+      return map[type] || type;
+    }
+
+    // =========================================================================
+    // 5. ACTIONS MÉTIER (RÉCEPTION, SORTIE, RÉFÉRENCES, INVENTAIRE, CORRECTION)
+    // =========================================================================
+    function navigateTo(route, preselectRefId = null) {
+      if (route === 'receipt') {
+        const activeRefs = getProjectReferences(false);
+        const defaultId = preselectRefId || (activeRefs[0] ? activeRefs[0].id : '');
+        ui.receiptForm = {
+          date: new Date().toISOString().split('T')[0],
+          supplier: 'Armatures Île-de-France',
+          bl: '',
+          zone: '',
+          comment: '',
+          attachmentName: '',
+          lines: [{ refId: defaultId, qty: '' }]
+        };
+      } else if (route === 'usage') {
+        const activeRefs = getProjectReferences(false).map(computeCageMetrics);
+        const firstAvailable = activeRefs.find(r => r.physicalStock > 0) || activeRefs[0];
+        const defaultId = preselectRefId || (firstAvailable ? firstAvailable.id : '');
+        ui.usageForm = {
+          date: new Date().toISOString().split('T')[0],
+          pile: '',
+          zone: '',
+          comment: '',
+          lines: [{ refId: defaultId, qty: '' }]
+        };
+      } else if (route === 'inventory') {
+        const refs = getProjectReferences(false).map(computeCageMetrics);
+        const draft = {};
+        refs.forEach(r => {
+          draft[r.id] = { counted: String(r.physicalStock), justification: '' };
+        });
+        ui.inventoryDraft = draft;
+      }
+      ui.route = route;
+      ui.mobileMenuOpen = false;
+      render();
+    }
+
+    function submitReceiptForm() {
+      if (!canOperate()) {
+        showToast('Accès refusé', 'Le profil Consultation ne peut pas enregistrer de réception.', 'error');
+        return;
+      }
+      const form = ui.receiptForm;
+      const validLines = form.lines.filter(l => l.refId && Number(l.qty) > 0);
+      if (validLines.length === 0) {
+        showToast('Saisie incomplète', 'Veuillez sélectionner au moins une référence et une quantité entière supérieure à 0.', 'error');
+        return;
+      }
+      for (const l of validLines) {
+        if (!Number.isInteger(Number(l.qty)) || Number(l.qty) <= 0) {
+          showToast('Quantité invalide', 'Le nombre de cages doit être un entier positif.', 'error');
+          return;
+        }
+      }
+
+      const user = getCurrentUser();
+      const nowTime = new Date().toTimeString().split(' ')[0];
+      const timestamp = new Date(`${form.date}T${nowTime}`).toISOString();
+
+      const newMovements = validLines.map((l, idx) => ({
+        id: `MV-${Date.now().toString().slice(-5)}-${idx + 1}`,
+        projectId: appState.activeProjectId,
+        refId: l.refId,
+        type: 'RECEIPT',
+        qty: parseInt(l.qty, 10),
+        date: timestamp,
+        user: user.name,
+        supplier: form.supplier.trim(),
+        bl: form.bl.trim(),
+        zone: form.zone.trim(),
+        comment: [form.comment.trim(), form.attachmentName ? `PJ: ${form.attachmentName}` : ''].filter(Boolean).join(' | ')
+      }));
+
+      // Mise à jour éventuelle de la zone de stockage si renseignée
+      const updatedRefs = appState.references.map(r => {
+        if (form.zone.trim() && validLines.some(l => l.refId === r.id)) {
+          return { ...r, zone: form.zone.trim() };
+        }
+        return r;
+      });
+
+      const totalCages = newMovements.reduce((s, m) => s + m.qty, 0);
+      setState({
+        references: updatedRefs,
+        movements: recalculateMovementChain([...appState.movements, ...newMovements])
+      });
+
+      showToast('Réception validée avec succès', `+${totalCages} cage(s) ajoutée(s) au stock chantier.`);
+      navigateTo('dashboard');
+    }
+
+    function submitUsageForm() {
+      if (!canOperate()) {
+        showToast('Accès refusé', 'Le profil Consultation ne peut pas enregistrer de sortie.', 'error');
+        return;
+      }
+      const form = ui.usageForm;
+      const validLines = form.lines.filter(l => l.refId && Number(l.qty) > 0);
+      if (validLines.length === 0) {
+        showToast('Saisie incomplète', 'Veuillez sélectionner au moins une référence et une quantité utilisée.', 'error');
+        return;
+      }
+
+      // Cumuler les quantités par référence au cas où la même réf serait saisie deux fois
+      const requestedByRef = {};
+      for (const l of validLines) {
+        const q = Number(l.qty);
+        if (!Number.isInteger(q) || q <= 0) {
+          showToast('Quantité invalide', 'Le nombre de cages utilisées doit être un entier positif.', 'error');
+          return;
+        }
+        requestedByRef[l.refId] = (requestedByRef[l.refId] || 0) + q;
+      }
+
+      // Vérification stricte du stock disponible
+      for (const [refId, totalReq] of Object.entries(requestedByRef)) {
+        const refObj = appState.references.find(r => r.id === refId);
+        const metrics = computeCageMetrics(refObj);
+        if (totalReq > metrics.physicalStock) {
+          showToast(
+            `Stock insuffisant pour ${refObj.ref}`,
+            `Sortie demandée : ${totalReq} cages, mais seulement ${metrics.physicalStock} disponible(s) physiquement.`,
+            'error'
+          );
+          return;
+        }
+      }
+
+      const user = getCurrentUser();
+      const nowTime = new Date().toTimeString().split(' ')[0];
+      const timestamp = new Date(`${form.date}T${nowTime}`).toISOString();
+
+      const newMovements = validLines.map((l, idx) => ({
+        id: `MV-${Date.now().toString().slice(-5)}-${idx + 1}`,
+        projectId: appState.activeProjectId,
+        refId: l.refId,
+        type: 'USAGE',
+        qty: parseInt(l.qty, 10),
+        date: timestamp,
+        user: user.name,
+        pile: form.pile.trim(),
+        zone: form.zone.trim(),
+        comment: form.comment.trim()
+      }));
+
+      const totalCages = newMovements.reduce((s, m) => s + m.qty, 0);
+      setState({
+        movements: recalculateMovementChain([...appState.movements, ...newMovements])
+      });
+
+      showToast('Sortie de stock enregistrée', `−${totalCages} cage(s) déduite(s) du stock chantier.`);
+      navigateTo('dashboard');
+    }
+
+    function submitInventoryValidation() {
+      if (!isAdmin()) {
+        showToast('Validation réservée aux Administrateurs', 'Seul un Conducteur de Travaux / Administrateur peut valider les écarts d’inventaire.', 'error');
+        return;
+      }
+      const refs = getProjectReferences(false).map(computeCageMetrics);
+      const lines = [];
+      const adjustmentMovements = [];
+      const now = new Date().toISOString();
+      const user = getCurrentUser();
+
+      for (const r of refs) {
+        const entry = ui.inventoryDraft[r.id] || { counted: String(r.physicalStock), justification: '' };
+        const counted = parseInt(entry.counted, 10);
+        if (isNaN(counted) || counted < 0) {
+          showToast('Valeur invalide', `Le comptage pour ${r.ref} doit être un entier positif ou nul.`, 'error');
+          return;
+        }
+        const diff = counted - r.physicalStock;
+        if (diff !== 0 && !entry.justification.trim()) {
+          showToast('Justification obligatoire', `Veuillez indiquer le motif de l'écart (${diff > 0 ? '+' + diff : diff}) pour ${r.ref}.`, 'warning');
+          return;
+        }
+        lines.push({
+          refId: r.id,
+          ref: r.ref,
+          theoretical: r.physicalStock,
+          counted,
+          diff,
+          justification: entry.justification.trim() || 'Conforme au stock théorique'
+        });
+
+        if (diff !== 0) {
+          adjustmentMovements.push({
+            id: `MV-INV-${Date.now().toString().slice(-4)}-${r.ref.replace(/\s+/g, '')}`,
+            projectId: appState.activeProjectId,
+            refId: r.id,
+            type: diff > 0 ? 'ADJUSTMENT_POS' : 'ADJUSTMENT_NEG',
+            qty: Math.abs(diff),
+            date: now,
+            user: user.name,
+            comment: `Inventaire physique (${r.physicalStock} → ${counted}) : ${entry.justification.trim()}`
+          });
+        }
+      }
+
+      const invRecord = {
+        id: `INV-${new Date().getFullYear()}-${String(appState.inventories.length + 1).padStart(2, '0')}`,
+        projectId: appState.activeProjectId,
+        date: now,
+        user: user.name,
+        status: 'VALIDATED',
+        lines
+      };
+
+      setState({
+        inventories: [invRecord, ...appState.inventories],
+        movements: recalculateMovementChain([...appState.movements, ...adjustmentMovements])
+      });
+
+      showToast(
+        'Inventaire physique validé',
+        adjustmentMovements.length > 0
+          ? `${adjustmentMovements.length} mouvement(s) d'ajustement enregistré(s).`
+          : 'Aucun écart constaté, stock certifié conforme.'
+      );
+      render();
+    }
+
+    // =========================================================================
+    // 6. MODALES (FICHE RÉFÉRENCE, CRÉATION/ÉDITION RÉF, CORRECTION TRAÇABLE)
+    // =========================================================================
+    function closeModal() {
+      document.getElementById('modal-root').innerHTML = '';
+    }
+
+    function openReferenceDetailModal(refId) {
+      const refObj = appState.references.find(r => r.id === refId);
+      if (!refObj) return;
+      const m = computeCageMetrics(refObj);
+      const mvs = appState.movements
+        .filter(mv => mv.refId === refId)
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      const root = document.getElementById('modal-root');
+      root.innerHTML = `
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4" onclick="if(event.target===this) closeModal()">
+          <div class="bg-white dark:bg-[#242A26] rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-gray-200 dark:border-gray-700 animate-view">
+            <!-- Header -->
+            <div class="px-6 py-5 bg-[#101513] text-white flex items-center justify-between">
+              <div>
+                <div class="flex items-center gap-2.5">
+                  <span class="px-2.5 py-0.5 rounded-md bg-[#2A623D] text-xs font-bold tracking-wide">${escapeHTML(m.ref)}</span>
+                  <span class="text-xs text-gray-400">Plan ${escapeHTML(m.planNumber || 'N/C')} (Ind. ${escapeHTML(m.planRevision || '-')})</span>
+                </div>
+                <h3 class="text-lg font-bold mt-1">${escapeHTML(m.designation)}</h3>
               </div>
-              <div className="mb-6">
-                <label className="block text-sm font-bold mb-2">Quantité</label>
-                <input type="number" min="1" required value={qty} onChange={e => setQty(e.target.value)} className="w-full p-3 border rounded-lg text-xl font-bold" />
+              <button onclick="closeModal()" class="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10">
+                <i data-lucide="x" class="w-5 h-5"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-6">
+              <!-- KPIs Fiche -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="p-3.5 rounded-xl bg-[#E8F1EB] dark:bg-[#1A472A]/40 border border-[#2A623D]/20">
+                  <p class="text-xs font-medium text-[#1A472A] dark:text-emerald-300">Stock Physique</p>
+                  <p class="text-2xl font-extrabold text-[#101513] dark:text-white mt-0.5">${m.physicalStock}</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-[#101513] border border-gray-200 dark:border-gray-700">
+                  <p class="text-xs text-gray-500">Total Réceptionné</p>
+                  <p class="text-2xl font-bold mt-0.5">${m.totalReceived}</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-[#101513] border border-gray-200 dark:border-gray-700">
+                  <p class="text-xs text-gray-500">Total Utilisé</p>
+                  <p class="text-2xl font-bold mt-0.5">${m.totalUsed}</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-[#101513] border border-gray-200 dark:border-gray-700">
+                  <p class="text-xs text-gray-500">Reste à Livrer</p>
+                  <p class="text-2xl font-bold mt-0.5 ${m.remainingToDeliver < 0 ? 'text-amber-600' : ''}">${m.plannedQty > 0 ? m.remainingToDeliver : '—'}</p>
+                </div>
               </div>
-              <button type="submit" className={`w-full py-3 rounded-lg font-bold text-white ${isReceipt ? 'bg-[#1A472A]' : 'bg-red-600'}`}>Valider l'opération</button>
+
+              <!-- Caractéristiques techniques -->
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm bg-gray-50 dark:bg-[#101513]/60 p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                <div><span class="text-gray-500 block text-xs">Type d'ouvrage</span><span class="font-semibold">${escapeHTML(m.type)}</span></div>
+                <div><span class="text-gray-500 block text-xs">Diamètre extérieur</span><span class="font-semibold">Ø ${m.diameter} mm</span></div>
+                <div><span class="text-gray-500 block text-xs">Longueur cage</span><span class="font-semibold">${m.length} m</span></div>
+                <div><span class="text-gray-500 block text-xs">Poids théorique</span><span class="font-semibold">${m.weight ? m.weight + ' kg' : 'Non renseigné'}</span></div>
+                <div><span class="text-gray-500 block text-xs">Fournisseur habituel</span><span class="font-semibold">${escapeHTML(m.supplier || '—')}</span></div>
+                <div><span class="text-gray-500 block text-xs">Zone de stockage</span><span class="font-semibold">${escapeHTML(m.zone || '—')}</span></div>
+                <div><span class="text-gray-500 block text-xs">Seuil d'alerte min.</span><span class="font-semibold">${m.minStock} cages</span></div>
+                <div><span class="text-gray-500 block text-xs">Quantité réservée</span><span class="font-semibold">${m.reservedQty} cages</span></div>
+                <div><span class="text-gray-500 block text-xs">Dernière réception</span><span class="font-semibold">${formatDateFR(m.lastReceiptDate)}</span></div>
+              </div>
+
+              ${m.notes ? `
+                <div class="text-sm p-3.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/70 dark:border-amber-800/50 text-amber-950 dark:text-amber-200">
+                  <span class="font-semibold">Observations techniques :</span> ${escapeHTML(m.notes)}
+                </div>
+              ` : ''}
+
+              <!-- Historique de cette référence -->
+              <div>
+                <h4 class="text-sm font-bold uppercase tracking-wider text-gray-500 mb-3">Historique des mouvements (${mvs.length})</h4>
+                <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                  <table class="w-full text-left text-xs">
+                    <thead class="bg-gray-50 dark:bg-[#101513] text-gray-500 border-b border-gray-200 dark:border-gray-700">
+                      <tr>
+                        <th class="p-2.5">Date</th>
+                        <th class="p-2.5">Nature</th>
+                        <th class="p-2.5 text-center">Qté</th>
+                        <th class="p-2.5 text-center">Stock après</th>
+                        <th class="p-2.5">Détails</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                      ${mvs.length === 0 ? `<tr><td colspan="5" class="p-4 text-center text-gray-400">Aucun mouvement enregistré</td></tr>` : mvs.map(mv => {
+                        const signed = mv.signedQty !== undefined ? mv.signedQty : (['USAGE', 'ADJUSTMENT_NEG'].includes(mv.type) ? -mv.qty : mv.qty);
+                        return `
+                          <tr>
+                            <td class="p-2.5 whitespace-nowrap">${formatDateTimeFR(mv.date)}</td>
+                            <td class="p-2.5 font-medium">${escapeHTML(getMovementTypeLabel(mv.type))}</td>
+                            <td class="p-2.5 text-center font-bold ${signed >= 0 ? 'text-emerald-600' : 'text-red-500'}">${signed > 0 ? '+' + signed : signed}</td>
+                            <td class="p-2.5 text-center font-semibold">${mv.stockAfter}</td>
+                            <td class="p-2.5 text-gray-500">${escapeHTML(mv.bl || mv.pile || mv.comment || '—')}</td>
+                          </tr>
+                        `;
+                      }).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 py-4 bg-gray-50 dark:bg-[#101513] border-t border-gray-200 dark:border-gray-800 flex flex-wrap justify-between gap-2">
+              <div class="flex gap-2">
+                ${canOperate() && m.status === 'ACTIVE' ? `
+                  <button onclick="closeModal(); navigateTo('receipt', '${m.id}')" class="px-4 py-2 rounded-lg bg-[#1A472A] hover:bg-[#2A623D] text-white text-sm font-semibold flex items-center gap-1.5">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Réceptionner
+                  </button>
+                  <button onclick="closeModal(); navigateTo('usage', '${m.id}')" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-semibold flex items-center gap-1.5">
+                    <i data-lucide="minus" class="w-4 h-4"></i> Sortie
+                  </button>
+                ` : ''}
+              </div>
+              <button onclick="closeModal()" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 text-sm font-medium hover:bg-gray-100 dark:hover:bg-white/5">Fermer</button>
+            </div>
+          </div>
+        </div>
+      `;
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function openReferenceFormModal(editRefId = null) {
+      if (!isAdmin()) {
+        showToast('Action réservée aux Administrateurs', 'Seul un profil Administrateur peut créer ou modifier le référentiel.', 'error');
+        return;
+      }
+      const existing = editRefId ? appState.references.find(r => r.id === editRefId) : null;
+      const root = document.getElementById('modal-root');
+
+      root.innerHTML = `
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4" onclick="if(event.target===this) closeModal()">
+          <div class="bg-white dark:bg-[#242A26] rounded-2xl shadow-2xl max-w-2xl w-full max-h-[92vh] flex flex-col overflow-hidden border border-gray-200 dark:border-gray-700 animate-view">
+            <div class="px-6 py-4 bg-[#101513] text-white flex items-center justify-between">
+              <h3 class="text-lg font-bold">${existing ? 'Modifier la référence ' + escapeHTML(existing.ref) : 'Nouvelle référence de cage d’armatures'}</h3>
+              <button onclick="closeModal()" class="p-1.5 rounded-lg text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form id="ref-modal-form" class="p-6 overflow-y-auto custom-scrollbar space-y-4 text-sm">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-semibold mb-1">Code Référence *</label>
+                  <input type="text" name="ref" required value="${escapeHTML(existing ? existing.ref : '')}" placeholder="Ex: CAGE P05" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+                </div>
+                <div>
+                  <label class="block font-semibold mb-1">Type de cage *</label>
+                  <select name="type" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]">
+                    ${['Pieu foré', 'Pieu sécant', 'Pieu gros diamètre', 'Barrette', 'Paroi moulée', 'Micropieu'].map(t =>
+                      `<option value="${t}" ${existing && existing.type === t ? 'selected' : ''}>${t}</option>`
+                    ).join('')}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-semibold mb-1">Désignation complète *</label>
+                <input type="text" name="designation" required value="${escapeHTML(existing ? existing.designation : '')}" placeholder="Ex: Cage principale pieu foré Ø1000" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+              </div>
+
+              <div class="grid grid-cols-3 gap-3">
+                <div>
+                  <label class="block font-semibold mb-1">Diamètre (mm) *</label>
+                  <input type="number" name="diameter" min="100" required value="${existing ? existing.diameter : 900}" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+                </div>
+                <div>
+                  <label class="block font-semibold mb-1">Longueur (m) *</label>
+                  <input type="number" step="0.1" name="length" min="0.5" required value="${existing ? existing.length : 12.0}" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+                </div>
+                <div>
+                  <label class="block font-semibold mb-1">Poids (kg)</label>
+                  <input type="number" name="weight" min="0" value="${existing ? existing.weight : 1400}" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="block font-semibold mb-1">N° Plan armatures</label>
+                  <input type="text" name="planNumber" value="${escapeHTML(existing ? existing.planNumber : '')}" placeholder="EXE-ARM-..." class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+                </div>
+                <div>
+                  <label class="block font-semibold mb-1">Indice révision</label>
+                  <input type="text" name="planRevision" value="${escapeHTML(existing ? existing.planRevision : 'A')}" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+                </div>
+                <div>
+                  <label class="block font-semibold mb-1">Fournisseur</label>
+                  <input type="text" name="supplier" value="${escapeHTML(existing ? existing.supplier : 'Armatures Île-de-France')}" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="block font-semibold mb-1">Quantité prévue chantier</label>
+                  <input type="number" name="plannedQty" min="0" value="${existing ? existing.plannedQty : 40}" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+                </div>
+                <div>
+                  <label class="block font-semibold mb-1">Seuil alerte minimal</label>
+                  <input type="number" name="minStock" min="0" value="${existing ? existing.minStock : 5}" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+                </div>
+                <div>
+                  <label class="block font-semibold mb-1">Quantité réservée</label>
+                  <input type="number" name="reservedQty" min="0" value="${existing ? existing.reservedQty : 0}" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-semibold mb-1">Zone de stockage habituelle</label>
+                <input type="text" name="zone" value="${escapeHTML(existing ? existing.zone : 'Zone A — Nord Foreuse')}" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" />
+              </div>
+
+              <div>
+                <label class="block font-semibold mb-1">Observations techniques</label>
+                <textarea name="notes" rows="2" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]">${escapeHTML(existing ? existing.notes : '')}</textarea>
+              </div>
+
+              <div class="pt-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-3">
+                <button type="button" onclick="closeModal()" class="px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 font-medium">Annuler</button>
+                <button type="submit" class="px-5 py-2.5 rounded-lg bg-[#1A472A] hover:bg-[#2A623D] text-white font-semibold">Enregistrer la référence</button>
+              </div>
             </form>
           </div>
+        </div>
+      `;
+      if (window.lucide) window.lucide.createIcons();
+
+      document.getElementById('ref-modal-form').onsubmit = function (e) {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const refCode = fd.get('ref').trim().toUpperCase();
+        const duplicate = appState.references.find(
+          r => r.projectId === appState.activeProjectId && r.ref.toUpperCase() === refCode && r.id !== editRefId
         );
+        if (duplicate) {
+          showToast('Doublon détecté', `La référence ${refCode} existe déjà sur ce chantier.`, 'error');
+          return;
+        }
+
+        const payload = {
+          ref: refCode,
+          type: fd.get('type'),
+          designation: fd.get('designation').trim(),
+          diameter: Number(fd.get('diameter')),
+          length: Number(fd.get('length')),
+          weight: Number(fd.get('weight')) || 0,
+          planNumber: fd.get('planNumber').trim(),
+          planRevision: fd.get('planRevision').trim(),
+          supplier: fd.get('supplier').trim(),
+          plannedQty: parseInt(fd.get('plannedQty'), 10) || 0,
+          minStock: parseInt(fd.get('minStock'), 10) || 0,
+          reservedQty: parseInt(fd.get('reservedQty'), 10) || 0,
+          zone: fd.get('zone').trim(),
+          notes: fd.get('notes').trim()
+        };
+
+        if (existing) {
+          setState({
+            references: appState.references.map(r => r.id === editRefId ? { ...r, ...payload } : r)
+          });
+          showToast('Référence mise à jour', `${refCode} a été modifiée.`);
+        } else {
+          const newRef = {
+            id: `REF-${Date.now().toString().slice(-5)}`,
+            projectId: appState.activeProjectId,
+            status: 'ACTIVE',
+            ...payload
+          };
+          setState({ references: [...appState.references, newRef] });
+          showToast('Référence créée', `${refCode} ajoutée au catalogue du chantier.`);
+        }
+        closeModal();
       };
+    }
 
-      return (
-        <div className="flex h-screen w-screen overflow-hidden">
-          
-          {msg && <div className="absolute top-4 right-4 bg-[#101513] text-white px-6 py-3 rounded-lg shadow-xl font-medium">{msg}</div>}
+    function openCorrectionModal(movementId) {
+      if (!isAdmin()) {
+        showToast('Habilitation insuffisante', 'Seul un Administrateur peut enregistrer une correction traçable.', 'error');
+        return;
+      }
+      const mv = appState.movements.find(m => m.id === movementId);
+      if (!mv) return;
+      const refObj = appState.references.find(r => r.id === mv.refId) || {};
+      const metrics = computeCageMetrics(refObj);
 
-          {/* SIDEBAR */}
-          <div className="w-64 bg-[#101513] flex flex-col p-4">
-            <div className="flex items-center gap-3 text-white p-2 mb-8">
-              <div className="w-10 h-10 bg-[#2A623D] rounded flex items-center justify-center font-bold text-xl">C</div>
-              <h1 className="text-xl font-bold tracking-wider">CAGESTOCK</h1>
+      const root = document.getElementById('modal-root');
+      root.innerHTML = `
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4" onclick="if(event.target===this) closeModal()">
+          <div class="bg-white dark:bg-[#242A26] rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-gray-200 dark:border-gray-700 animate-view">
+            <div class="px-6 py-4 bg-[#101513] text-white flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <i data-lucide="shield-alert" class="w-5 h-5 text-amber-400"></i>
+                <h3 class="text-base font-bold">Correction traçable d'opération</h3>
+              </div>
+              <button onclick="closeModal()" class="p-1 text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <NavItem icon={IconDash} label="Tableau de bord" active={view === 'dashboard'} onClick={() => setView('dashboard')} />
-            <NavItem icon={IconPack} label="Stock actuel" active={view === 'stock'} onClick={() => setView('stock')} />
-            <NavItem icon={IconIn} label="Réception" active={view === 'receipt'} onClick={() => setView('receipt')} />
-            <NavItem icon={IconOut} label="Sortie" active={view === 'usage'} onClick={() => setView('usage')} />
-            <NavItem icon={IconHist} label="Historique" active={view === 'history'} onClick={() => setView('history')} />
+            <form id="correction-form" class="p-6 space-y-4 text-sm">
+              <div class="p-3.5 rounded-xl bg-gray-50 dark:bg-[#101513] border border-gray-200 dark:border-gray-700 space-y-1">
+                <p class="text-xs text-gray-500">Opération initiale conservée dans le journal :</p>
+                <p class="font-bold">${escapeHTML(mv.id)} — ${escapeHTML(refObj.ref)} (${escapeHTML(getMovementTypeLabel(mv.type))} : ${mv.qty} cages)</p>
+                <p class="text-xs text-gray-500">Stock physique actuel de ${escapeHTML(refObj.ref)} : <strong>${metrics.physicalStock} cages</strong></p>
+              </div>
+
+              <div>
+                <label class="block font-semibold mb-1">Ajustement compensatoire signé (ex: -2 ou +3) *</label>
+                <input type="number" name="signedQty" required placeholder="Ex: -2" class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] font-bold" />
+                <p class="text-xs text-gray-500 mt-1">Exemple : si 12 cages ont été saisies au lieu de 10, saisissez <strong>-2</strong>.</p>
+              </div>
+
+              <div>
+                <label class="block font-semibold mb-1">Justification obligatoire *</label>
+                <textarea name="reason" required rows="2" placeholder="Ex: Erreur de lecture sur le bon de livraison BL-2026-918 (10 cages réelles au lieu de 12)." class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]"></textarea>
+              </div>
+
+              <div class="pt-3 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-2">
+                <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700">Annuler</button>
+                <button type="submit" class="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold">Valider la correction</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      `;
+      if (window.lucide) window.lucide.createIcons();
+
+      document.getElementById('correction-form').onsubmit = function (e) {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const signedQty = parseInt(fd.get('signedQty'), 10);
+        const reason = fd.get('reason').trim();
+
+        if (!signedQty || signedQty === 0) {
+          showToast('Correction invalide', 'Veuillez saisir un nombre entier non nul (ex: -2 ou +2).', 'error');
+          return;
+        }
+        if (metrics.physicalStock + signedQty < 0) {
+          showToast('Stock négatif impossible', `Cette correction rendrait le stock négatif (${metrics.physicalStock + signedQty}).`, 'error');
+          return;
+        }
+
+        const corrMovement = {
+          id: `MV-COR-${Date.now().toString().slice(-5)}`,
+          projectId: appState.activeProjectId,
+          refId: mv.refId,
+          type: 'CORRECTION',
+          qty: Math.abs(signedQty),
+          signedQty,
+          affectsReceived: mv.type === 'RECEIPT',
+          date: new Date().toISOString(),
+          user: getCurrentUser().name,
+          comment: `Correction sur ${mv.id} : ${reason}`
+        };
+
+        setState({
+          movements: recalculateMovementChain([...appState.movements, corrMovement])
+        });
+        showToast('Correction enregistrée', `Mouvement compensatoire (${signedQty > 0 ? '+' + signedQty : signedQty}) ajouté au journal.`);
+        closeModal();
+      };
+    }
+
+    function toggleArchiveReference(refId) {
+      if (!isAdmin()) {
+        showToast('Accès refusé', 'Seul un Administrateur peut archiver ou réactiver une référence.', 'error');
+        return;
+      }
+      const refObj = appState.references.find(r => r.id === refId);
+      if (!refObj) return;
+      const nextStatus = refObj.status === 'ARCHIVED' ? 'ACTIVE' : 'ARCHIVED';
+      setState({
+        references: appState.references.map(r => r.id === refId ? { ...r, status: nextStatus } : r)
+      });
+      showToast(
+        nextStatus === 'ARCHIVED' ? 'Référence archivée' : 'Référence réactivée',
+        `${refObj.ref} est désormais ${nextStatus === 'ARCHIVED' ? 'archivée (historique conservé)' : 'active'}.`
+      );
+    }
+
+    function resetDemoEnvironment() {
+      const fresh = buildDefaultData();
+      fresh.darkMode = appState.darkMode;
+      setState(fresh);
+      navigateTo('dashboard');
+      showToast('Données de démonstration réinitialisées', 'Tous les stocks et mouvements initiaux ont été restaurés.');
+    }
+
+    // =========================================================================
+    // 7. VUES DE L'APPLICATION (10 RUBRIQUES)
+    // =========================================================================
+    function renderDashboardView() {
+      const project = getActiveProject();
+      const metrics = getProjectReferences(false).map(computeCageMetrics);
+      const movements = getProjectMovements();
+      const alerts = getProjectAlerts();
+
+      const totalPhysicalStock = metrics.reduce((s, m) => s + m.physicalStock, 0);
+      const todayISO = new Date().toISOString().split('T')[0];
+      const receiptsToday = movements
+        .filter(m => m.type === 'RECEIPT' && m.date.startsWith(todayISO))
+        .reduce((s, m) => s + m.qty, 0);
+      const usedTotalPeriod = movements
+        .filter(m => m.type === 'USAGE')
+        .reduce((s, m) => s + m.qty, 0);
+      const refsInStockCount = metrics.filter(m => m.physicalStock > 0).length;
+      const totalRemainingDeliveries = metrics.reduce((s, m) => s + Math.max(0, m.remainingToDeliver), 0);
+
+      // Données graphique 7 derniers jours
+      const days7 = [];
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const iso = d.toISOString().split('T')[0];
+        const label = d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+        const rec = movements.filter(m => m.type === 'RECEIPT' && m.date.startsWith(iso)).reduce((s, m) => s + m.qty, 0);
+        const usg = movements.filter(m => m.type === 'USAGE' && m.date.startsWith(iso)).reduce((s, m) => s + m.qty, 0);
+        days7.push({ label, rec, usg });
+      }
+      const maxBarVal = Math.max(10, ...days7.map(d => Math.max(d.rec, d.usg)));
+      const maxRefStock = Math.max(10, ...metrics.map(m => m.physicalStock));
+
+      // Répartition par zone de stockage
+      const zonesMap = {};
+      metrics.forEach(m => {
+        const z = m.zone || 'Non affectée';
+        zonesMap[z] = (zonesMap[z] || 0) + m.physicalStock;
+      });
+      const zonesList = Object.entries(zonesMap).sort((a, b) => b[1] - a[1]);
+
+      const refLookup = Object.fromEntries(appState.references.map(r => [r.id, r]));
+
+      return `
+        <div class="space-y-6 animate-view">
+          <!-- En-tête + Boutons d'action ultra-rapides -->
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-white dark:bg-[#242A26] p-5 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs">
+            <div>
+              <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#2A623D] dark:text-emerald-400">
+                <i data-lucide="hard-hat" class="w-4 h-4"></i> Pilotage Chantier • ${escapeHTML(project.code)}
+              </div>
+              <h2 class="text-2xl font-extrabold text-[#101513] dark:text-white mt-0.5">${escapeHTML(project.name)}</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">${escapeHTML(project.location)} — Synthèse temps réel du parc à cages</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button onclick="navigateTo('receipt')" ${!canOperate() ? 'disabled' : ''} class="px-5 py-3.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white font-bold text-sm shadow-lg shadow-[#1A472A]/25 transition flex items-center justify-center gap-2.5 cursor-pointer">
+                <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                <span>+ Réceptionner des cages</span>
+              </button>
+              <button onclick="navigateTo('usage')" ${!canOperate() ? 'disabled' : ''} class="px-5 py-3.5 rounded-xl bg-[#101513] hover:bg-[#242A26] dark:bg-white dark:text-[#101513] dark:hover:bg-gray-200 disabled:opacity-50 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2.5 cursor-pointer">
+                <i data-lucide="minus-circle" class="w-5 h-5 text-red-400 dark:text-red-600"></i>
+                <span>− Enregistrer une sortie</span>
+              </button>
+            </div>
           </div>
 
-          {/* CONTENU */}
-          <div className="flex-1 flex flex-col bg-[#F7F9F7] overflow-y-auto">
-            <div className="h-16 bg-white border-b flex items-center px-8 font-medium text-[#1A472A]">
-              Chantier Actif : Gare de Paris - Ligne 15
+          <!-- 6 Cartes KPI -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+            <div onclick="navigateTo('stock')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs hover:border-[#2A623D] transition">
+              <div class="flex items-center justify-between text-gray-500 dark:text-gray-400 mb-2">
+                <span class="text-xs font-semibold uppercase tracking-wide">Stock total actuel</span>
+                <div class="p-2 rounded-lg bg-[#E8F1EB] dark:bg-[#1A472A]/50 text-[#1A472A] dark:text-emerald-300"><i data-lucide="layers" class="w-4 h-4"></i></div>
+              </div>
+              <p class="text-3xl font-extrabold text-[#101513] dark:text-white">${totalPhysicalStock}</p>
+              <p class="text-xs text-gray-500 mt-1">cages présentes sur site</p>
             </div>
-            
-            <div className="p-8">
-              
-              {view === 'dashboard' && (
-                <div>
-                  <h2 className="text-3xl font-bold text-[#101513] mb-6">Tableau de Bord</h2>
-                  <div className="grid grid-cols-3 gap-6 mb-8">
-                    <Card title="Stock Total (Cages)" value={totalStock} icon={IconPack} />
-                    <Card title="Derniers Mouvements" value={movements.length} icon={IconHist} />
-                    <Card title="Alertes Stock Faible" value={alertsCount} alert={alertsCount > 0} icon={IconAlert} />
+
+            <div onclick="navigateTo('receipt')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs hover:border-[#2A623D] transition">
+              <div class="flex items-center justify-between text-gray-500 dark:text-gray-400 mb-2">
+                <span class="text-xs font-semibold uppercase tracking-wide">Réceptions du jour</span>
+                <div class="p-2 rounded-lg bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400"><i data-lucide="arrow-down-to-line" class="w-4 h-4"></i></div>
+              </div>
+              <p class="text-3xl font-extrabold text-emerald-700 dark:text-emerald-400">+${receiptsToday}</p>
+              <p class="text-xs text-gray-500 mt-1">cages livrées aujourd'hui</p>
+            </div>
+
+            <div onclick="navigateTo('usage')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs hover:border-[#2A623D] transition">
+              <div class="flex items-center justify-between text-gray-500 dark:text-gray-400 mb-2">
+                <span class="text-xs font-semibold uppercase tracking-wide">Cages utilisées</span>
+                <div class="p-2 rounded-lg bg-gray-100 dark:bg-[#101513] text-gray-700 dark:text-gray-300"><i data-lucide="arrow-up-from-line" class="w-4 h-4"></i></div>
+              </div>
+              <p class="text-3xl font-extrabold text-[#101513] dark:text-white">${usedTotalPeriod}</p>
+              <p class="text-xs text-gray-500 mt-1">posées dans les pieux</p>
+            </div>
+
+            <div onclick="navigateTo('catalog')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs hover:border-[#2A623D] transition">
+              <div class="flex items-center justify-between text-gray-500 dark:text-gray-400 mb-2">
+                <span class="text-xs font-semibold uppercase tracking-wide">Réf. en stock</span>
+                <div class="p-2 rounded-lg bg-[#E8F1EB] dark:bg-[#1A472A]/50 text-[#1A472A] dark:text-emerald-300"><i data-lucide="grid" class="w-4 h-4"></i></div>
+              </div>
+              <p class="text-3xl font-extrabold text-[#101513] dark:text-white">${refsInStockCount} <span class="text-sm font-normal text-gray-400">/ ${metrics.length}</span></p>
+              <p class="text-xs text-gray-500 mt-1">modèles disponibles</p>
+            </div>
+
+            <div onclick="navigateTo('stock')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border ${alerts.length > 0 ? 'border-amber-300 dark:border-amber-700' : 'border-gray-200/80 dark:border-gray-800'} shadow-xs transition">
+              <div class="flex items-center justify-between text-gray-500 dark:text-gray-400 mb-2">
+                <span class="text-xs font-semibold uppercase tracking-wide">Alertes de stock</span>
+                <div class="p-2 rounded-lg ${alerts.length > 0 ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400' : 'bg-gray-100 text-gray-500'}"><i data-lucide="alert-triangle" class="w-4 h-4"></i></div>
+              </div>
+              <p class="text-3xl font-extrabold ${alerts.length > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-[#101513] dark:text-white'}">${alerts.length}</p>
+              <p class="text-xs text-gray-500 mt-1">seuil bas ou rupture</p>
+            </div>
+
+            <div onclick="navigateTo('forecasts')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs hover:border-[#2A623D] transition">
+              <div class="flex items-center justify-between text-gray-500 dark:text-gray-400 mb-2">
+                <span class="text-xs font-semibold uppercase tracking-wide">Reste à livrer</span>
+                <div class="p-2 rounded-lg bg-[#E8F1EB] dark:bg-[#1A472A]/50 text-[#1A472A] dark:text-emerald-300"><i data-lucide="truck" class="w-4 h-4"></i></div>
+              </div>
+              <p class="text-3xl font-extrabold text-[#101513] dark:text-white">${totalRemainingDeliveries}</p>
+              <p class="text-xs text-gray-500 mt-1">selon planning prévu</p>
+            </div>
+          </div>
+
+          <!-- Zone Alertes Automatiques (si présentes) -->
+          ${alerts.length > 0 ? `
+            <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-amber-200 dark:border-amber-800/70 p-4 shadow-xs">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="text-sm font-bold flex items-center gap-2 text-amber-800 dark:text-amber-300">
+                  <i data-lucide="bell-ring" class="w-4 h-4"></i> Alertes et points de vigilance chantier (${alerts.length})
+                </h3>
+                <button onclick="navigateTo('stock')" class="text-xs font-semibold text-[#1A472A] dark:text-emerald-400 hover:underline">Voir le stock détaillé →</button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                ${alerts.map(a => `
+                  <div class="p-3 rounded-xl border ${a.severity === 'danger' ? 'bg-red-50/80 border-red-200 dark:bg-red-950/30 dark:border-red-800/60' : 'bg-amber-50/80 border-amber-200 dark:bg-amber-950/30 dark:border-amber-800/60'} flex items-start justify-between gap-2">
+                    <div>
+                      <p class="text-xs font-bold ${a.severity === 'danger' ? 'text-red-800 dark:text-red-300' : 'text-amber-900 dark:text-amber-300'}">${escapeHTML(a.title)}</p>
+                      <p class="text-xs text-gray-600 dark:text-gray-400 mt-0.5">${escapeHTML(a.message)}</p>
+                    </div>
+                    ${canOperate() ? `<button onclick="navigateTo('receipt', '${a.refId}')" class="shrink-0 px-2.5 py-1 rounded-lg bg-white dark:bg-[#101513] border border-gray-200 dark:border-gray-700 text-xs font-semibold hover:border-[#1A472A]">+ Récept.</button>` : ''}
                   </div>
-                  <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
-                    <h3 className="text-lg font-bold mb-4">Derniers Mouvements</h3>
-                    {movements.slice(0, 5).map(m => (
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+
+          <!-- Graphiques Visuels -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Graphique 1 : Évolution 7 derniers jours -->
+            <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs">
+              <div class="flex items-center justify-between mb-5">
+                <div>
+                  <h3 class="text-base font-bold">Flux des 7 derniers jours</h3>
+                  <p class="text-xs text-gray-500">Comparatif quotidien des réceptions et poses de cages</p>
+                </div>
+                <div class="flex items-center gap-4 text-xs font-medium">
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-[#2A623D]"></span> Réceptions</span>
+                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-xs bg-red-500"></span> Sorties</span>
+                </div>
+              </div>
+              <div class="h-52 flex items-end justify-between gap-3 pt-4 border-b border-gray-100 dark:border-gray-800 px-2">
+                ${days7.map(d => {
+                  const hRec = Math.round((d.rec / maxBarVal) * 100);
+                  const hUsg = Math.round((d.usg / maxBarVal) * 100);
+                  return `
+                    <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
+                      <div class="w-full flex items-end justify-center gap-1.5 h-40">
+                        <div class="w-3.5 sm:w-5 bg-[#2A623D] rounded-t-md transition-all duration-300 relative" style="height: ${Math.max(hRec, d.rec > 0 ? 8 : 2)}%" title="Réceptions : ${d.rec}">
+                          ${d.rec > 0 ? `<span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-[#1A472A] dark:text-emerald-400">${d.rec}</span>` : ''}
+                        </div>
+                        <div class="w-3.5 sm:w-5 bg-red-500/85 rounded-t-md transition-all duration-300 relative" style="height: ${Math.max(hUsg, d.usg > 0 ? 8 : 2)}%" title="Sorties : ${d.usg}">
+                          ${d.usg > 0 ? `<span class="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] font-bold text-red-600 dark:text-red-400">${d.usg}</span>` : ''}
+                        </div>
+                      </div>
+                      <span class="text-[11px] text-gray-500 font-medium">${d.label}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Graphique 2 : Stock disponible par référence -->
+            <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h3 class="text-base font-bold">Stock physique par référence</h3>
+                  <p class="text-xs text-gray-500">Disponibilité immédiate vs seuil minimal d'alerte</p>
+                </div>
+                <button onclick="navigateTo('stock')" class="text-xs font-semibold text-[#1A472A] dark:text-emerald-400 hover:underline">Tout voir</button>
+              </div>
+              <div class="space-y-3.5">
+                ${metrics.map(m => {
+                  const pct = Math.min(100, Math.round((m.physicalStock / maxRefStock) * 100));
+                  const barColor = m.statusCode === 'OUT' ? 'bg-red-500' : m.statusCode === 'LOW' ? 'bg-amber-500' : 'bg-[#2A623D]';
+                  return `
+                    <div class="cursor-pointer group" onclick="openReferenceDetailModal('${m.id}')">
+                      <div class="flex justify-between text-xs mb-1">
+                        <span class="font-bold group-hover:text-[#2A623D] transition">${escapeHTML(m.ref)} <span class="font-normal text-gray-500">— ${escapeHTML(m.designation.slice(0, 34))}${m.designation.length > 34 ? '…' : ''}</span></span>
+                        <span class="font-bold">${m.physicalStock} <span class="text-gray-400 font-normal">(min ${m.minStock})</span></span>
+                      </div>
+                      <div class="w-full h-2.5 bg-gray-100 dark:bg-[#101513] rounded-full overflow-hidden">
+                        <div class="h-full ${barColor} rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Derniers mouvements + Répartition par zone -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-base font-bold">Derniers mouvements de stock</h3>
+                <button onclick="navigateTo('history')" class="text-xs font-semibold text-[#1A472A] dark:text-emerald-400 hover:underline">Journal complet →</button>
+              </div>
+              <div class="divide-y divide-gray-100 dark:divide-gray-800">
+                ${movements.slice(0, 5).map(mv => {
+                  const r = refLookup[mv.refId] || { ref: mv.refId };
+                  const isPos = ['RECEIPT', 'RETURN', 'ADJUSTMENT_POS'].includes(mv.type) || (mv.type === 'CORRECTION' && (mv.signedQty || 0) > 0);
+                  const signed = mv.signedQty !== undefined ? mv.signedQty : (isPos ? mv.qty : -mv.qty);
+                  return `
+                    <div class="py-3 flex items-center justify-between gap-3">
+                      <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${isPos ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400' : 'bg-red-50 text-red-600 dark:bg-red-950 dark:text-red-400'}">
+                          <i data-lucide="${isPos ? 'arrow-down-left' : 'arrow-up-right'}" class="w-4 h-4"></i>
+                        </div>
+                        <div class="truncate">
+                          <p class="text-sm font-bold truncate">${escapeHTML(r.ref)} <span class="font-normal text-xs text-gray-500">• ${escapeHTML(getMovementTypeLabel(mv.type))}</span></p>
+                          <p class="text-xs text-gray-500 truncate">${formatDateTimeFR(mv.date)} par ${escapeHTML(mv.user)} ${mv.bl ? '• BL ' + escapeHTML(mv.bl) : mv.pile ? '• ' + escapeHTML(mv.pile) : ''}</p>
+                        </div>
+                      </div>
+                      <div class="text-right shrink-0">
+                        <span class="text-sm font-extrabold ${isPos ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}">${signed > 0 ? '+' + signed : signed}</span>
+                        <span class="block text-[11px] text-gray-400">Stock : ${mv.stockAfter}</span>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs">
+              <h3 class="text-base font-bold mb-1">Répartition par zone</h3>
+              <p class="text-xs text-gray-500 mb-4">Emplacements sur chantier</p>
+              <div class="space-y-3">
+                ${zonesList.map(([zoneName, qty]) => `
+                  <div class="p-3 rounded-xl bg-[#F7F9F7] dark:bg-[#101513] flex items-center justify-between">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                      <i data-lucide="map-pin" class="w-4 h-4 text-[#2A623D] shrink-0"></i>
+                      <span class="text-xs font-semibold truncate">${escapeHTML(zoneName)}</span>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#242A26] text-xs font-extrabold border border-gray-200 dark:border-gray-700">${qty} cages</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderStockView() {
+      const includeArchived = ui.stockFilter === 'ARCHIVED';
+      let items = getProjectReferences(includeArchived).map(computeCageMetrics);
+
+      if (ui.stockSearch.trim()) {
+        const q = ui.stockSearch.trim().toLowerCase();
+        items = items.filter(m =>
+          m.ref.toLowerCase().includes(q) ||
+          m.designation.toLowerCase().includes(q) ||
+          m.type.toLowerCase().includes(q) ||
+          (m.zone || '').toLowerCase().includes(q)
+        );
+      }
+
+      if (ui.stockFilter === 'AVAILABLE') items = items.filter(m => m.physicalStock > 0 && m.status === 'ACTIVE');
+      else if (ui.stockFilter === 'LOW') items = items.filter(m => m.statusCode === 'LOW');
+      else if (ui.stockFilter === 'OUT') items = items.filter(m => m.statusCode === 'OUT');
+      else if (ui.stockFilter === 'ARCHIVED') items = items.filter(m => m.status === 'ARCHIVED');
+
+      items.sort((a, b) => {
+        const dir = ui.stockSortDir === 'asc' ? 1 : -1;
+        const valA = a[ui.stockSortBy];
+        const valB = b[ui.stockSortBy];
+        if (typeof valA === 'number' && typeof valB === 'number') return (valA - valB) * dir;
+        return String(valA || '').localeCompare(String(valB || '')) * dir;
+      });
+
+      const statusBadge = (m) => {
+        if (m.statusCode === 'ARCHIVED') return `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300">Archivée</span>`;
+        if (m.statusCode === 'OUT') return `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300">Rupture</span>`;
+        if (m.statusCode === 'LOW') return `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Stock faible</span>`;
+        return `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-[#E8F1EB] text-[#1A472A] dark:bg-[#1A472A] dark:text-emerald-200">Satisfaisant</span>`;
+      };
+
+      return `
+        <div class="space-y-5 animate-view">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-extrabold">Stock actuel du chantier</h2>
+              <p class="text-sm text-gray-500">Calcul automatique en temps réel à partir des mouvements validés</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="exportStockCSV()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-[#242A26] border border-gray-300 dark:border-gray-700 text-sm font-semibold hover:bg-gray-50 flex items-center gap-2">
+                <i data-lucide="download" class="w-4 h-4 text-[#2A623D]"></i> Exporter CSV
+              </button>
+              ${canOperate() ? `
+                <button onclick="navigateTo('receipt')" class="px-4 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white text-sm font-semibold flex items-center gap-2">
+                  <i data-lucide="plus" class="w-4 h-4"></i> Nouvelle réception
+                </button>
+              ` : ''}
+            </div>
+          </div>
+
+          <!-- Barre de recherche & filtres -->
+          <div class="bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200/80 dark:border-gray-800 flex flex-col md:flex-row gap-3 justify-between">
+            <div class="relative flex-1 max-w-md">
+              <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3.5 top-3"></i>
+              <input type="text" value="${escapeHTML(ui.stockSearch)}" oninput="setUI({ stockSearch: this.value })" placeholder="Rechercher référence, désignation, zone..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm focus:outline-none focus:ring-2 focus:ring-[#2A623D]" />
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              ${[
+                ['ALL', 'Toutes actives'],
+                ['AVAILABLE', 'Disponibles (>0)'],
+                ['LOW', 'Stock faible'],
+                ['OUT', 'Ruptures'],
+                ['ARCHIVED', 'Archivées']
+              ].map(([id, label]) => `
+                <button onclick="setUI({ stockFilter: '${id}' })" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition ${ui.stockFilter === id ? 'bg-[#1A472A] text-white' : 'bg-gray-100 dark:bg-[#101513] text-gray-600 dark:text-gray-300 hover:bg-gray-200'}">
+                  ${label}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Tableau Desktop -->
+          <div class="hidden lg:block bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200/80 dark:border-gray-800 shadow-xs overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="bg-[#F7F9F7] dark:bg-[#101513] text-gray-600 dark:text-gray-400 text-xs uppercase tracking-wider border-b border-gray-200 dark:border-gray-800">
+                  <th class="p-3.5 cursor-pointer hover:text-[#1A472A]" onclick="toggleStockSort('ref')">Référence ↕</th>
+                  <th class="p-3.5">Désignation & Dimensions</th>
+                  <th class="p-3.5 text-center">Reçues</th>
+                  <th class="p-3.5 text-center">Utilisées</th>
+                  <th class="p-3.5 text-center cursor-pointer hover:text-[#1A472A]" onclick="toggleStockSort('physicalStock')">Stock Physique ↕</th>
+                  <th class="p-3.5 text-center">Réservées</th>
+                  <th class="p-3.5 text-center">Dispo. Libre</th>
+                  <th class="p-3.5 text-center">Reste à livrer</th>
+                  <th class="p-3.5">Zone</th>
+                  <th class="p-3.5 text-center">Statut</th>
+                  <th class="p-3.5 text-right">Actions rapides</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                ${items.length === 0 ? `<tr><td colspan="11" class="p-8 text-center text-gray-500">Aucune référence ne correspond aux filtres sélectionnés.</td></tr>` : items.map(m => `
+                  <tr class="hover:bg-[#F7F9F7] dark:hover:bg-white/5 transition">
+                    <td class="p-3.5 font-extrabold text-[#1A472A] dark:text-emerald-400 whitespace-nowrap">
+                      <button onclick="openReferenceDetailModal('${m.id}')" class="hover:underline">${escapeHTML(m.ref)}</button>
+                    </td>
+                    <td class="p-3.5">
+                      <p class="font-semibold text-[#101513] dark:text-white">${escapeHTML(m.designation)}</p>
+                      <p class="text-xs text-gray-500">${escapeHTML(m.type)} • Ø${m.diameter} mm • L = ${m.length} m</p>
+                    </td>
+                    <td class="p-3.5 text-center text-gray-600 dark:text-gray-300 font-medium">${m.totalReceived}</td>
+                    <td class="p-3.5 text-center text-gray-600 dark:text-gray-300 font-medium">${m.totalUsed}</td>
+                    <td class="p-3.5 text-center">
+                      <span class="text-lg font-extrabold">${m.physicalStock}</span>
+                    </td>
+                    <td class="p-3.5 text-center text-gray-500">${m.reservedQty}</td>
+                    <td class="p-3.5 text-center font-bold text-[#1A472A] dark:text-emerald-400">${m.availableStock}</td>
+                    <td class="p-3.5 text-center font-semibold ${m.remainingToDeliver < 0 ? 'text-amber-600' : 'text-gray-600 dark:text-gray-300'}">
+                      ${m.plannedQty > 0 ? (m.remainingToDeliver < 0 ? `+${Math.abs(m.remainingToDeliver)} (dép.)` : m.remainingToDeliver) : '—'}
+                    </td>
+                    <td class="p-3.5 text-xs text-gray-600 dark:text-gray-400">${escapeHTML(m.zone || '—')}</td>
+                    <td class="p-3.5 text-center">${statusBadge(m)}</td>
+                    <td class="p-3.5 text-right whitespace-nowrap">
+                      <div class="inline-flex items-center gap-1.5">
+                        ${canOperate() && m.status === 'ACTIVE' ? `
+                          <button onclick="navigateTo('receipt', '${m.id}')" title="Réceptionner cette référence" class="px-2.5 py-1.5 rounded-lg bg-[#E8F1EB] hover:bg-[#1A472A] text-[#1A472A] hover:text-white text-xs font-bold transition">+ Récept.</button>
+                          <button onclick="navigateTo('usage', '${m.id}')" title="Enregistrer une sortie" class="px-2.5 py-1.5 rounded-lg bg-red-50 hover:bg-red-600 text-red-700 hover:text-white text-xs font-bold transition">− Sortie</button>
+                        ` : ''}
+                        <button onclick="openReferenceDetailModal('${m.id}')" title="Fiche & Historique" class="p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300">
+                          <i data-lucide="eye" class="w-4 h-4"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Cartes Responsive Mobile / Tablette -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:hidden">
+            ${items.map(m => `
+              <div class="bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-3">
+                <div class="flex items-start justify-between gap-2">
+                  <div>
+                    <span class="text-base font-extrabold text-[#1A472A] dark:text-emerald-400">${escapeHTML(m.ref)}</span>
+                    <h4 class="text-sm font-semibold mt-0.5">${escapeHTML(m.designation)}</h4>
+                    <p class="text-xs text-gray-500">Ø${m.diameter} mm • L: ${m.length} m • ${escapeHTML(m.zone || '')}</p>
+                  </div>
+                  ${statusBadge(m)}
+                </div>
+                <div class="grid grid-cols-3 gap-2 text-center bg-[#F7F9F7] dark:bg-[#101513] p-2.5 rounded-xl">
+                  <div><span class="text-[11px] text-gray-500 block">Physique</span><span class="text-lg font-extrabold">${m.physicalStock}</span></div>
+                  <div><span class="text-[11px] text-gray-500 block">Dispo libre</span><span class="text-lg font-bold text-[#2A623D] dark:text-emerald-400">${m.availableStock}</span></div>
+                  <div><span class="text-[11px] text-gray-500 block">Reste livrer</span><span class="text-lg font-bold">${m.plannedQty > 0 ? m.remainingToDeliver : '—'}</span></div>
+                </div>
+                <div class="flex gap-2 pt-1">
+                  ${canOperate() && m.status === 'ACTIVE' ? `
+                    <button onclick="navigateTo('receipt', '${m.id}')" class="flex-1 py-2.5 rounded-xl bg-[#1A472A] text-white text-xs font-bold">+ Réceptionner</button>
+                    <button onclick="navigateTo('usage', '${m.id}')" class="flex-1 py-2.5 rounded-xl bg-red-600 text-white text-xs font-bold">− Sortie</button>
+                  ` : ''}
+                  <button onclick="openReferenceDetailModal('${m.id}')" class="px-3 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 text-xs font-semibold">Détails</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleStockSort(field) {
+      if (ui.stockSortBy === field) {
+        ui.stockSortDir = ui.stockSortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        ui.stockSortBy = field;
+        ui.stockSortDir = 'asc';
+      }
+      render();
+    }
+
+    function renderReceiptView() {
+      const project = getActiveProject();
+      const activeRefs = getProjectReferences(false).map(computeCageMetrics);
+      const form = ui.receiptForm;
+
+      // Calcul du récapitulatif avant validation
+      const summaryLines = form.lines
+        .filter(l => l.refId && Number(l.qty) > 0)
+        .map(l => {
+          const m = activeRefs.find(r => r.id === l.refId);
+          if (!m) return null;
+          const q = parseInt(l.qty, 10);
+          return { ref: m.ref, designation: m.designation, before: m.physicalStock, added: q, after: m.physicalStock + q };
+        })
+        .filter(Boolean);
+
+      return `
+        <div class="max-w-4xl mx-auto space-y-6 animate-view">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#2A623D] dark:text-emerald-400">
+                <i data-lucide="zap" class="w-3.5 h-3.5"></i> Saisie express chantier (< 30 sec)
+              </span>
+              <h2 class="text-2xl font-extrabold mt-0.5">Nouvelle réception de cages d'armatures</h2>
+            </div>
+            <button onclick="navigateTo('stock')" class="text-sm text-gray-500 hover:text-[#101513] dark:hover:text-white font-medium">← Retour au stock</button>
+          </div>
+
+          ${!canOperate() ? `
+            <div class="p-4 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-sm font-medium">
+              Vous êtes connecté avec le profil <strong>Consultation</strong>. Passez en profil <strong>Utilisateur opérationnel</strong> ou <strong>Administrateur</strong> en haut de l'écran pour enregistrer une réception.
+            </div>
+          ` : ''}
+
+          <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+            <div class="p-6 space-y-6">
+              <!-- Informations générales livraison -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Chantier concerné</label>
+                  <input type="text" disabled value="${escapeHTML(project.name)}" class="w-full p-2.5 rounded-xl bg-gray-100 dark:bg-[#101513] border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Date de réception *</label>
+                  <input type="date" value="${form.date}" onchange="ui.receiptForm.date=this.value" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-sm font-medium" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">N° Bon de Livraison (BL)</label>
+                  <input type="text" value="${escapeHTML(form.bl)}" oninput="ui.receiptForm.bl=this.value" placeholder="Ex: BL-2026-925" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Fournisseur</label>
+                  <select onchange="ui.receiptForm.supplier=this.value" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-sm">
+                    ${['Armatures Île-de-France', 'SiderArmature Pro', 'Acier & Fondations France', 'Autre fournisseur'].map(s =>
+                      `<option value="${s}" ${form.supplier === s ? 'selected' : ''}>${s}</option>`
+                    ).join('')}
+                  </select>
+                </div>
+              </div>
+
+              <!-- Lignes de cages réceptionnées -->
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <label class="text-sm font-bold text-[#101513] dark:text-white">Cages réceptionnées dans cette livraison *</label>
+                  <span class="text-xs text-gray-500">Saisissez uniquement des quantités entières</span>
+                </div>
+
+                ${form.lines.map((line, idx) => {
+                  const selectedMetric = activeRefs.find(r => r.id === line.refId);
+                  return `
+                    <div class="p-4 rounded-xl bg-[#F7F9F7] dark:bg-[#101513] border border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row gap-3 items-stretch sm:items-end">
+                      <div class="flex-1">
+                        <label class="block text-xs font-semibold text-gray-500 mb-1">Référence de cage #${idx + 1}</label>
+                        <select onchange="ui.receiptForm.lines[${idx}].refId=this.value; render();" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#242A26] font-bold text-sm">
+                          ${activeRefs.map(r => `<option value="${r.id}" ${line.refId === r.id ? 'selected' : ''}>${escapeHTML(r.ref)} — ${escapeHTML(r.designation)} (Stock : ${r.physicalStock})</option>`).join('')}
+                        </select>
+                      </div>
+                      <div class="w-full sm:w-40">
+                        <label class="block text-xs font-semibold text-gray-500 mb-1">Quantité reçue *</label>
+                        <input type="number" min="1" step="1" value="${escapeHTML(line.qty)}" oninput="ui.receiptForm.lines[${idx}].qty=this.value; updateReceiptPreview();" placeholder="Ex: 8" class="w-full p-3 rounded-xl border-2 border-[#2A623D] bg-white dark:bg-[#242A26] text-lg font-extrabold text-center focus:outline-none" />
+                      </div>
+                      ${form.lines.length > 1 ? `
+                        <button type="button" onclick="ui.receiptForm.lines.splice(${idx}, 1); render();" class="p-3 rounded-xl text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 self-end" title="Retirer cette ligne">
+                          <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </button>
+                      ` : ''}
+                    </div>
+                  `;
+                }).join('')}
+
+                <button type="button" onclick="ui.receiptForm.lines.push({ refId: '${activeRefs[0] ? activeRefs[0].id : ''}', qty: '' }); render();" class="px-4 py-2.5 rounded-xl border-2 border-dashed border-[#2A623D]/50 text-[#1A472A] dark:text-emerald-400 hover:bg-[#E8F1EB] dark:hover:bg-[#1A472A]/30 text-sm font-bold flex items-center gap-2 transition">
+                  <i data-lucide="plus" class="w-4 h-4"></i> + Ajouter une autre référence
+                </button>
+              </div>
+
+              <!-- Champs facultatifs complémentaires -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-gray-100 dark:border-gray-800">
+                <div>
+                  <label class="block text-xs font-semibold text-gray-500 mb-1">Zone de stockage (facultatif)</label>
+                  <input type="text" value="${escapeHTML(form.zone)}" oninput="ui.receiptForm.zone=this.value" placeholder="Ex: Zone A — Nord Foreuse" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-gray-500 mb-1">Observations (facultatif)</label>
+                  <input type="text" value="${escapeHTML(form.comment)}" oninput="ui.receiptForm.comment=this.value" placeholder="État des cages, remarques..." class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-gray-500 mb-1">Photo / Scan BL (facultatif)</label>
+                  <label class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-xs flex items-center gap-2 cursor-pointer hover:bg-gray-50 truncate">
+                    <i data-lucide="paperclip" class="w-4 h-4 text-[#2A623D] shrink-0"></i>
+                    <span class="truncate">${form.attachmentName ? escapeHTML(form.attachmentName) : 'Joindre un fichier...'}</span>
+                    <input type="file" class="hidden" onchange="if(this.files[0]){ ui.receiptForm.attachmentName=this.files[0].name; render(); }" />
+                  </label>
+                </div>
+              </div>
+
+              <!-- Récapitulatif dynamique avant validation -->
+              <div id="receipt-summary-box">
+                ${renderReceiptSummaryHTML(summaryLines)}
+              </div>
+            </div>
+
+            <div class="px-6 py-4 bg-[#F7F9F7] dark:bg-[#101513] border-t border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row justify-end gap-3">
+              <button type="button" onclick="navigateTo('dashboard')" class="px-5 py-3 rounded-xl border border-gray-300 dark:border-gray-700 text-sm font-semibold">Annuler</button>
+              <button type="button" onclick="submitReceiptForm()" ${!canOperate() ? 'disabled' : ''} class="px-7 py-3 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white font-bold text-sm shadow-lg shadow-[#1A472A]/20 flex items-center justify-center gap-2 cursor-pointer">
+                <i data-lucide="check-circle-2" class="w-5 h-5"></i> Valider la réception
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderReceiptSummaryHTML(summaryLines) {
+      if (!summaryLines || summaryLines.length === 0) {
+        return `<div class="p-4 rounded-xl bg-gray-50 dark:bg-[#101513]/60 border border-gray-200 dark:border-gray-800 text-xs text-gray-500">Indiquez une quantité ci-dessus pour visualiser le calcul automatique du nouveau stock.</div>`;
+      }
+      return `
+        <div class="p-4 rounded-xl bg-[#E8F1EB] dark:bg-[#1A472A]/40 border border-[#2A623D]/30 space-y-2">
+          <p class="text-xs font-bold uppercase tracking-wider text-[#1A472A] dark:text-emerald-300">Récapitulatif automatique avant validation</p>
+          <div class="divide-y divide-[#2A623D]/15">
+            ${summaryLines.map(s => `
+              <div class="py-1.5 flex items-center justify-between text-sm">
+                <span class="font-bold">${escapeHTML(s.ref)}</span>
+                <span>Ancien stock : <strong>${s.before}</strong> → Réception : <strong class="text-emerald-700 dark:text-emerald-400">+${s.added}</strong> → Nouveau stock : <strong class="text-base underline">${s.after} cages</strong></span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function updateReceiptPreview() {
+      const box = document.getElementById('receipt-summary-box');
+      if (!box) return;
+      const activeRefs = getProjectReferences(false).map(computeCageMetrics);
+      const summaryLines = ui.receiptForm.lines
+        .filter(l => l.refId && Number(l.qty) > 0)
+        .map(l => {
+          const m = activeRefs.find(r => r.id === l.refId);
+          if (!m) return null;
+          const q = parseInt(l.qty, 10);
+          return { ref: m.ref, designation: m.designation, before: m.physicalStock, added: q, after: m.physicalStock + q };
+        })
+        .filter(Boolean);
+      box.innerHTML = renderReceiptSummaryHTML(summaryLines);
+    }
+
+    function renderUsageView() {
+      const project = getActiveProject();
+      const activeRefs = getProjectReferences(false).map(computeCageMetrics);
+      const form = ui.usageForm;
+
+      return `
+        <div class="max-w-4xl mx-auto space-y-6 animate-view">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-red-600 dark:text-red-400">
+                <i data-lucide="arrow-up-from-line" class="w-3.5 h-3.5"></i> Consommation chantier / Pose dans pieux
+              </span>
+              <h2 class="text-2xl font-extrabold mt-0.5">Enregistrer une sortie de cages</h2>
+            </div>
+            <button onclick="navigateTo('stock')" class="text-sm text-gray-500 hover:text-[#101513] dark:hover:text-white font-medium">← Retour au stock</button>
+          </div>
+
+          <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+            <div class="p-6 space-y-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Chantier</label>
+                  <input type="text" disabled value="${escapeHTML(project.name)}" class="w-full p-2.5 rounded-xl bg-gray-100 dark:bg-[#101513] border border-gray-200 dark:border-gray-700 text-sm font-semibold text-gray-600 dark:text-gray-300" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Date de sortie *</label>
+                  <input type="date" value="${form.date}" onchange="ui.usageForm.date=this.value" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-sm font-medium" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">N° Pieu(x) associé(s)</label>
+                  <input type="text" value="${escapeHTML(form.pile)}" oninput="ui.usageForm.pile=this.value" placeholder="Ex: Pieux P14, P15" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-sm" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Zone / Phase travaux</label>
+                  <input type="text" value="${escapeHTML(form.zone)}" oninput="ui.usageForm.zone=this.value" placeholder="Ex: Plot Nord / Paroi Est" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-sm" />
+                </div>
+              </div>
+
+              <!-- Lignes de sortie -->
+              <div class="space-y-3">
+                <label class="block text-sm font-bold">Cages utilisées *</label>
+                ${form.lines.map((line, idx) => {
+                  const m = activeRefs.find(r => r.id === line.refId);
+                  return `
+                    <div class="p-4 rounded-xl bg-[#F7F9F7] dark:bg-[#101513] border border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row gap-3 items-stretch sm:items-end">
+                      <div class="flex-1">
+                        <label class="block text-xs font-semibold text-gray-500 mb-1">Référence de cage #${idx + 1}</label>
+                        <select onchange="ui.usageForm.lines[${idx}].refId=this.value; render();" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#242A26] font-bold text-sm">
+                          ${activeRefs.map(r => `<option value="${r.id}" ${line.refId === r.id ? 'selected' : ''}>${escapeHTML(r.ref)} — Dispo physique : ${r.physicalStock} cage(s)</option>`).join('')}
+                        </select>
+                        ${m ? `<p class="text-xs mt-1 ${m.physicalStock > 0 ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-600 font-bold'}">Stock physique disponible : ${m.physicalStock} cage(s)</p>` : ''}
+                      </div>
+                      <div class="w-full sm:w-44">
+                        <label class="block text-xs font-semibold text-gray-500 mb-1">Quantité utilisée *</label>
+                        <input type="number" min="1" max="${m ? m.physicalStock : 9999}" step="1" value="${escapeHTML(line.qty)}" oninput="ui.usageForm.lines[${idx}].qty=this.value" placeholder="Ex: 5" class="w-full p-3 rounded-xl border-2 border-red-400 dark:border-red-700 bg-white dark:bg-[#242A26] text-lg font-extrabold text-center focus:outline-none" />
+                      </div>
+                      ${form.lines.length > 1 ? `
+                        <button type="button" onclick="ui.usageForm.lines.splice(${idx}, 1); render();" class="p-3 rounded-xl text-red-600 hover:bg-red-50 self-end">
+                          <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </button>
+                      ` : ''}
+                    </div>
+                  `;
+                }).join('')}
+
+                <button type="button" onclick="ui.usageForm.lines.push({ refId: '${activeRefs[0] ? activeRefs[0].id : ''}', qty: '' }); render();" class="px-4 py-2 rounded-xl border border-dashed border-gray-400 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 text-xs font-bold flex items-center gap-2">
+                  <i data-lucide="plus" class="w-4 h-4"></i> + Ajouter une autre référence utilisée
+                </button>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-gray-500 mb-1">Observations éventuelles</label>
+                <input type="text" value="${escapeHTML(form.comment)}" oninput="ui.usageForm.comment=this.value" placeholder="Ex: Cage descendue sans incident, bétonnage poste matin" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-sm" />
+              </div>
+            </div>
+
+            <div class="px-6 py-4 bg-[#F7F9F7] dark:bg-[#101513] border-t border-gray-200 dark:border-gray-800 flex justify-end gap-3">
+              <button type="button" onclick="navigateTo('dashboard')" class="px-5 py-3 rounded-xl border border-gray-300 dark:border-gray-700 text-sm font-semibold">Annuler</button>
+              <button type="button" onclick="submitUsageForm()" ${!canOperate() ? 'disabled' : ''} class="px-7 py-3 rounded-xl bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-bold text-sm shadow-lg shadow-red-600/20 flex items-center gap-2 cursor-pointer">
+                <i data-lucide="check" class="w-5 h-5"></i> Valider la sortie de stock
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCatalogView() {
+      let refs = getProjectReferences(ui.catalogShowArchived).map(computeCageMetrics);
+      if (ui.catalogSearch.trim()) {
+        const q = ui.catalogSearch.trim().toLowerCase();
+        refs = refs.filter(r => r.ref.toLowerCase().includes(q) || r.designation.toLowerCase().includes(q) || (r.planNumber || '').toLowerCase().includes(q));
+      }
+
+      return `
+        <div class="space-y-5 animate-view">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-extrabold">Catalogue des références de cages</h2>
+              <p class="text-sm text-gray-500">Bibliothèque technique des armatures du chantier</p>
+            </div>
+            ${isAdmin() ? `
+              <button onclick="openReferenceFormModal()" class="px-4 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white text-sm font-bold flex items-center gap-2 shadow-sm">
+                <i data-lucide="plus" class="w-4 h-4"></i> Créer une référence
+              </button>
+            ` : ''}
+          </div>
+
+          <div class="bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row gap-3 justify-between items-center">
+            <div class="relative w-full sm:max-w-md">
+              <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3.5 top-3"></i>
+              <input type="text" value="${escapeHTML(ui.catalogSearch)}" oninput="setUI({ catalogSearch: this.value })" placeholder="Filtrer par référence, désignation, N° de plan..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm" />
+            </div>
+            <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer">
+              <input type="checkbox" ${ui.catalogShowArchived ? 'checked' : ''} onchange="setUI({ catalogShowArchived: this.checked })" class="rounded accent-[#1A472A]" />
+              Afficher les références archivées
+            </label>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            ${refs.map(r => `
+              <div class="bg-white dark:bg-[#242A26] rounded-2xl border ${r.status === 'ARCHIVED' ? 'border-gray-300 opacity-75' : 'border-gray-200 dark:border-gray-800'} p-5 shadow-xs flex flex-col justify-between space-y-4">
+                <div>
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="px-2.5 py-1 rounded-lg bg-[#E8F1EB] dark:bg-[#1A472A] text-[#1A472A] dark:text-emerald-200 text-xs font-extrabold">${escapeHTML(r.ref)}</span>
+                    <span class="text-xs text-gray-400">Plan ${escapeHTML(r.planNumber || 'N/C')} • Ind. ${escapeHTML(r.planRevision || '-')}</span>
+                  </div>
+                  <h3 class="text-base font-bold mt-2.5">${escapeHTML(r.designation)}</h3>
+                  <p class="text-xs text-gray-500 mt-1">${escapeHTML(r.type)} • Ø${r.diameter} mm • L = ${r.length} m • ${r.weight} kg</p>
+
+                  <div class="grid grid-cols-3 gap-2 mt-4 p-3 rounded-xl bg-[#F7F9F7] dark:bg-[#101513] text-center">
+                    <div><span class="text-[11px] text-gray-500 block">Stock</span><span class="text-base font-extrabold">${r.physicalStock}</span></div>
+                    <div><span class="text-[11px] text-gray-500 block">Prévu</span><span class="text-base font-bold">${r.plannedQty}</span></div>
+                    <div><span class="text-[11px] text-gray-500 block">Seuil min</span><span class="text-base font-bold">${r.minStock}</span></div>
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between gap-2">
+                  <button onclick="openReferenceDetailModal('${r.id}')" class="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-[#101513] hover:bg-gray-200 text-xs font-semibold">Fiche complète</button>
+                  ${isAdmin() ? `
+                    <div class="flex items-center gap-1.5">
+                      <button onclick="openReferenceFormModal('${r.id}')" class="p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100" title="Modifier"><i data-lucide="edit-3" class="w-4 h-4"></i></button>
+                      <button onclick="toggleArchiveReference('${r.id}')" class="p-1.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-100 text-gray-500" title="${r.status === 'ARCHIVED' ? 'Réactiver' : 'Archiver (suppression interdite si mouvements)'}">
+                        <i data-lucide="${r.status === 'ARCHIVED' ? 'rotate-ccw' : 'archive'}" class="w-4 h-4"></i>
+                      </button>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderForecastsView() {
+      const refs = getProjectReferences(false).map(computeCageMetrics);
+      const forecastMap = Object.fromEntries(appState.forecasts.map(f => [f.refId, f]));
+
+      return `
+        <div class="space-y-6 animate-view">
+          <div>
+            <h2 class="text-2xl font-extrabold">Livraisons prévisionnelles & Avancement</h2>
+            <p class="text-sm text-gray-500">Suivi des quantités prévues au marché vs quantités déjà réceptionnées sur chantier</p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            ${refs.map(r => {
+              const fc = forecastMap[r.id] || {};
+              const planned = r.plannedQty || 0;
+              const pct = planned > 0 ? Math.min(100, Math.round((r.totalReceived / planned) * 100)) : 0;
+              const isOver = planned > 0 && r.remainingToDeliver < 0;
+
+              return `
+                <div class="bg-white dark:bg-[#242A26] p-5 rounded-2xl border ${isOver ? 'border-amber-300 dark:border-amber-700' : 'border-gray-200 dark:border-gray-800'} shadow-xs space-y-4">
+                  <div class="flex items-start justify-between">
+                    <div>
+                      <span class="font-extrabold text-[#1A472A] dark:text-emerald-400">${escapeHTML(r.ref)}</span>
+                      <h3 class="text-sm font-bold">${escapeHTML(r.designation)}</h3>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-lg text-xs font-bold ${isOver ? 'bg-amber-100 text-amber-800' : 'bg-[#E8F1EB] text-[#1A472A]'}">
+                      ${pct}% livré
+                    </span>
+                  </div>
+
+                  <!-- Barre de progression -->
+                  <div>
+                    <div class="w-full h-3 bg-gray-100 dark:bg-[#101513] rounded-full overflow-hidden">
+                      <div class="h-full ${isOver ? 'bg-amber-500' : 'bg-[#2A623D]'} rounded-full transition-all" style="width: ${pct}%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs mt-2 font-medium">
+                      <span>Prévu : <strong>${planned}</strong></span>
+                      <span>Réceptionné : <strong class="text-emerald-700 dark:text-emerald-400">${r.totalReceived}</strong></span>
+                      <span>Reste à recevoir : <strong class="${isOver ? 'text-amber-600' : ''}">${isOver ? 'Dépassement (+' + Math.abs(r.remainingToDeliver) + ')' : Math.max(0, r.remainingToDeliver)}</strong></span>
+                    </div>
+                  </div>
+
+                  <div class="pt-3 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between text-xs text-gray-500">
+                    <span>Stock dispo actuel : <strong class="text-[#101513] dark:text-white">${r.physicalStock} cages</strong></span>
+                    <span>${fc.nextDeliveryDate ? `Prochaine livraison : <strong>${formatDateFR(fc.nextDeliveryDate)}</strong> (${fc.nextDeliveryQty} u.)` : 'Aucune date planifiée'}</span>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderHistoryView() {
+      const refMap = Object.fromEntries(appState.references.map(r => [r.id, r]));
+      const refs = getProjectReferences(true);
+      let mvs = getProjectMovements();
+
+      if (ui.historyTypeFilter !== 'ALL') {
+        mvs = mvs.filter(m => m.type === ui.historyTypeFilter);
+      }
+      if (ui.historyRefFilter !== 'ALL') {
+        mvs = mvs.filter(m => m.refId === ui.historyRefFilter);
+      }
+      if (ui.historySearch.trim()) {
+        const q = ui.historySearch.trim().toLowerCase();
+        mvs = mvs.filter(m => {
+          const r = refMap[m.refId] || {};
+          return (
+            m.id.toLowerCase().includes(q) ||
+            (r.ref || '').toLowerCase().includes(q) ||
+            (m.user || '').toLowerCase().includes(q) ||
+            (m.bl || '').toLowerCase().includes(q) ||
+            (m.pile || '').toLowerCase().includes(q) ||
+            (m.comment || '').toLowerCase().includes(q)
+          );
+        });
+      }
+
+      return `
+        <div class="space-y-5 animate-view">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-extrabold">Journal & Traçabilité des mouvements</h2>
+              <p class="text-sm text-gray-500">Historique immuable : toute correction génère un mouvement compensatoire traçable</p>
+            </div>
+            <button onclick="exportMovementsCSV(false)" class="px-4 py-2.5 rounded-xl bg-white dark:bg-[#242A26] border border-gray-300 dark:border-gray-700 text-sm font-semibold flex items-center gap-2">
+              <i data-lucide="download" class="w-4 h-4 text-[#2A623D]"></i> Exporter journal CSV
+            </button>
+          </div>
+
+          <!-- Filtres -->
+          <div class="bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="relative">
+              <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3.5 top-3"></i>
+              <input type="text" value="${escapeHTML(ui.historySearch)}" oninput="setUI({ historySearch: this.value })" placeholder="ID, BL, pieu, utilisateur, commentaire..." class="w-full pl-10 pr-3 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm" />
+            </div>
+            <select onchange="setUI({ historyRefFilter: this.value })" class="p-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm">
+              <option value="ALL">Toutes les références</option>
+              ${refs.map(r => `<option value="${r.id}" ${ui.historyRefFilter === r.id ? 'selected' : ''}>${escapeHTML(r.ref)} — ${escapeHTML(r.designation)}</option>`).join('')}
+            </select>
+            <select onchange="setUI({ historyTypeFilter: this.value })" class="p-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm">
+              <option value="ALL">Toutes les natures de mouvement</option>
+              <option value="RECEIPT" ${ui.historyTypeFilter === 'RECEIPT' ? 'selected' : ''}>Entrée / Réception</option>
+              <option value="USAGE" ${ui.historyTypeFilter === 'USAGE' ? 'selected' : ''}>Sortie / Utilisation</option>
+              <option value="ADJUSTMENT_POS" ${ui.historyTypeFilter === 'ADJUSTMENT_POS' ? 'selected' : ''}>Ajustement positif</option>
+              <option value="ADJUSTMENT_NEG" ${ui.historyTypeFilter === 'ADJUSTMENT_NEG' ? 'selected' : ''}>Ajustement négatif</option>
+              <option value="CORRECTION" ${ui.historyTypeFilter === 'CORRECTION' ? 'selected' : ''}>Correction traçable</option>
+            </select>
+          </div>
+
+          <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="bg-[#F7F9F7] dark:bg-[#101513] text-gray-500 text-xs uppercase border-b border-gray-200 dark:border-gray-800">
+                  <th class="p-3.5">ID / Date & Heure</th>
+                  <th class="p-3.5">Référence</th>
+                  <th class="p-3.5">Nature</th>
+                  <th class="p-3.5 text-center">Quantité</th>
+                  <th class="p-3.5 text-center">Avant → Après</th>
+                  <th class="p-3.5">Auteur</th>
+                  <th class="p-3.5">BL / Pieu / Commentaire</th>
+                  <th class="p-3.5 text-right">Traçabilité</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                ${mvs.map(mv => {
+                  const r = refMap[mv.refId] || { ref: mv.refId };
+                  const isPos = ['RECEIPT', 'RETURN', 'ADJUSTMENT_POS'].includes(mv.type) || (mv.type === 'CORRECTION' && (mv.signedQty || 0) > 0);
+                  const signed = mv.signedQty !== undefined ? mv.signedQty : (isPos ? mv.qty : -mv.qty);
+                  return `
+                    <tr class="hover:bg-[#F7F9F7] dark:hover:bg-white/5">
+                      <td class="p-3.5 whitespace-nowrap">
+                        <span class="font-mono text-xs text-gray-400 block">${escapeHTML(mv.id)}</span>
+                        <span class="text-xs font-medium">${formatDateTimeFR(mv.date)}</span>
+                      </td>
+                      <td class="p-3.5 font-extrabold text-[#1A472A] dark:text-emerald-400">${escapeHTML(r.ref)}</td>
+                      <td class="p-3.5">
+                        <span class="px-2.5 py-1 rounded-md text-xs font-semibold ${mv.type === 'CORRECTION' ? 'bg-amber-100 text-amber-800' : isPos ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300'}">
+                          ${escapeHTML(getMovementTypeLabel(mv.type))}
+                        </span>
+                      </td>
+                      <td class="p-3.5 text-center font-extrabold ${isPos ? 'text-emerald-600' : 'text-red-600'}">${signed > 0 ? '+' + signed : signed}</td>
+                      <td class="p-3.5 text-center text-xs font-semibold">${mv.stockBefore} → <strong>${mv.stockAfter}</strong></td>
+                      <td class="p-3.5 text-xs font-medium">${escapeHTML(mv.user)}</td>
+                      <td class="p-3.5 text-xs text-gray-500 max-w-xs truncate">${escapeHTML([mv.bl ? 'BL: ' + mv.bl : '', mv.pile, mv.comment].filter(Boolean).join(' • ') || '—')}</td>
+                      <td class="p-3.5 text-right">
+                        ${isAdmin() && mv.type !== 'CORRECTION' ? `
+                          <button onclick="openCorrectionModal('${mv.id}')" class="px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-amber-500 text-xs font-semibold text-gray-600 dark:text-gray-300">Corriger</button>
+                        ` : '<span class="text-xs text-gray-400">Verrouillé</span>'}
+                      </td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderInventoryView() {
+      const refs = getProjectReferences(false).map(computeCageMetrics);
+      const pastInventories = appState.inventories.filter(i => i.projectId === appState.activeProjectId);
+
+      return `
+        <div class="space-y-6 animate-view">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-extrabold">Inventaire physique & Contrôle des écarts</h2>
+              <p class="text-sm text-gray-500">Confrontez le stock théorique informatique avec le comptage physique réel sur chantier</p>
+            </div>
+            <button onclick="exportInventoriesCSV()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-[#242A26] border border-gray-300 dark:border-gray-700 text-sm font-semibold flex items-center gap-2">
+              <i data-lucide="download" class="w-4 h-4 text-[#2A623D]"></i> Exporter inventaires CSV
+            </button>
+          </div>
+
+          <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs overflow-hidden">
+            <div class="p-4 bg-[#F7F9F7] dark:bg-[#101513] border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+              <span class="text-sm font-bold">Nouveau relevé d'inventaire physique</span>
+              <span class="text-xs text-gray-500">Validation réservée au profil Administrateur</span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-sm">
+                <thead>
+                  <tr class="border-b border-gray-200 dark:border-gray-800 text-xs uppercase text-gray-500">
+                    <th class="p-3.5">Référence</th>
+                    <th class="p-3.5 text-center">Stock théorique</th>
+                    <th class="p-3.5 text-center">Stock physique compté</th>
+                    <th class="p-3.5 text-center">Écart constaté</th>
+                    <th class="p-3.5">Justification (obligatoire si écart)</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                  ${refs.map(r => {
+                    const draft = ui.inventoryDraft[r.id] || { counted: String(r.physicalStock), justification: '' };
+                    const countedNum = parseInt(draft.counted, 10);
+                    const diff = isNaN(countedNum) ? 0 : countedNum - r.physicalStock;
+                    return `
+                      <tr>
+                        <td class="p-3.5">
+                          <span class="font-extrabold text-[#1A472A] dark:text-emerald-400">${escapeHTML(r.ref)}</span>
+                          <span class="block text-xs text-gray-500">${escapeHTML(r.designation)}</span>
+                        </td>
+                        <td class="p-3.5 text-center font-bold text-base">${r.physicalStock}</td>
+                        <td class="p-3.5 text-center">
+                          <input type="number" min="0" value="${escapeHTML(draft.counted)}" oninput="ui.inventoryDraft['${r.id}'] = { ...(ui.inventoryDraft['${r.id}'] || {}), counted: this.value }; render();" class="w-24 p-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-center font-extrabold" />
+                        </td>
+                        <td class="p-3.5 text-center font-extrabold ${diff === 0 ? 'text-gray-400' : diff > 0 ? 'text-emerald-600' : 'text-red-600'}">
+                          ${diff === 0 ? '0 (Conforme)' : (diff > 0 ? '+' + diff : diff)}
+                        </td>
+                        <td class="p-3.5">
+                          <input type="text" value="${escapeHTML(draft.justification || '')}" oninput="ui.inventoryDraft['${r.id}'] = { ...(ui.inventoryDraft['${r.id}'] || {}), justification: this.value }" placeholder="${diff !== 0 ? 'Motif obligatoire de l’écart...' : 'RAS (facultatif)'}" class="w-full p-2 rounded-xl border ${diff !== 0 ? 'border-amber-400' : 'border-gray-200 dark:border-gray-700'} bg-white dark:bg-[#101513] text-xs" />
+                        </td>
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
+            </div>
+            <div class="p-4 bg-[#F7F9F7] dark:bg-[#101513] border-t border-gray-200 dark:border-gray-800 flex justify-end">
+              <button onclick="submitInventoryValidation()" ${!isAdmin() ? 'disabled' : ''} class="px-6 py-3 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white font-bold text-sm flex items-center gap-2 cursor-pointer">
+                <i data-lucide="clipboard-check" class="w-4 h-4"></i> Valider l'inventaire et ajuster le stock
+              </button>
+            </div>
+          </div>
+
+          <!-- Historique des inventaires -->
+          <div class="bg-white dark:bg-[#242A26] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-3">
+            <h3 class="text-base font-bold">Historique des inventaires validés (${pastInventories.length})</h3>
+            ${pastInventories.map(inv => `
+              <div class="p-4 rounded-xl bg-[#F7F9F7] dark:bg-[#101513] border border-gray-200/70 dark:border-gray-800">
+                <div class="flex flex-wrap justify-between gap-2 text-xs font-bold mb-2">
+                  <span>${escapeHTML(inv.id)} — Validé le ${formatDateTimeFR(inv.date)}</span>
+                  <span class="text-[#2A623D] dark:text-emerald-400">Responsable : ${escapeHTML(inv.user)}</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  ${inv.lines.map(l => `
+                    <span class="px-2.5 py-1 rounded-lg bg-white dark:bg-[#242A26] border border-gray-200 dark:border-gray-700 text-xs">
+                      <strong>${escapeHTML(l.ref)}</strong> : théorique ${l.theoretical} / compté ${l.counted} (<span class="${l.diff === 0 ? 'text-gray-500' : 'text-amber-600 font-bold'}">${l.diff > 0 ? '+' + l.diff : l.diff}</span>)
+                    </span>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderReportsView() {
+      return `
+        <div class="max-w-4xl mx-auto space-y-6 animate-view">
+          <div>
+            <h2 class="text-2xl font-extrabold">Rapports, Exports & Maintenance</h2>
+            <p class="text-sm text-gray-500">Extractions professionnelles compatibles Excel (.csv) pour les réunions de chantier</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-[#E8F1EB] text-[#1A472A] flex items-center justify-center"><i data-lucide="file-spreadsheet" class="w-5 h-5"></i></div>
+              <h3 class="text-base font-bold">Export de l'état du stock actuel</h3>
+              <p class="text-xs text-gray-500">Inclut toutes les références du chantier actif, les quantités reçues, utilisées, le stock physique, réservé et le reste à livrer.</p>
+              <button onclick="exportStockCSV()" class="px-4 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white text-xs font-bold flex items-center gap-2">
+                <i data-lucide="download" class="w-4 h-4"></i> Télécharger Stock_Actuel.csv
+              </button>
+            </div>
+
+            <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-[#E8F1EB] text-[#1A472A] flex items-center justify-center"><i data-lucide="truck" class="w-5 h-5"></i></div>
+              <h3 class="text-base font-bold">Export des réceptions (Bons de livraison)</h3>
+              <p class="text-xs text-gray-500">Journal détaillé de toutes les entrées de cages avec dates, fournisseurs, numéros de BL et réceptionnaires.</p>
+              <button onclick="exportMovementsCSV(true)" class="px-4 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white text-xs font-bold flex items-center gap-2">
+                <i data-lucide="download" class="w-4 h-4"></i> Télécharger Receptions.csv
+              </button>
+            </div>
+
+            <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-[#E8F1EB] text-[#1A472A] flex items-center justify-center"><i data-lucide="history" class="w-5 h-5"></i></div>
+              <h3 class="text-base font-bold">Export intégral des mouvements</h3>
+              <p class="text-xs text-gray-500">Traçabilité complète (entrées, sorties, ajustements d'inventaire, corrections compensatoires) avec stock avant/après.</p>
+              <button onclick="exportMovementsCSV(false)" class="px-4 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white text-xs font-bold flex items-center gap-2">
+                <i data-lucide="download" class="w-4 h-4"></i> Télécharger Mouvements_Complets.csv
+              </button>
+            </div>
+
+            <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-[#E8F1EB] text-[#1A472A] flex items-center justify-center"><i data-lucide="clipboard-check" class="w-5 h-5"></i></div>
+              <h3 class="text-base font-bold">Export des inventaires physiques</h3>
+              <p class="text-xs text-gray-500">Historique des comptages contradictoires, écarts relevés et justifications signées.</p>
+              <button onclick="exportInventoriesCSV()" class="px-4 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white text-xs font-bold flex items-center gap-2">
+                <i data-lucide="download" class="w-4 h-4"></i> Télécharger Inventaires.csv
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSettingsView() {
+      const currentUser = getCurrentUser();
+      return `
+        <div class="max-w-4xl mx-auto space-y-6 animate-view">
+          <div>
+            <h2 class="text-2xl font-extrabold">Paramètres & Administration</h2>
+            <p class="text-sm text-gray-500">Gestion des profils utilisateurs, chantiers et environnement de démonstration</p>
+          </div>
+
+          <!-- Simulation Rôle Utilisateur -->
+          <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-4">
+            <h3 class="text-base font-bold">Simulation des profils & habilitations (Multi-utilisateurs)</h3>
+            <p class="text-xs text-gray-500">Testez les niveaux de permissions prévus pour les équipes Soletanche Bachy :</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              ${DEFAULT_USERS.map(u => {
+                const active = u.id === currentUser.id;
+                const roleBadge = u.role === 'ADMIN' ? 'Administrateur' : u.role === 'OPERATIONAL' ? 'Opérationnel' : 'Consultation';
+                return `
+                  <div onclick="setState({ currentUserId: '${u.id}' }); showToast('Profil actif : ${escapeHTML(u.name)}', 'Rôle : ${roleBadge}');" class="cursor-pointer p-4 rounded-xl border-2 transition ${active ? 'border-[#1A472A] bg-[#E8F1EB]/60 dark:bg-[#1A472A]/30' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'}">
+                    <div class="flex items-center justify-between mb-1">
+                      <span class="text-xs font-extrabold uppercase px-2 py-0.5 rounded bg-[#101513] text-white">${roleBadge}</span>
+                      ${active ? '<i data-lucide="check-circle-2" class="w-4 h-4 text-[#1A472A] dark:text-emerald-400"></i>' : ''}
+                    </div>
+                    <p class="font-bold text-sm mt-2">${escapeHTML(u.name)}</p>
+                    <p class="text-xs text-gray-500">${escapeHTML(u.title)}</p>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- Chantiers configurés -->
+          <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-4">
+            <h3 class="text-base font-bold">Chantiers actifs dans CAGESTOCK</h3>
+            <div class="divide-y divide-gray-100 dark:divide-gray-800">
+              ${appState.projects.map(p => `
+                <div class="py-3 flex items-center justify-between">
+                  <div>
+                    <p class="font-bold text-sm">${escapeHTML(p.name)} <span class="text-xs font-mono text-gray-400">(${escapeHTML(p.code)})</span></p>
+                    <p class="text-xs text-gray-500">${escapeHTML(p.location)} • Début : ${formatDateFR(p.startDate)}</p>
+                  </div>
+                  <button onclick="setState({ activeProjectId: '${p.id}' }); showToast('Chantier actif modifié', '${escapeHTML(p.name)}');" class="px-3 py-1.5 rounded-lg text-xs font-bold ${p.id === appState.activeProjectId ? 'bg-[#1A472A] text-white' : 'border border-gray-300 dark:border-gray-700'}">
+                    ${p.id === appState.activeProjectId ? 'Chantier sélectionné' : 'Basculer sur ce chantier'}
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Réinitialisation données démo -->
+          <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-red-200 dark:border-red-900/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-base font-bold text-red-700 dark:text-red-400">Réinitialiser l'environnement de démonstration</h3>
+              <p class="text-xs text-gray-500 mt-0.5">Restaure les stocks initiaux, les références fictives et l'historique d'origine.</p>
+            </div>
+            <button onclick="resetDemoEnvironment()" class="px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold shrink-0">
+              Réinitialiser les données démo
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 8. STRUCTURE PRINCIPALE (SIDEBAR, HEADER, LOGO RÉUTILISABLE)
+    // =========================================================================
+    function renderLogoHTML() {
+      // Tente d'afficher /public/images/logo.png et bascule proprement sur le badge CAGESTOCK si absent
+      return `
+        <div class="flex items-center gap-3">
+          <img src="/public/images/logo.png" alt="Logo Entreprise" class="h-9 w-auto object-contain rounded-md" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div style="display:none" class="w-9 h-9 rounded-xl bg-[#2A623D] text-white font-extrabold text-lg items-center justify-center shadow-inner shrink-0">
+            C
+          </div>
+          <div class="leading-tight">
+            <span class="text-white font-extrabold tracking-wider text-lg block">CAGESTOCK</span>
+            <span class="text-emerald-400 text-[10px] font-bold uppercase tracking-widest block">Soletanche Bachy</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function render() {
+      if (appState.darkMode) document.documentElement.classList.add('dark');
+      else document.documentElement.classList.remove('dark');
+
+      const project = getActiveProject();
+      const user = getCurrentUser();
+      const alerts = getProjectAlerts();
+
+      const navItems = [
+        { id: 'dashboard', label: 'Tableau de bord', icon: 'layout-dashboard' },
+        { id: 'stock', label: 'Stock actuel', icon: 'package' },
+        { id: 'receipt', label: 'Nouvelle réception', icon: 'arrow-down-to-line', highlight: true },
+        { id: 'usage', label: 'Sorties de stock', icon: 'arrow-up-from-line' },
+        { id: 'catalog', label: 'Références de cages', icon: 'layers' },
+        { id: 'forecasts', label: 'Livraisons prévisionnelles', icon: 'truck' },
+        { id: 'history', label: 'Historique mouvements', icon: 'history' },
+        { id: 'inventory', label: 'Inventaire physique', icon: 'clipboard-check' },
+        { id: 'reports', label: 'Rapports et exports', icon: 'file-spreadsheet' },
+        { id: 'settings', label: 'Paramètres', icon: 'settings' }
+      ];
+
+      let mainContent = '';
+      switch (ui.route) {
+        case 'stock': mainContent = renderStockView(); break;
+        case 'receipt': mainContent = renderReceiptView(); break;
+        case 'usage': mainContent = renderUsageView(); break;
+        case 'catalog': mainContent = renderCatalogView(); break;
+        case 'forecasts': mainContent = renderForecastsView(); break;
+        case 'history': mainContent = renderHistoryView(); break;
+        case 'inventory': mainContent = renderInventoryView(); break;
+        case 'reports': mainContent = renderReportsView(); break;
+        case 'settings': mainContent = renderSettingsView(); break;
+        default: mainContent = renderDashboardView();
+      }
+
+      const todayFormatted = new Intl.DateTimeFormat('fr-FR', {
+        timeZone: 'Europe/Paris',
+        weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+      }).format(new Date());
+
+      const roleLabel = user.role === 'ADMIN' ? 'Admin' : user.role === 'OPERATIONAL' ? 'Opérationnel' : 'Consultation';
+
+      document.getElementById('app').innerHTML = `
+        <!-- Backdrop Mobile -->
+        ${ui.mobileMenuOpen ? `<div onclick="setUI({ mobileMenuOpen: false })" class="fixed inset-0 bg-black/60 z-30 lg:hidden"></div>` : ''}
+
+        <!-- Sidebar Latérale -->
+        <aside class="fixed lg:static inset-y-0 left-0 z-40 w-68 bg-[#101513] text-white flex flex-col border-r border-white/10 transition-transform duration-200 ${ui.mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} shrink-0">
+          <div class="p-5 border-b border-white/10 flex items-center justify-between">
+            ${renderLogoHTML()}
+            <button onclick="setUI({ mobileMenuOpen: false })" class="lg:hidden p-1.5 text-gray-400 hover:text-white">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto custom-scrollbar">
+            ${navItems.map(item => {
+              const active = ui.route === item.id;
+              return `
+                <button onclick="navigateTo('${item.id}')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition cursor-pointer ${
+                  active
+                    ? 'bg-[#2A623D] text-white font-semibold shadow-sm'
+                    : item.highlight
+                    ? 'text-emerald-300 hover:bg-[#1A472A]/70'
+                    : 'text-gray-300 hover:bg-white/5 hover:text-white'
+                }">
+                  <span class="flex items-center gap-3">
+                    <i data-lucide="${item.icon}" class="w-4 h-4 shrink-0"></i>
+                    <span>${item.label}</span>
+                  </span>
+                  ${item.id === 'stock' && alerts.length > 0 ? `<span class="px-1.5 py-0.5 text-[10px] font-bold rounded-full bg-amber-500 text-black">${alerts.length}</span>` : ''}
+                </button>
+              `;
+            }).join('')}
+          </nav>
+
+          <!-- Pied Sidebar : Utilisateur & Mode Sombre -->
+          <div class="p-4 border-t border-white/10 space-y-3">
+            <div class="flex items-center justify-between px-2">
+              <span class="text-xs text-gray-400">Thème d'affichage</span>
+              <button onclick="setState({ darkMode: !appState.darkMode })" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300" title="Basculer mode clair / sombre">
+                <i data-lucide="${appState.darkMode ? 'sun' : 'moon'}" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="flex items-center gap-3 p-2 rounded-xl bg-white/5">
+              <div class="w-9 h-9 rounded-full bg-[#2A623D] flex items-center justify-center font-bold text-xs shrink-0">
+                ${user.name.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div class="min-w-0 flex-1">
+                <p class="text-xs font-bold truncate">${escapeHTML(user.name)}</p>
+                <p class="text-[11px] text-emerald-400 truncate">${roleLabel}</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Zone Principale -->
+        <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+          <!-- Barre Supérieure -->
+          <header class="h-16 bg-white dark:bg-[#242A26] border-b border-gray-200 dark:border-gray-800 px-4 lg:px-8 flex items-center justify-between gap-3 shrink-0">
+            <div class="flex items-center gap-3 min-w-0">
+              <button onclick="setUI({ mobileMenuOpen: true })" class="lg:hidden p-2 rounded-xl border border-gray-200 dark:border-gray-700">
+                <i data-lucide="menu" class="w-5 h-5"></i>
+              </button>
+
+              <!-- Sélecteur Multi-Chantiers -->
+              <div class="flex items-center gap-2 bg-[#E8F1EB] dark:bg-[#1A472A]/60 px-3 py-1.5 rounded-xl border border-[#2A623D]/20">
+                <span class="w-2 h-2 rounded-full bg-[#2A623D] dark:bg-emerald-400 shrink-0"></span>
+                <select onchange="setState({ activeProjectId: this.value }); navigateTo(ui.route);" class="bg-transparent text-xs sm:text-sm font-bold text-[#1A472A] dark:text-emerald-200 focus:outline-none cursor-pointer max-w-[180px] sm:max-w-xs truncate">
+                  ${appState.projects.map(p => `<option value="${p.id}" class="text-black" ${p.id === project.id ? 'selected' : ''}>${escapeHTML(p.name)}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-4">
+              <span class="hidden md:flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
+                <i data-lucide="calendar" class="w-4 h-4"></i> ${todayFormatted}
+              </span>
+
+              <!-- Sélecteur rapide de rôle de démonstration -->
+              <select onchange="setState({ currentUserId: this.value }); showToast('Rôle modifié', 'Profil actif : ' + this.options[this.selectedIndex].text);" title="Changer le profil utilisateur de démonstration" class="hidden sm:block text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] cursor-pointer">
+                ${DEFAULT_USERS.map(u => `<option value="${u.id}" ${u.id === user.id ? 'selected' : ''}>${escapeHTML(u.name)} (${u.role === 'ADMIN' ? 'Admin' : u.role === 'OPERATIONAL' ? 'Opé.' : 'Consult.'})</option>`).join('')}
+              </select>
+
+              <!-- Cloche notifications alertes -->
+              <button onclick="navigateTo('stock')" class="relative p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 text-gray-600 dark:text-gray-300" title="Alertes de stock">
+                <i data-lucide="bell" class="w-5 h-5"></i>
+                ${alerts.length > 0 ? `<span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-[#242A26]"></span>` : ''}
+              </button>
+            </div>
+          </header>
+
+          <!-- Contenu Scrollable -->
+          <main class="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-6 lg:p-8">
+            <div class="max-w-7xl mx-auto">
+              ${mainContent}
+            </div>
+          </main>
+        </div>
+      `;
+
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    }
+
+    // Lancement initial au chargement
+    window.addEventListener('DOMContentLoaded', () => {
+      render();
+    });
+    render();
+  </script>
+</body>
+</html>
