@@ -95,41 +95,41 @@
     // 2. CATALOGUE EXACT DES 35 CAGES D'ARMATURES DE LA NOTE DE CALCUL (NDC)
     // =========================================================================
     const NDC_CAGE_CATALOG_TEMPLATE = [
-      { code: '2, L=5,5 (AB)', length: 5.5, diameter: 'Ø620', stock: 6, forecastQty: 10, forecastDate: '2026-11-26', minStock: 3, zone: 'Zone A — Nord' },
-      { code: '2c, L=5 (AB)', length: 5.0, diameter: 'Ø620', stock: 4, forecastQty: 8, forecastDate: '2026-11-26', minStock: 3, zone: 'Zone A — Nord' },
-      { code: '2c, L=7 (AB)', length: 7.0, diameter: 'Ø620', stock: 5, forecastQty: 6, forecastDate: '2026-11-28', minStock: 3, zone: 'Zone A — Nord' },
-      { code: '2rc, L=7,5 (AB)', length: 7.5, diameter: 'Ø620', stock: 2, forecastQty: 8, forecastDate: '2026-11-25', minStock: 4, zone: 'Zone A — Nord' },
-      { code: '3, L=6 (AB)', length: 6.0, diameter: 'Ø820', stock: 8, forecastQty: 12, forecastDate: '2026-11-27', minStock: 4, zone: 'Zone B — Centre' },
-      { code: '3b, L=6,5 (AB)', length: 6.5, diameter: 'Ø820', stock: 7, forecastQty: 10, forecastDate: '2026-11-27', minStock: 4, zone: 'Zone B — Centre' },
-      { code: '3b, L=7,5 (AB)', length: 7.5, diameter: 'Ø820', stock: 5, forecastQty: 10, forecastDate: '2026-11-29', minStock: 4, zone: 'Zone B — Centre' },
-      { code: '3a, L=9 (AB)', length: 9.0, diameter: 'Ø820', stock: 6, forecastQty: 8, forecastDate: '2026-11-29', minStock: 3, zone: 'Zone B — Centre' },
-      { code: '3c, L=6 (AB)', length: 6.0, diameter: 'Ø820', stock: 4, forecastQty: 6, forecastDate: '2026-12-01', minStock: 3, zone: 'Zone B — Centre' },
-      { code: '3c, L=12 (AB)', length: 12.0, diameter: 'Ø820', stock: 3, forecastQty: 6, forecastDate: '2026-12-01', minStock: 3, zone: 'Zone B — Centre' },
-      { code: '3rb, L=6,5 (AB)', length: 6.5, diameter: 'Ø820', stock: 4, forecastQty: 8, forecastDate: '2026-11-28', minStock: 3, zone: 'Zone B — Centre' },
-      { code: '3rb, L=8 (AB)', length: 8.0, diameter: 'Ø820', stock: 5, forecastQty: 6, forecastDate: '2026-11-28', minStock: 3, zone: 'Zone B — Centre' },
-      { code: '3rb, L=12 (AB)', length: 12.0, diameter: 'Ø820', stock: 2, forecastQty: 6, forecastDate: '2026-11-30', minStock: 3, zone: 'Zone B — Centre' },
-      { code: '3rc, L=6,5 (AB)', length: 6.5, diameter: 'Ø820', stock: 6, forecastQty: 8, forecastDate: '2026-12-02', minStock: 3, zone: 'Zone B — Centre' },
-      { code: '3rc, L=12,5 (AB)', length: 12.5, diameter: 'Ø820', stock: 3, forecastQty: 8, forecastDate: '2026-12-02', minStock: 3, zone: 'Zone B — Centre' },
-      { code: '4, L=6 (AB)', length: 6.0, diameter: 'Ø920', stock: 10, forecastQty: 14, forecastDate: '2026-11-25', minStock: 5, zone: 'Zone C — Foreuse 1' },
-      { code: '4, L=7 (AB)', length: 7.0, diameter: 'Ø920', stock: 8, forecastQty: 12, forecastDate: '2026-11-25', minStock: 4, zone: 'Zone C — Foreuse 1' },
-      { code: '4, L=8,5 (AB)', length: 8.5, diameter: 'Ø920', stock: 12, forecastQty: 16, forecastDate: '2026-11-26', minStock: 5, zone: 'Zone C — Foreuse 1' },
-      { code: '4, L=10,5 (AB)', length: 10.5, diameter: 'Ø920', stock: 7, forecastQty: 10, forecastDate: '2026-11-27', minStock: 4, zone: 'Zone C — Foreuse 1' },
-      { code: '4, L=12,5 (AB)', length: 12.5, diameter: 'Ø920', stock: 6, forecastQty: 12, forecastDate: '2026-11-28', minStock: 4, zone: 'Zone C — Foreuse 1' },
-      { code: '4b, L=8,5 (AB)', length: 8.5, diameter: 'Ø920', stock: 5, forecastQty: 10, forecastDate: '2026-11-27', minStock: 4, zone: 'Zone C — Foreuse 1' },
-      { code: '4a, L=10,5 (AB)', length: 10.5, diameter: 'Ø920', stock: 4, forecastQty: 8, forecastDate: '2026-11-29', minStock: 4, zone: 'Zone C — Foreuse 1' },
-      { code: '4b, L=11 (AB)', length: 11.0, diameter: 'Ø920', stock: 3, forecastQty: 10, forecastDate: '2026-11-29', minStock: 4, zone: 'Zone C — Foreuse 1' },
-      { code: '4c, L=7,5 (AB)', length: 7.5, diameter: 'Ø920', stock: 6, forecastQty: 8, forecastDate: '2026-11-30', minStock: 3, zone: 'Zone C — Foreuse 1' },
-      { code: '4c, L=11 (AB)', length: 11.0, diameter: 'Ø920', stock: 5, forecastQty: 8, forecastDate: '2026-11-30', minStock: 3, zone: 'Zone C — Foreuse 1' },
-      { code: '4rb, L=8 (AB)', length: 8.0, diameter: 'Ø920', stock: 4, forecastQty: 8, forecastDate: '2026-12-01', minStock: 3, zone: 'Zone C — Foreuse 1' },
-      { code: '4rb, L=11 (AB)', length: 11.0, diameter: 'Ø920', stock: 2, forecastQty: 8, forecastDate: '2026-12-01', minStock: 4, zone: 'Zone C — Foreuse 1' },
-      { code: '4rc, L=5,5 (AB)', length: 5.5, diameter: 'Ø920', stock: 7, forecastQty: 6, forecastDate: '2026-12-02', minStock: 3, zone: 'Zone C — Foreuse 1' },
-      { code: '4rc, L=11 (AB)', length: 11.0, diameter: 'Ø920', stock: 4, forecastQty: 10, forecastDate: '2026-12-02', minStock: 4, zone: 'Zone C — Foreuse 1' },
-      { code: '5b, L=6 (AB)', length: 6.0, diameter: 'Ø1020', stock: 6, forecastQty: 10, forecastDate: '2026-11-28', minStock: 3, zone: 'Zone D — Sud' },
-      { code: '6a, L=8,5 (AB)', length: 8.5, diameter: 'Ø1220', stock: 4, forecastQty: 8, forecastDate: '2026-11-30', minStock: 3, zone: 'Zone D — Sud' },
-      { code: '6a, L=6 (AB)', length: 6.0, diameter: 'Ø1220', stock: 5, forecastQty: 6, forecastDate: '2026-11-30', minStock: 3, zone: 'Zone D — Sud' },
-      { code: 'G-3, L=6 (AB)', length: 6.0, diameter: 'Ø820', stock: 4, forecastQty: 6, forecastDate: '2026-12-03', minStock: 2, zone: 'Zone E — Grue' },
-      { code: 'G-3a, L=8.5 (AB)', length: 8.5, diameter: 'Ø820', stock: 3, forecastQty: 6, forecastDate: '2026-12-03', minStock: 2, zone: 'Zone E — Grue' },
-      { code: 'G-3, L=7 (AB)', length: 7.0, diameter: 'Ø820', stock: 0, forecastQty: 6, forecastDate: '2026-11-25', minStock: 3, zone: 'Zone E — Grue' }
+      { code: '2, L=5,5 (AB)', length: 5.5, diameter: 'Ø620', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone A — Nord' },
+      { code: '2c, L=5 (AB)', length: 5.0, diameter: 'Ø620', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone A — Nord' },
+      { code: '2c, L=7 (AB)', length: 7.0, diameter: 'Ø620', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone A — Nord' },
+      { code: '2rc, L=7,5 (AB)', length: 7.5, diameter: 'Ø620', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone A — Nord' },
+      { code: '3, L=6 (AB)', length: 6.0, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '3b, L=6,5 (AB)', length: 6.5, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '3b, L=7,5 (AB)', length: 7.5, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '3a, L=9 (AB)', length: 9.0, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '3c, L=6 (AB)', length: 6.0, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '3c, L=12 (AB)', length: 12.0, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '3rb, L=6,5 (AB)', length: 6.5, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '3rb, L=8 (AB)', length: 8.0, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '3rb, L=12 (AB)', length: 12.0, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '3rc, L=6,5 (AB)', length: 6.5, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '3rc, L=12,5 (AB)', length: 12.5, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone B — Centre' },
+      { code: '4, L=6 (AB)', length: 6.0, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 4, zone: 'Zone C — Foreuse 1' },
+      { code: '4, L=7 (AB)', length: 7.0, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 4, zone: 'Zone C — Foreuse 1' },
+      { code: '4, L=8,5 (AB)', length: 8.5, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 4, zone: 'Zone C — Foreuse 1' },
+      { code: '4, L=10,5 (AB)', length: 10.5, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 4, zone: 'Zone C — Foreuse 1' },
+      { code: '4, L=12,5 (AB)', length: 12.5, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 4, zone: 'Zone C — Foreuse 1' },
+      { code: '4b, L=8,5 (AB)', length: 8.5, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 4, zone: 'Zone C — Foreuse 1' },
+      { code: '4a, L=10,5 (AB)', length: 10.5, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 4, zone: 'Zone C — Foreuse 1' },
+      { code: '4b, L=11 (AB)', length: 11.0, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 4, zone: 'Zone C — Foreuse 1' },
+      { code: '4c, L=7,5 (AB)', length: 7.5, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone C — Foreuse 1' },
+      { code: '4c, L=11 (AB)', length: 11.0, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone C — Foreuse 1' },
+      { code: '4rb, L=8 (AB)', length: 8.0, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone C — Foreuse 1' },
+      { code: '4rb, L=11 (AB)', length: 11.0, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone C — Foreuse 1' },
+      { code: '4rc, L=5,5 (AB)', length: 5.5, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone C — Foreuse 1' },
+      { code: '4rc, L=11 (AB)', length: 11.0, diameter: 'Ø920', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone C — Foreuse 1' },
+      { code: '5b, L=6 (AB)', length: 6.0, diameter: 'Ø1020', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone D — Sud' },
+      { code: '6a, L=8,5 (AB)', length: 8.5, diameter: 'Ø1220', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone D — Sud' },
+      { code: '6a, L=6 (AB)', length: 6.0, diameter: 'Ø1220', stock: 0, forecastQty: 0, forecastDate: '', minStock: 3, zone: 'Zone D — Sud' },
+      { code: 'G-3, L=6 (AB)', length: 6.0, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 2, zone: 'Zone E — Grue' },
+      { code: 'G-3a, L=8.5 (AB)', length: 8.5, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 2, zone: 'Zone E — Grue' },
+      { code: 'G-3, L=7 (AB)', length: 7.0, diameter: 'Ø820', stock: 0, forecastQty: 0, forecastDate: '', minStock: 2, zone: 'Zone E — Grue' }
     ];
 
     const AVAILABLE_DIAMETERS = ['Ø620', 'Ø820', 'Ø920', 'Ø1020', 'Ø1220', 'Ø1520'];
@@ -137,7 +137,7 @@
     // =========================================================================
     // 3. PERSISTANCE DOUBLE : LOCALSTORAGE + INDEXEDDB + FIREBASE FIRESTORE
     // =========================================================================
-    const LOCAL_KEY = 'STOCAGE_SBFS_PROD_V2';
+    const LOCAL_KEY = 'STOCAGE_SBFS_PROD_V3';
     const IDB_NAME = 'STOCAGE_SBFS_BACKUP_DB';
     const IDB_STORE = 'snapshots';
 
@@ -158,7 +158,27 @@
       }
     }
 
-    function createInitialState() {
+    // État vierge au tout premier démarrage : déclenche l'Assistant d'Initialisation
+    function createUnconfiguredState() {
+      return {
+        version: 3,
+        initialized: false,
+        lastUpdated: new Date().toISOString(),
+        darkMode: false,
+        users: [],
+        sessionUserId: null,
+        projects: [],
+        activeProjectId: null,
+        references: [],
+        movements: [],
+        ndcPiles: [],
+        inventories: [],
+        firebaseConfig: null
+      };
+    }
+
+    // Chantier d'exemple optionnel (uniquement si l'utilisateur clique sur "Charger un chantier d'exemple")
+    function createDemoState() {
       const now = new Date();
       const isoAgo = (days, h = 8, m = 30) => {
         const d = new Date(now);
@@ -167,7 +187,8 @@
         return d.toISOString();
       };
 
-      const projectId = 'PRJ-SBFS-01';
+      const projectId = 'PRJ-DEMO-01';
+      const demoStocks = [6, 4, 5, 2, 8, 7, 5, 6, 4, 3, 4, 5, 2, 6, 3, 10, 8, 12, 7, 6, 5, 4, 3, 6, 5, 4, 2, 7, 4, 6, 4, 5, 4, 3, 0];
       const references = NDC_CAGE_CATALOG_TEMPLATE.map((item, idx) => ({
         id: `REF-${String(idx + 1).padStart(3, '0')}`,
         projectId,
@@ -176,108 +197,67 @@
         diameter: item.diameter,
         cageFamily: 'AB',
         minStock: item.minStock,
-        forecastQty: item.forecastQty,
-        forecastDate: item.forecastDate,
+        plannedNdcQty: (demoStocks[idx] || 2) + 4,
+        forecastQty: 8,
+        forecastDate: '2026-11-28',
         zone: item.zone,
         status: 'ACTIVE'
       }));
 
-      // Génération des mouvements initiaux cohérents avec le stock de départ
       const movements = [];
       references.forEach((r, idx) => {
-        const tmpl = NDC_CAGE_CATALOG_TEMPLATE[idx];
-        if (tmpl.stock > 0) {
+        const st = demoStocks[idx] || 0;
+        if (st > 0) {
           movements.push({
             id: `MV-INIT-${idx + 1}`,
             projectId,
             refId: r.id,
             type: 'RECEIPT',
-            qty: tmpl.stock,
-            date: isoAgo(idx % 5 + 1, 8, 15),
+            qty: st,
+            date: isoAgo(idx % 4 + 1, 8, 15),
             user: 'Marc Lefebvre',
             supplier: 'Armatures Île-de-France',
             bl: `BL-INIT-${100 + idx}`,
-            comment: 'Stock initial validé sur parc'
+            comment: 'Stock initial exemple'
           });
         }
       });
 
-      // Exemples de pieux issus de la Note de Calcul (NDC)
       const findRefId = (code) => (references.find(r => r.ref === code) || references[0]).id;
       const ndcPiles = [
         {
           id: 'NDC-001', projectId, pileNumber: 'P01', diameter: 'Ø920',
           ngfDepth: 34.50, pileLength: 19.0,
-          cages: [
-            { refId: findRefId('4, L=10,5 (AB)'), qty: 1 },
-            { refId: findRefId('4, L=8,5 (AB)'), qty: 1 }
-          ],
-          soupape: true, soupapeHeight: 1.20,
-          nbr: 33.30, deltaNgfNbr: 1.20,
-          status: 'A_REALISER', notes: 'Recépage standard + soupape béton 1,20 m'
+          cages: [{ refId: findRefId('4, L=10,5 (AB)'), qty: 1 }, { refId: findRefId('4, L=8,5 (AB)'), qty: 1 }],
+          soupape: true, soupapeHeight: 1.20, nbr: 33.30, deltaNgfNbr: 1.20,
+          status: 'A_REALISER', notes: 'Exemple pieu Ø920'
         },
         {
           id: 'NDC-002', projectId, pileNumber: 'P02', diameter: 'Ø920',
           ngfDepth: 34.50, pileLength: 21.5,
-          cages: [
-            { refId: findRefId('4, L=12,5 (AB)'), qty: 1 },
-            { refId: findRefId('4b, L=8,5 (AB)'), qty: 1 }
-          ],
-          soupape: true, soupapeHeight: 1.20,
-          nbr: 33.30, deltaNgfNbr: 1.20,
-          status: 'A_REALISER', notes: 'Zone Foreuse 1 — Armature renforcée'
-        },
-        {
-          id: 'NDC-003', projectId, pileNumber: 'P03', diameter: 'Ø920',
-          ngfDepth: 34.20, pileLength: 22.0,
-          cages: [
-            { refId: findRefId('4b, L=11 (AB)'), qty: 2 }
-          ],
-          soupape: false, soupapeHeight: 0,
-          nbr: 33.40, deltaNgfNbr: 0.80,
-          status: 'A_REALISER', notes: 'Double cage 4b L=11m'
-        },
-        {
-          id: 'NDC-004', projectId, pileNumber: 'P04', diameter: 'Ø820',
-          ngfDepth: 35.00, pileLength: 15.5,
-          cages: [
-            { refId: findRefId('3a, L=9 (AB)'), qty: 1 },
-            { refId: findRefId('3b, L=6,5 (AB)'), qty: 1 }
-          ],
-          soupape: true, soupapeHeight: 1.00,
-          nbr: 34.00, deltaNgfNbr: 1.00,
-          status: 'A_REALISER', notes: 'Paroi pieux sécants'
-        },
-        {
-          id: 'NDC-005', projectId, pileNumber: 'P05', diameter: 'Ø1220',
-          ngfDepth: 33.80, pileLength: 14.5,
-          cages: [
-            { refId: findRefId('6a, L=8,5 (AB)'), qty: 1 },
-            { refId: findRefId('6a, L=6 (AB)'), qty: 1 }
-          ],
-          soupape: true, soupapeHeight: 1.50,
-          nbr: 32.30, deltaNgfNbr: 1.50,
-          status: 'A_REALISER', notes: 'Pieu gros diamètre culée'
+          cages: [{ refId: findRefId('4, L=12,5 (AB)'), qty: 1 }, { refId: findRefId('4b, L=8,5 (AB)'), qty: 1 }],
+          soupape: true, soupapeHeight: 1.20, nbr: 33.30, deltaNgfNbr: 1.20,
+          status: 'A_REALISER', notes: 'Exemple pieu Ø920 renforcé'
         }
       ];
 
       return {
-        version: 2,
+        version: 3,
+        initialized: true,
         lastUpdated: new Date().toISOString(),
         darkMode: false,
         users: [
           { id: 'USR-ADMIN', name: 'Marc Lefebvre', role: 'ADMIN', title: 'Conducteur de Travaux', pin: '1234', active: true },
-          { id: 'USR-CHEF', name: 'Karim Benali', role: 'OPERATIONAL', title: 'Chef de Chantier', pin: '0000', active: true },
-          { id: 'USR-VIEW', name: 'Claire Moreau', role: 'VIEWER', title: 'Ingénieure Études / NDC', pin: '1111', active: true }
+          { id: 'USR-CHEF', name: 'Karim Benali', role: 'OPERATIONAL', title: 'Chef de Chantier', pin: '0000', active: true }
         ],
-        sessionUserId: 'USR-ADMIN', // Connecté par défaut pour accès immédiat, verrouillable/switchable à tout moment
+        sessionUserId: 'USR-ADMIN',
         projects: [
           {
             id: projectId,
-            code: 'SBFS-GPE-L15',
-            name: 'Gare de Paris — Ligne 15 Sud',
+            code: 'SBFS-DEMO-L15',
+            name: 'Chantier Exemple — Gare Ligne 15',
             location: 'Issy-les-Moulineaux (92)',
-            startDate: '2026-03-10',
+            startDate: '2026-11-24',
             status: 'En cours'
           }
         ],
@@ -286,7 +266,7 @@
         movements: recalculateChain(movements),
         ndcPiles,
         inventories: [],
-        firebaseConfig: null // Configuré par l'utilisateur ou injecté par l'environnement
+        firebaseConfig: null
       };
     }
 
@@ -310,14 +290,12 @@
         const raw = localStorage.getItem(LOCAL_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          if (parsed && parsed.references && parsed.users) return parsed;
+          if (parsed && typeof parsed.initialized === 'boolean') return parsed;
         }
       } catch (e) {
         console.warn('Lecture localStorage impossible:', e);
       }
-      const fresh = createInitialState();
-      persistLocal(fresh);
-      return fresh;
+      return createUnconfiguredState();
     }
 
     function persistLocal(next) {
@@ -336,7 +314,6 @@
     let cloudStatus = { connected: false, mode: 'LOCAL', message: 'Sauvegarde locale sécurisée active (navigateur + IndexedDB)', db: null, unsub: null };
 
     async function initCloudSync(customConfig = null) {
-      // Vérifie d'abord la config globale de l'environnement, sinon celle enregistrée par l'utilisateur
       let cfg = customConfig;
       if (!cfg && typeof __firebase_config !== 'undefined' && __firebase_config) {
         try { cfg = JSON.parse(__firebase_config); } catch {}
@@ -371,17 +348,15 @@
             const remoteData = snap.data();
             if (remoteData && remoteData.payload) {
               const parsed = JSON.parse(remoteData.payload);
-              // Ne remplace que si le timestamp distant est plus récent
               if (!state.lastUpdated || new Date(parsed.lastUpdated) > new Date(state.lastUpdated)) {
                 const currentSession = state.sessionUserId;
                 const currentDark = state.darkMode;
-                state = { ...parsed, sessionUserId: currentSession, darkMode: currentDark, firebaseConfig: cfg };
+                state = { ...parsed, sessionUserId: currentSession || parsed.sessionUserId, darkMode: currentDark, firebaseConfig: cfg };
                 persistLocal(state);
                 render();
               }
             }
-          } else {
-            // Initialise le document Cloud avec l'état local actuel
+          } else if (state.initialized) {
             setDoc(sharedDocRef, { payload: JSON.stringify(state), updatedAt: new Date().toISOString() });
           }
         }, (err) => {
@@ -422,9 +397,22 @@
     let ui = {
       tab: 'dashboard', // dashboard | stock | ndc | receipt | usage | history | inventory | config | database
       mobileMenu: false,
-      diameterFilter: 'ALL', // ALL | Ø620 | Ø820 | Ø920 | Ø1020 | Ø1220 | Ø1520
+      diameterFilter: 'ALL',
       stockSearch: '',
-      stockStatusFilter: 'ALL', // ALL | AVAILABLE | LOW | OUT | TO_DELIVER
+      stockStatusFilter: 'ALL',
+      // État Assistant de Démarrage (Onboarding Production)
+      setup: {
+        userName: '',
+        userTitle: 'Conducteur de Travaux',
+        userPin: '1234',
+        projectName: '',
+        projectCode: 'SB-2026-01',
+        projectLocation: '',
+        projectStartDate: new Date().toISOString().split('T')[0],
+        catalogMode: 'NDC_35_ZERO' // NDC_35_ZERO | EMPTY
+      },
+      // Brouillon d'édition groupée du catalogue & stock initial
+      bulkConfigDraft: null,
       // Formulaire Réception
       receipt: {
         date: new Date().toISOString().split('T')[0],
@@ -457,12 +445,9 @@
         deltaManual: '',
         notes: ''
       },
-      // Historique filtres
       historySearch: '',
       historyType: 'ALL',
-      // Inventaire brouillon
       inventoryDraft: {},
-      // Configuration
       configSearch: ''
     };
 
@@ -532,22 +517,22 @@
 
       const currentStock = totalReceived - totalUsed + totalAdjust;
 
-      // Calcul du besoin NDC depuis les pieux saisis dans l'onglet Note de Calcul (non encore coulés + coulés)
+      // Calcul du besoin NDC depuis les pieux saisis dans l'onglet Note de Calcul
       const piles = getProjectNdcPiles();
-      let ndcTotalNeeded = 0;
-      let ndcRemainingNeeded = 0; // Pour les pieux restant à réaliser
+      let ndcPilesRemaining = 0;
       piles.forEach(p => {
         (p.cages || []).forEach(c => {
-          if (c.refId === refObj.id) {
-            ndcTotalNeeded += Number(c.qty || 0);
-            if (p.status !== 'COULE') {
-              ndcRemainingNeeded += Number(c.qty || 0);
-            }
+          if (c.refId === refObj.id && p.status !== 'COULE') {
+            ndcPilesRemaining += Number(c.qty || 0);
           }
         });
       });
 
-      // Stock à livrer = Besoin pour les pieux à réaliser - Stock physique déjà présent sur chantier (min 0)
+      // On prend le max entre la quantité prévue paramétrée manuellement (restante à poser) et les pieux saisis dans la NDC
+      const manualRemaining = Math.max(0, (Number(refObj.plannedNdcQty) || 0) - totalUsed);
+      const ndcRemainingNeeded = Math.max(ndcPilesRemaining, manualRemaining);
+
+      // Stock à livrer = Besoin restant NDC - Stock physique déjà présent sur chantier (min 0)
       const stockToDeliver = Math.max(0, ndcRemainingNeeded - currentStock);
 
       let status = 'OK';
@@ -557,7 +542,7 @@
         statusLabel = 'Archivée';
       } else if (currentStock <= 0) {
         status = 'OUT';
-        statusLabel = 'Rupture';
+        statusLabel = 'Rupture / Zéro';
       } else if (currentStock <= (refObj.minStock || 0)) {
         status = 'LOW';
         statusLabel = 'Stock faible';
@@ -568,7 +553,6 @@
         totalReceived,
         totalUsed,
         currentStock,
-        ndcTotalNeeded,
         ndcRemainingNeeded,
         stockToDeliver,
         status,
@@ -577,7 +561,227 @@
     }
 
     // =========================================================================
-    // 6. OUTILS D'AFFICHAGE & EXPORT / SAUVEGARDE ANTI-PERTE
+    // 6. ASSISTANT DE DÉMARRAGE PRODUCTION ("INITIALISER MON CHANTIER")
+    // =========================================================================
+    window.handleOnboardingSubmit = function (e) {
+      e.preventDefault();
+      const s = ui.setup;
+      const userName = s.userName.trim();
+      const projectName = s.projectName.trim();
+      const projectCode = s.projectCode.trim().toUpperCase();
+      const pin = s.userPin.trim();
+
+      if (!userName || !projectName || !projectCode || !pin) {
+        return toast('Champs obligatoires', 'Veuillez renseigner votre nom, votre PIN et le nom du chantier.', 'error');
+      }
+
+      const adminId = `USR-${Date.now().toString().slice(-5)}`;
+      const projectId = `PRJ-${Date.now().toString().slice(-5)}`;
+
+      const adminUser = {
+        id: adminId,
+        name: userName,
+        role: 'ADMIN',
+        title: s.userTitle.trim() || 'Conducteur de Travaux',
+        pin,
+        active: true
+      };
+
+      const firstProject = {
+        id: projectId,
+        code: projectCode,
+        name: projectName,
+        location: s.projectLocation.trim() || 'Chantier Fondations Spéciales',
+        startDate: s.projectStartDate || new Date().toISOString().split('T')[0],
+        status: 'En cours'
+      };
+
+      let initialRefs = [];
+      if (s.catalogMode === 'NDC_35_ZERO') {
+        initialRefs = NDC_CAGE_CATALOG_TEMPLATE.map((item, idx) => ({
+          id: `REF-${projectId}-${idx + 1}`,
+          projectId,
+          ref: item.code,
+          length: item.length,
+          diameter: item.diameter,
+          cageFamily: 'AB',
+          minStock: item.minStock,
+          plannedNdcQty: 0,
+          forecastQty: 0,
+          forecastDate: '',
+          zone: item.zone,
+          status: 'ACTIVE'
+        }));
+      }
+
+      const nextState = {
+        version: 3,
+        initialized: true,
+        lastUpdated: new Date().toISOString(),
+        darkMode: state.darkMode,
+        users: [adminUser],
+        sessionUserId: adminId,
+        projects: [firstProject],
+        activeProjectId: projectId,
+        references: initialRefs,
+        movements: [],
+        ndcPiles: [],
+        inventories: [],
+        firebaseConfig: state.firebaseConfig
+      };
+
+      state = nextState;
+      persistLocal(state);
+      pushToCloud(state);
+      window.goTab('config');
+      toast(`Espace STOCAGE créé pour ${userName}`, `Paramétrez maintenant les quantités prévues NDC et stocks initiaux de "${projectName}".`);
+    };
+
+    window.launchDemoWorkspace = function () {
+      const demo = createDemoState();
+      state = demo;
+      persistLocal(state);
+      pushToCloud(state);
+      window.goTab('dashboard');
+      toast('Chantier d’exemple chargé', 'Vous pouvez explorer toutes les fonctions ou réinitialiser à tout moment.');
+    };
+
+    window.resetToOnboarding = function () {
+      if (!isAdmin()) return toast('Réservé aux Administrateurs', '', 'error');
+      const fresh = createUnconfiguredState();
+      fresh.firebaseConfig = state.firebaseConfig;
+      state = fresh;
+      persistLocal(state);
+      render();
+      toast('Application réinitialisée', 'Vous pouvez créer un nouveau chantier vierge.');
+    };
+
+    function renderOnboardingScreen() {
+      const s = ui.setup;
+      return `
+        <div class="min-h-screen bg-[#101513] text-white flex flex-col justify-between p-4 sm:p-8">
+          <!-- En-tête marque -->
+          <div class="max-w-4xl w-full mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <img src="/public/images/logo.png" alt="Logo" class="h-10 w-auto rounded" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <div style="display:none" class="w-10 h-10 rounded-xl bg-[#2A623D] text-white font-extrabold text-xl items-center justify-center shadow-lg">S</div>
+              <div>
+                <span class="font-extrabold tracking-wider text-xl block leading-none">STOCAGE</span>
+                <span class="text-emerald-400 text-[11px] font-bold uppercase tracking-widest block mt-1">Soletanche Bachy Fondations Spéciales</span>
+              </div>
+            </div>
+            <label class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-bold flex items-center gap-2 cursor-pointer transition">
+              ${icon('upload', 'w-4 h-4 text-emerald-400')}
+              <span>Restaurer une sauvegarde (.json)</span>
+              <input type="file" accept=".json" class="hidden" onchange="restoreBackupJSON(this.files[0])" />
+            </label>
+          </div>
+
+          <!-- Carte principale Assistant d'Initialisation -->
+          <div class="max-w-4xl w-full mx-auto my-8 bg-white text-[#101513] rounded-3xl shadow-2xl overflow-hidden border border-white/10 animate-view">
+            <div class="bg-[#1A472A] text-white p-6 sm:p-8">
+              <span class="px-3 py-1 rounded-full bg-white/15 text-emerald-200 text-xs font-bold uppercase tracking-wider">Démarrage Production</span>
+              <h1 class="text-2xl sm:text-3xl font-extrabold mt-2">Initialiser mon espace chantier STOCAGE</h1>
+              <p class="text-sm text-emerald-100 mt-1">Configurez votre profil administrateur et votre premier chantier en 30 secondes. Toutes vos données démarrent à zéro, prêtes pour l'exploitation réelle.</p>
+            </div>
+
+            <form onsubmit="handleOnboardingSubmit(event)" class="p-6 sm:p-8 space-y-7">
+              <!-- ÉTAPE 1 : PROFIL ADMINISTRATEUR -->
+              <div class="space-y-4">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-full bg-[#1A472A] text-white text-xs font-extrabold flex items-center justify-center">1</span>
+                  <h2 class="text-base font-extrabold uppercase tracking-wide text-[#1A472A]">Votre profil Administrateur (Responsable)</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Votre Nom & Prénom *</label>
+                    <input type="text" required value="${esc(s.userName)}" oninput="ui.setup.userName=this.value" placeholder="Ex: Jean Dupont" class="w-full p-3 rounded-xl border border-gray-300 bg-[#F7F9F7] font-bold focus:border-[#1A472A] focus:outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Votre Fonction</label>
+                    <input type="text" value="${esc(s.userTitle)}" oninput="ui.setup.userTitle=this.value" placeholder="Ex: Conducteur de Travaux" class="w-full p-3 rounded-xl border border-gray-300 bg-[#F7F9F7] font-medium focus:border-[#1A472A] focus:outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Votre Code PIN de sécurité *</label>
+                    <input type="text" maxlength="6" required value="${esc(s.userPin)}" oninput="ui.setup.userPin=this.value" placeholder="Ex: 1234" class="w-full p-3 rounded-xl border border-gray-300 bg-[#F7F9F7] font-mono font-extrabold text-center tracking-widest focus:border-[#1A472A] focus:outline-none" />
+                  </div>
+                </div>
+              </div>
+
+              <hr class="border-gray-200" />
+
+              <!-- ÉTAPE 2 : CRÉATION DU PREMIER CHANTIER -->
+              <div class="space-y-4">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-full bg-[#1A472A] text-white text-xs font-extrabold flex items-center justify-center">2</span>
+                  <h2 class="text-base font-extrabold uppercase tracking-wide text-[#1A472A]">Identification du Chantier</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                  <div class="lg:col-span-2">
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nom du Chantier *</label>
+                    <input type="text" required value="${esc(s.projectName)}" oninput="ui.setup.projectName=this.value" placeholder="Ex: Viaduc Grand Paris — Lot 2" class="w-full p-3 rounded-xl border border-gray-300 bg-[#F7F9F7] font-bold focus:border-[#1A472A] focus:outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Référence Affaire *</label>
+                    <input type="text" required value="${esc(s.projectCode)}" oninput="ui.setup.projectCode=this.value" placeholder="Ex: SB-2026-14" class="w-full p-3 rounded-xl border border-gray-300 bg-[#F7F9F7] font-mono font-bold focus:border-[#1A472A] focus:outline-none" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Date de début</label>
+                    <input type="date" value="${esc(s.projectStartDate)}" onchange="ui.setup.projectStartDate=this.value" class="w-full p-3 rounded-xl border border-gray-300 bg-[#F7F9F7] font-medium focus:border-[#1A472A] focus:outline-none" />
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Ville / Localisation</label>
+                  <input type="text" value="${esc(s.projectLocation)}" oninput="ui.setup.projectLocation=this.value" placeholder="Ex: Lyon (69) — Secteur Gare" class="w-full p-3 rounded-xl border border-gray-300 bg-[#F7F9F7] text-sm focus:border-[#1A472A] focus:outline-none" />
+                </div>
+              </div>
+
+              <hr class="border-gray-200" />
+
+              <!-- ÉTAPE 3 : CATALOGUE INITIAL DES CAGES -->
+              <div class="space-y-3">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-7 h-7 rounded-full bg-[#1A472A] text-white text-xs font-extrabold flex items-center justify-center">3</span>
+                  <h2 class="text-base font-extrabold uppercase tracking-wide text-[#1A472A]">Catalogue de Cages d'Armatures de départ</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                  <label onclick="ui.setup.catalogMode='NDC_35_ZERO'; render();" class="cursor-pointer p-4 rounded-2xl border-2 transition ${s.catalogMode === 'NDC_35_ZERO' ? 'border-[#1A472A] bg-[#E8F1EB]/70' : 'border-gray-200 hover:border-gray-300'}">
+                    <div class="flex items-center justify-between">
+                      <span class="font-extrabold text-[#1A472A]">Option A — Vos 35 cages NDC à ZÉRO (Recommandé)</span>
+                      <input type="radio" name="catMode" ${s.catalogMode === 'NDC_35_ZERO' ? 'checked' : ''} class="accent-[#1A472A]" />
+                    </div>
+                    <p class="text-xs text-gray-600 mt-1.5">Pré-charge les 35 références (de <code>2, L=5,5 (AB)</code> à <code>G-3, L=7 (AB)</code>) avec <strong>0 en stock</strong> et <strong>0 prévu</strong>, prêtes à recevoir vos vraies quantités.</p>
+                  </label>
+
+                  <label onclick="ui.setup.catalogMode='EMPTY'; render();" class="cursor-pointer p-4 rounded-2xl border-2 transition ${s.catalogMode === 'EMPTY' ? 'border-[#1A472A] bg-[#E8F1EB]/70' : 'border-gray-200 hover:border-gray-300'}">
+                    <div class="flex items-center justify-between">
+                      <span class="font-extrabold text-[#101513]">Option B — Catalogue 100 % vierge</span>
+                      <input type="radio" name="catMode" ${s.catalogMode === 'EMPTY' ? 'checked' : ''} class="accent-[#1A472A]" />
+                    </div>
+                    <p class="text-xs text-gray-600 mt-1.5">Démarre sans aucune cage pré-enregistrée : vous créez vous-même uniquement les références exactes de votre chantier.</p>
+                  </label>
+                </div>
+              </div>
+
+              <div class="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <button type="button" onclick="launchDemoWorkspace()" class="text-xs font-semibold text-gray-500 hover:text-[#1A472A] underline">
+                  Ou explorer d'abord un chantier d'exemple fictif
+                </button>
+                <button type="submit" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-[#1A472A] hover:bg-[#2A623D] text-white font-extrabold text-sm shadow-xl shadow-[#1A472A]/25 flex items-center justify-center gap-2 cursor-pointer transition">
+                  <span>Lancer mon espace STOCAGE</span>
+                  ${icon('check', 'w-5 h-5')}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <p class="text-center text-xs text-gray-500">STOCAGE — Outil interne de gestion des stocks de cages d'armatures & NDC • Soletanche Bachy Fondations Spéciales</p>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 7. OUTILS D'AFFICHAGE & EXPORT / SAUVEGARDE ANTI-PERTE
     // =========================================================================
     function esc(s) {
       if (s === null || s === undefined) return '';
@@ -664,9 +868,9 @@
       const project = getActiveProject();
       const stats = getProjectRefs(false).map(computeRefStats);
       const sep = ';';
-      const headers = ['Chantier', 'Référence Cage', 'Longueur (m)', 'Diamètre', 'Besoin NDC', 'Stock Actuel', 'Stock à Livrer', 'Livraison Prévisionnelle', 'Date Livraison Prévue', 'Zone', 'Statut'];
+      const headers = ['Chantier', 'Référence Cage', 'Longueur (m)', 'Diamètre', 'Qté Prévue NDC', 'Besoin Restant NDC', 'Stock Actuel', 'Stock à Livrer', 'Livraison Prévisionnelle', 'Date Livraison Prévue', 'Zone', 'Statut'];
       const rows = stats.map(s => [
-        project.name, s.ref, s.length, s.diameter, s.ndcRemainingNeeded, s.currentStock, s.stockToDeliver, s.forecastQty || 0, s.forecastDate || '', s.zone || '', s.statusLabel
+        project.name, s.ref, s.length, s.diameter, s.plannedNdcQty || 0, s.ndcRemainingNeeded, s.currentStock, s.stockToDeliver, s.forecastQty || 0, s.forecastDate || '', s.zone || '', s.statusLabel
       ]);
       const csv = '\uFEFF' + [headers.join(sep), ...rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(sep))].join('\n');
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -715,6 +919,8 @@
           draft[r.id] = { counted: String(r.currentStock), justification: '' };
         });
         ui.inventoryDraft = draft;
+      } else if (tab === 'config') {
+        initBulkConfigDraft();
       }
       ui.tab = tab;
       ui.mobileMenu = false;
@@ -898,28 +1104,24 @@
     };
 
     // =========================================================================
-    // 8. RENDU DES VUES DE L'APPLICATION
+    // 8. VUES PRINCIPALES (DASHBOARD, STOCK NDC, NOTE DE CALCUL, RÉCEPTION)
     // =========================================================================
     function renderDiameterFilterBar() {
-      const counts = { ALL: 0 };
+      const refs = getProjectRefs(false);
+      const counts = {};
       AVAILABLE_DIAMETERS.forEach(d => counts[d] = 0);
-      getProjectRefs(false).map(computeRefStats).forEach(r => {
-        counts.ALL += r.currentStock;
-        if (counts[r.diameter] !== undefined) counts[r.diameter] += r.currentStock;
-      });
+      refs.forEach(r => { counts[r.diameter] = (counts[r.diameter] || 0) + 1; });
 
       return `
-        <div class="bg-white dark:bg-[#242A26] p-3.5 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-wrap items-center gap-2">
-          <span class="text-xs font-extrabold uppercase tracking-wider text-[#1A472A] dark:text-emerald-400 mr-1 flex items-center gap-1.5">
-            ${icon('sliders', 'w-4 h-4')} Filtre Diamètre :
-          </span>
-          <button onclick="setDiameterFilter('ALL')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${ui.diameterFilter === 'ALL' ? 'bg-[#1A472A] text-white shadow-sm' : 'bg-[#F7F9F7] dark:bg-[#101513] text-gray-700 dark:text-gray-300 hover:bg-gray-200'}">
-            Tous (${counts.ALL} cages)
-          </button>
+        <div class="bg-white dark:bg-[#242A26] p-3.5 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-wrap items-center gap-2 shadow-xs">
+          <span class="text-xs font-extrabold uppercase tracking-wider text-gray-500 mr-1">Filtre Diamètre NDC :</span>
+          <button onclick="setDiameterFilter('ALL')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+            ui.diameterFilter === 'ALL' ? 'bg-[#1A472A] text-white shadow-sm' : 'bg-[#F7F9F7] dark:bg-[#101513] text-gray-600 dark:text-gray-300 hover:bg-gray-200'
+          }">Tous (${refs.length})</button>
           ${AVAILABLE_DIAMETERS.map(dia => `
-            <button onclick="setDiameterFilter('${dia}')" class="px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${ui.diameterFilter === dia ? 'bg-[#1A472A] text-white shadow-sm' : 'bg-[#F7F9F7] dark:bg-[#101513] text-gray-700 dark:text-gray-300 hover:bg-gray-200'}">
-              ${dia} <span class="opacity-75">(${counts[dia]})</span>
-            </button>
+            <button onclick="setDiameterFilter('${dia}')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+              ui.diameterFilter === dia ? 'bg-[#1A472A] text-white shadow-sm' : 'bg-[#F7F9F7] dark:bg-[#101513] text-gray-700 dark:text-gray-300 hover:bg-[#E8F1EB] hover:text-[#1A472A]'
+            }">${dia} <span class="opacity-75">(${counts[dia] || 0})</span></button>
           `).join('')}
         </div>
       `;
@@ -928,116 +1130,122 @@
     function renderDashboard() {
       const project = getActiveProject();
       let stats = getProjectRefs(false).map(computeRefStats);
-      if (ui.diameterFilter !== 'ALL') {
-        stats = stats.filter(s => s.diameter === ui.diameterFilter);
-      }
+      if (ui.diameterFilter !== 'ALL') stats = stats.filter(s => s.diameter === ui.diameterFilter);
 
-      const totalStock = stats.reduce((s, r) => s + r.currentStock, 0);
-      const totalNdcNeed = stats.reduce((s, r) => s + r.ndcRemainingNeeded, 0);
-      const totalToDeliver = stats.reduce((s, r) => s + r.stockToDeliver, 0);
-      const totalForecast = stats.reduce((s, r) => s + (r.forecastQty || 0), 0);
-      const lowOrOut = stats.filter(r => r.status === 'OUT' || r.status === 'LOW');
-      const pilesToDo = getProjectNdcPiles().filter(p => p.status !== 'COULE' && (ui.diameterFilter === 'ALL' || p.diameter === ui.diameterFilter));
+      const mvs = getProjectMovements();
+      const piles = getProjectNdcPiles();
+      const todayPrefix = new Date().toISOString().split('T')[0];
 
-      const todayISO = new Date().toISOString().split('T')[0];
-      const receiptsToday = getProjectMovements().filter(m => m.type === 'RECEIPT' && m.date.startsWith(todayISO)).reduce((s, m) => s + m.qty, 0);
+      const totalStock = stats.reduce((a, s) => a + s.currentStock, 0);
+      const totalToDeliver = stats.reduce((a, s) => a + s.stockToDeliver, 0);
+      const totalForecast = stats.reduce((a, s) => a + (Number(s.forecastQty) || 0), 0);
+      const alerts = stats.filter(s => s.status === 'LOW' || s.status === 'OUT');
+      const receiptsToday = mvs.filter(m => m.type === 'RECEIPT' && m.date.startsWith(todayPrefix)).reduce((a, m) => a + m.qty, 0);
+      const pilesRemaining = piles.filter(p => p.status !== 'COULE' && (ui.diameterFilter === 'ALL' || p.diameter === ui.diameterFilter)).length;
+
+      const refMap = Object.fromEntries(state.references.map(r => [r.id, r]));
 
       return `
         <div class="space-y-6 animate-view">
-          <!-- Bandeau Chantier & Actions Ultra-Rapides -->
-          <div class="bg-white dark:bg-[#242A26] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#2A623D] dark:text-emerald-400">
-                ${icon('building', 'w-4 h-4')} Chantier Actif • ${esc(project.code)}
-              </div>
-              <h2 class="text-2xl font-extrabold mt-0.5">${esc(project.name)}</h2>
-              <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">${esc(project.location)} • ${pilesToDo.length} pieu(x) à réaliser selon Note de Calcul</p>
+              <h1 class="text-2xl font-extrabold tracking-tight">Tableau de bord — STOCAGE</h1>
+              <p class="text-sm text-gray-500 dark:text-gray-400">${esc(project.name)} • ${esc(project.location || '')}</p>
             </div>
-            <div class="flex flex-col sm:flex-row gap-3">
-              <button onclick="goTab('receipt')" ${!canOperate() ? 'disabled' : ''} class="px-5 py-3.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white font-bold text-sm shadow-lg shadow-[#1A472A]/25 flex items-center justify-center gap-2 cursor-pointer transition">
-                ${icon('plus', 'w-5 h-5')} <span>+ Réceptionner des cages</span>
-              </button>
-              <button onclick="goTab('usage')" ${!canOperate() ? 'disabled' : ''} class="px-5 py-3.5 rounded-xl bg-[#101513] hover:bg-[#242A26] dark:bg-white dark:text-[#101513] disabled:opacity-50 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer transition">
-                ${icon('minus', 'w-5 h-5')} <span>− Enregistrer une sortie</span>
-              </button>
+            <div class="flex flex-wrap gap-3">
+              ${canOperate() ? `
+                <button onclick="goTab('receipt')" class="px-5 py-3 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white font-bold text-sm shadow-lg shadow-[#1A472A]/25 flex items-center gap-2 transition cursor-pointer">
+                  ${icon('plus', 'w-5 h-5')}
+                  <span>+ Réceptionner des cages</span>
+                </button>
+                <button onclick="goTab('usage')" class="px-5 py-3 rounded-xl bg-white dark:bg-[#242A26] hover:bg-gray-50 dark:hover:bg-white/5 text-[#101513] dark:text-white border-2 border-[#101513]/15 dark:border-gray-700 font-bold text-sm flex items-center gap-2 transition cursor-pointer">
+                  ${icon('minus', 'w-5 h-5 text-red-600')}
+                  <span>− Enregistrer une sortie</span>
+                </button>
+              ` : ''}
             </div>
           </div>
 
-          <!-- Filtre rapide par diamètre -->
           ${renderDiameterFilterBar()}
 
-          <!-- 6 Cartes KPI -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-            <div onclick="goTab('stock')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-[#2A623D] transition">
-              <span class="text-xs font-semibold uppercase text-gray-500">Stock actuel</span>
-              <p class="text-3xl font-extrabold mt-1">${totalStock}</p>
-              <span class="text-xs text-gray-500">cages sur chantier</span>
+          <!-- KPIs -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div class="bg-white dark:bg-[#242A26] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+              <p class="text-xs font-bold uppercase text-gray-500">Stock actuel sur parc</p>
+              <p class="text-3xl font-extrabold mt-2 text-[#1A472A] dark:text-emerald-400">${totalStock}</p>
+              <p class="text-xs text-gray-400 mt-1">${stats.filter(s => s.currentStock > 0).length} réf. disponibles</p>
             </div>
-            <div onclick="goTab('ndc')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-[#2A623D] transition">
-              <span class="text-xs font-semibold uppercase text-gray-500">Besoin NDC</span>
-              <p class="text-3xl font-extrabold text-[#1A472A] dark:text-emerald-400 mt-1">${totalNdcNeed}</p>
-              <span class="text-xs text-gray-500">pour pieux à réaliser</span>
+            <div class="bg-white dark:bg-[#242A26] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+              <p class="text-xs font-bold uppercase text-gray-500">Stock à livrer (NDC)</p>
+              <p class="text-3xl font-extrabold mt-2 text-amber-600">${totalToDeliver}</p>
+              <p class="text-xs text-gray-400 mt-1">Manquant pour pieux NDC</p>
             </div>
-            <div onclick="goTab('stock')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-[#2A623D] transition">
-              <span class="text-xs font-semibold uppercase text-gray-500">Stock à livrer</span>
-              <p class="text-3xl font-extrabold ${totalToDeliver > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600'} mt-1">${totalToDeliver}</p>
-              <span class="text-xs text-gray-500">manquant vs NDC</span>
+            <div class="bg-white dark:bg-[#242A26] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+              <p class="text-xs font-bold uppercase text-gray-500">Livraisons prévis.</p>
+              <p class="text-3xl font-extrabold mt-2">${totalForecast}</p>
+              <p class="text-xs text-gray-400 mt-1">Programmées fournisseur</p>
             </div>
-            <div onclick="goTab('stock')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-[#2A623D] transition">
-              <span class="text-xs font-semibold uppercase text-gray-500">Prévisionnel</span>
-              <p class="text-3xl font-extrabold mt-1">${totalForecast}</p>
-              <span class="text-xs text-gray-500">cages planifiées usine</span>
+            <div class="bg-white dark:bg-[#242A26] p-5 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs">
+              <p class="text-xs font-bold uppercase text-gray-500">Réceptions du jour</p>
+              <p class="text-3xl font-extrabold mt-2 text-emerald-600">+${receiptsToday}</p>
+              <p class="text-xs text-gray-400 mt-1">${pilesRemaining} pieu(x) NDC à couler</p>
             </div>
-            <div onclick="goTab('receipt')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 hover:border-[#2A623D] transition">
-              <span class="text-xs font-semibold uppercase text-gray-500">Réceptions jour</span>
-              <p class="text-3xl font-extrabold text-emerald-700 dark:text-emerald-400 mt-1">+${receiptsToday}</p>
-              <span class="text-xs text-gray-500">entrées aujourd'hui</span>
-            </div>
-            <div onclick="goTab('stock')" class="cursor-pointer bg-white dark:bg-[#242A26] p-4 rounded-2xl border ${lowOrOut.length > 0 ? 'border-red-300 dark:border-red-800' : 'border-gray-200 dark:border-gray-800'} transition">
-              <span class="text-xs font-semibold uppercase text-gray-500">Alertes seuil</span>
-              <p class="text-3xl font-extrabold ${lowOrOut.length > 0 ? 'text-red-600' : ''} mt-1">${lowOrOut.length}</p>
-              <span class="text-xs text-gray-500">ruptures ou stocks bas</span>
+            <div class="bg-white dark:bg-[#242A26] p-5 rounded-2xl border ${alerts.length > 0 ? 'border-red-300 bg-red-50/40 dark:bg-red-950/20' : 'border-gray-200 dark:border-gray-800'} shadow-xs">
+              <p class="text-xs font-bold uppercase ${alerts.length > 0 ? 'text-red-600' : 'text-gray-500'}">Alertes seuil / rupture</p>
+              <p class="text-3xl font-extrabold mt-2 ${alerts.length > 0 ? 'text-red-600' : ''}">${alerts.length}</p>
+              <p class="text-xs text-gray-400 mt-1">Réf. sous seuil minimal</p>
             </div>
           </div>
 
-          <!-- Synthèse visuelle : Stock Actuel vs Stock à livrer vs Prévisionnel -->
-          <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200 dark:border-gray-800 p-5 shadow-xs">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-              <div>
-                <h3 class="text-base font-bold">Vue rapide des cages (${ui.diameterFilter === 'ALL' ? 'Tous diamètres' : ui.diameterFilter})</h3>
-                <p class="text-xs text-gray-500">Comparaison directe : Stock actuel sur parc, Besoin NDC, Stock à livrer et Livraisons prévisionnelles</p>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-base font-bold">Situation des cages ${ui.diameterFilter !== 'ALL' ? `(${ui.diameterFilter})` : ''}</h3>
+                <button onclick="goTab('stock')" class="text-xs font-bold text-[#2A623D] dark:text-emerald-400 hover:underline">Voir tout le tableau →</button>
               </div>
-              <button onclick="goTab('stock')" class="text-xs font-bold text-[#1A472A] dark:text-emerald-400 hover:underline">Ouvrir le tableau complet →</button>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse text-sm">
-                <thead>
-                  <tr class="bg-[#F7F9F7] dark:bg-[#101513] text-gray-500 text-xs uppercase border-b border-gray-200 dark:border-gray-800">
-                    <th class="p-3">Type de cage</th>
-                    <th class="p-3 text-center">Diamètre</th>
-                    <th class="p-3 text-center">Besoin NDC</th>
-                    <th class="p-3 text-center">Stock Actuel</th>
-                    <th class="p-3 text-center">Stock à Livrer</th>
-                    <th class="p-3 text-center">Livraison Prévis.</th>
-                    <th class="p-3 text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                  ${stats.slice(0, 12).map(s => `
-                    <tr class="hover:bg-[#F7F9F7] dark:hover:bg-white/5">
-                      <td class="p-3 font-extrabold text-[#1A472A] dark:text-emerald-400">${esc(s.ref)}</td>
-                      <td class="p-3 text-center"><span class="px-2 py-0.5 rounded bg-gray-100 dark:bg-[#101513] text-xs font-bold">${esc(s.diameter)}</span></td>
-                      <td class="p-3 text-center font-semibold">${s.ndcRemainingNeeded}</td>
-                      <td class="p-3 text-center font-extrabold text-base">${s.currentStock}</td>
-                      <td class="p-3 text-center font-bold ${s.stockToDeliver > 0 ? 'text-amber-600' : 'text-emerald-600'}">${s.stockToDeliver}</td>
-                      <td class="p-3 text-center text-xs">${s.forecastQty || 0} u. ${s.forecastDate ? '(' + fmtDate(s.forecastDate) + ')' : ''}</td>
-                      <td class="p-3 text-right">
-                        ${canOperate() ? `<button onclick="goTab('receipt', '${s.id}')" class="px-2.5 py-1 rounded-lg bg-[#E8F1EB] hover:bg-[#1A472A] text-[#1A472A] hover:text-white text-xs font-bold transition">+ Récept.</button>` : ''}
-                      </td>
+              <div class="overflow-x-auto max-h-80 overflow-y-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead class="bg-[#F7F9F7] dark:bg-[#101513] text-gray-500 uppercase sticky top-0">
+                    <tr>
+                      <th class="p-2.5">Cage</th>
+                      <th class="p-2.5">Diamètre</th>
+                      <th class="p-2.5 text-center">Stock Actuel</th>
+                      <th class="p-2.5 text-center">À Livrer</th>
+                      <th class="p-2.5 text-center">Prévisionnel</th>
                     </tr>
-                  `).join('')}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                    ${stats.slice(0, 12).map(s => `
+                      <tr>
+                        <td class="p-2.5 font-extrabold text-[#1A472A] dark:text-emerald-400">${esc(s.ref)}</td>
+                        <td class="p-2.5 font-bold">${esc(s.diameter)}</td>
+                        <td class="p-2.5 text-center font-extrabold text-sm">${s.currentStock}</td>
+                        <td class="p-2.5 text-center font-bold ${s.stockToDeliver > 0 ? 'text-amber-600' : 'text-gray-400'}">${s.stockToDeliver}</td>
+                        <td class="p-2.5 text-center">${s.forecastQty || 0}</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800">
+              <h3 class="text-base font-bold mb-4">Derniers mouvements</h3>
+              <div class="space-y-2.5">
+                ${mvs.length === 0 ? `<p class="text-xs text-gray-500 py-6 text-center">Aucun mouvement enregistré pour le moment.</p>` : mvs.slice(0, 6).map(m => {
+                  const r = refMap[m.refId] || { ref: m.refId };
+                  const isPos = ['RECEIPT', 'RETURN', 'ADJUSTMENT_POS'].includes(m.type);
+                  return `
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-[#F7F9F7] dark:bg-[#101513]">
+                      <div>
+                        <p class="text-xs font-extrabold">${esc(r.ref)}</p>
+                        <p class="text-[11px] text-gray-500">${fmtDateTime(m.date)} • ${esc(m.user)}</p>
+                      </div>
+                      <span class="text-sm font-extrabold ${isPos ? 'text-emerald-600' : 'text-red-600'}">${isPos ? '+' + m.qty : '−' + m.qty}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
             </div>
           </div>
         </div>
@@ -1046,9 +1254,7 @@
 
     function renderStockView() {
       let stats = getProjectRefs(false).map(computeRefStats);
-      if (ui.diameterFilter !== 'ALL') {
-        stats = stats.filter(s => s.diameter === ui.diameterFilter);
-      }
+      if (ui.diameterFilter !== 'ALL') stats = stats.filter(s => s.diameter === ui.diameterFilter);
       if (ui.stockSearch.trim()) {
         const q = ui.stockSearch.trim().toLowerCase();
         stats = stats.filter(s => s.ref.toLowerCase().includes(q) || s.diameter.toLowerCase().includes(q) || (s.zone || '').toLowerCase().includes(q));
@@ -1060,85 +1266,79 @@
 
       return `
         <div class="space-y-5 animate-view">
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h2 class="text-2xl font-extrabold">Stock Actuel, Besoins NDC & Prévisions</h2>
-              <p class="text-sm text-gray-500">Suivi exhaustif par type de cage : Stock actuel, Stock à livrer et Livraisons prévisionnelles</p>
+              <h2 class="text-2xl font-extrabold">Stock actuel, Stock à livrer & Prévisions NDC</h2>
+              <p class="text-sm text-gray-500">Suivi temps réel devant chaque référence d'armature</p>
             </div>
             <div class="flex flex-wrap gap-2">
-              <button onclick="exportStockCSV()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-[#242A26] border border-gray-300 dark:border-gray-700 text-xs font-bold flex items-center gap-2 hover:bg-gray-50">
-                ${icon('download', 'w-4 h-4')} Exporter Excel / CSV
+              <button onclick="exportStockCSV()" class="px-4 py-2.5 rounded-xl bg-white dark:bg-[#242A26] border border-gray-300 dark:border-gray-700 text-xs font-bold flex items-center gap-2 cursor-pointer">
+                ${icon('download', 'w-4 h-4')} Export Excel / CSV
               </button>
-              <button onclick="goTab('config')" class="px-4 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white text-xs font-bold flex items-center gap-2">
-                ${icon('sliders', 'w-4 h-4')} Configurer les cages
-              </button>
+              ${canOperate() ? `
+                <button onclick="goTab('receipt')" class="px-4 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white text-xs font-bold flex items-center gap-2 cursor-pointer">
+                  ${icon('plus', 'w-4 h-4')} + Réception
+                </button>
+              ` : ''}
             </div>
           </div>
 
-          <!-- Filtre rapide Diamètres -->
           ${renderDiameterFilterBar()}
 
-          <!-- Recherche & Filtres statut -->
-          <div class="bg-white dark:bg-[#242A26] p-3.5 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-col md:flex-row gap-3 justify-between">
-            <div class="relative flex-1 max-w-md">
-              <span class="absolute left-3.5 top-2.5 text-gray-400">${icon('search', 'w-4 h-4')}</span>
-              <input type="text" value="${esc(ui.stockSearch)}" oninput="ui.stockSearch=this.value; render();" placeholder="Rechercher une cage (ex: 4b, G-3, L=11)..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm" />
+          <div class="bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row gap-3">
+            <div class="relative flex-1">
+              <span class="absolute left-3.5 top-3 text-gray-400">${icon('search', 'w-4 h-4')}</span>
+              <input type="text" value="${esc(ui.stockSearch)}" oninput="ui.stockSearch=this.value; render();" placeholder="Rechercher une cage (ex: 4b, L=11, G-3)..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm" />
             </div>
-            <div class="flex flex-wrap gap-1.5">
-              ${[
-                ['ALL', 'Toutes (' + stats.length + ')'],
-                ['AVAILABLE', 'En stock (>0)'],
-                ['TO_DELIVER', 'À livrer (>0)'],
-                ['LOW', 'Stock faible'],
-                ['OUT', 'Rupture']
-              ].map(([id, label]) => `
-                <button onclick="ui.stockStatusFilter='${id}'; render();" class="px-3 py-1.5 rounded-lg text-xs font-bold ${ui.stockStatusFilter === id ? 'bg-[#1A472A] text-white' : 'bg-gray-100 dark:bg-[#101513] text-gray-600 dark:text-gray-300'}">${label}</button>
-              `).join('')}
-            </div>
+            <select onchange="ui.stockStatusFilter=this.value; render();" class="p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm font-semibold">
+              <option value="ALL">Toutes les cages (${stats.length})</option>
+              <option value="AVAILABLE" ${ui.stockStatusFilter === 'AVAILABLE' ? 'selected' : ''}>En stock (> 0)</option>
+              <option value="TO_DELIVER" ${ui.stockStatusFilter === 'TO_DELIVER' ? 'selected' : ''}>Reste à livrer NDC (> 0)</option>
+              <option value="LOW" ${ui.stockStatusFilter === 'LOW' ? 'selected' : ''}>Stock faible</option>
+              <option value="OUT" ${ui.stockStatusFilter === 'OUT' ? 'selected' : ''}>Rupture / Zéro</option>
+            </select>
           </div>
 
-          <!-- Tableau Principal -->
           <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs overflow-x-auto">
             <table class="w-full text-left border-collapse text-sm">
               <thead>
                 <tr class="bg-[#F7F9F7] dark:bg-[#101513] text-gray-500 text-xs uppercase border-b border-gray-200 dark:border-gray-800">
-                  <th class="p-3.5">Référence Cage (NDC)</th>
-                  <th class="p-3.5 text-center">Diamètre</th>
+                  <th class="p-3.5">Référence Cage</th>
+                  <th class="p-3.5">Diamètre NDC</th>
                   <th class="p-3.5 text-center">Longueur</th>
+                  <th class="p-3.5 text-center bg-[#E8F1EB]/50 dark:bg-[#1A472A]/30 text-[#1A472A] dark:text-emerald-300">Stock Actuel</th>
                   <th class="p-3.5 text-center">Besoin NDC</th>
-                  <th class="p-3.5 text-center bg-[#E8F1EB]/50 dark:bg-[#1A472A]/20">Stock Actuel</th>
-                  <th class="p-3.5 text-center">Stock à Livrer</th>
-                  <th class="p-3.5 text-center">Livraisons Prévisionnelles</th>
+                  <th class="p-3.5 text-center text-amber-700 dark:text-amber-400">Stock à Livrer</th>
+                  <th class="p-3.5 text-center">Livraison Prévis.</th>
                   <th class="p-3.5 text-center">Statut</th>
-                  <th class="p-3.5 text-right">Actions rapides</th>
+                  <th class="p-3.5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                ${stats.length === 0 ? `<tr><td colspan="9" class="p-8 text-center text-gray-500">Aucune cage trouvée pour ce filtre.</td></tr>` : stats.map(s => {
+                ${stats.length === 0 ? `<tr><td colspan="9" class="p-8 text-center text-gray-500">Aucune référence trouvée pour ce filtre.</td></tr>` : stats.map(s => {
                   const badge = s.status === 'OUT'
-                    ? '<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300">Rupture</span>'
+                    ? 'bg-red-100 text-red-800'
                     : s.status === 'LOW'
-                    ? '<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Stock faible</span>'
-                    : '<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-[#E8F1EB] text-[#1A472A] dark:bg-[#1A472A] dark:text-emerald-200">Satisfaisant</span>';
-
+                    ? 'bg-amber-100 text-amber-800'
+                    : 'bg-emerald-100 text-emerald-800';
                   return `
-                    <tr class="hover:bg-[#F7F9F7] dark:hover:bg-white/5 transition">
+                    <tr class="hover:bg-[#F7F9F7] dark:hover:bg-white/5">
                       <td class="p-3.5 font-extrabold text-[#1A472A] dark:text-emerald-400 whitespace-nowrap">${esc(s.ref)}</td>
-                      <td class="p-3.5 text-center"><span class="px-2.5 py-0.5 rounded-md bg-gray-100 dark:bg-[#101513] font-bold text-xs">${esc(s.diameter)}</span></td>
+                      <td class="p-3.5"><span class="px-2.5 py-1 rounded-lg bg-[#101513] text-white text-xs font-bold">${esc(s.diameter)}</span></td>
                       <td class="p-3.5 text-center font-medium">${s.length} m</td>
+                      <td class="p-3.5 text-center font-extrabold text-lg bg-[#E8F1EB]/30 dark:bg-[#1A472A]/15">${s.currentStock}</td>
                       <td class="p-3.5 text-center font-semibold text-gray-600 dark:text-gray-300">${s.ndcRemainingNeeded}</td>
-                      <td class="p-3.5 text-center bg-[#E8F1EB]/30 dark:bg-[#1A472A]/15 font-extrabold text-lg">${s.currentStock}</td>
-                      <td class="p-3.5 text-center font-extrabold ${s.stockToDeliver > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600'}">${s.stockToDeliver}</td>
+                      <td class="p-3.5 text-center font-extrabold ${s.stockToDeliver > 0 ? 'text-amber-600' : 'text-gray-400'}">${s.stockToDeliver}</td>
                       <td class="p-3.5 text-center text-xs">
-                        <span class="font-bold">${s.forecastQty || 0} cages</span>
-                        ${s.forecastDate ? `<span class="block text-gray-400">le ${fmtDate(s.forecastDate)}</span>` : ''}
+                        <span class="font-bold">${s.forecastQty || 0}</span>
+                        ${s.forecastDate ? `<span class="block text-[11px] text-gray-400">${fmtDate(s.forecastDate)}</span>` : ''}
                       </td>
-                      <td class="p-3.5 text-center">${badge}</td>
-                      <td class="p-3.5 text-right whitespace-nowrap">
+                      <td class="p-3.5 text-center"><span class="px-2.5 py-1 rounded-full text-xs font-bold ${badge}">${s.statusLabel}</span></td>
+                      <td class="p-3.5 text-right whitespace-nowrap space-x-1">
                         ${canOperate() ? `
-                          <button onclick="goTab('receipt', '${s.id}')" class="px-2.5 py-1.5 rounded-lg bg-[#E8F1EB] hover:bg-[#1A472A] text-[#1A472A] hover:text-white text-xs font-bold mr-1 transition">+ Récept.</button>
-                          <button onclick="goTab('usage', '${s.id}')" class="px-2.5 py-1.5 rounded-lg bg-red-50 hover:bg-red-600 text-red-700 hover:text-white text-xs font-bold transition">− Sortie</button>
-                        ` : '<span class="text-xs text-gray-400">Lecture seule</span>'}
+                          <button onclick="goTab('receipt', '${s.id}')" class="px-2.5 py-1.5 rounded-lg bg-[#1A472A] text-white text-xs font-bold cursor-pointer">+ Réception</button>
+                          <button onclick="goTab('usage', '${s.id}')" ${s.currentStock <= 0 ? 'disabled' : ''} class="px-2.5 py-1.5 rounded-lg border border-gray-300 dark:border-gray-700 disabled:opacity-40 text-xs font-bold cursor-pointer">− Sortie</button>
+                        ` : '—'}
                       </td>
                     </tr>
                   `;
@@ -1153,168 +1353,146 @@
     function renderNdcView() {
       const refs = getProjectRefs(false);
       const refMap = Object.fromEntries(refs.map(r => [r.id, r]));
-      const f = ui.ndcForm;
+      let piles = getProjectNdcPiles();
+      if (ui.diameterFilter !== 'ALL') piles = piles.filter(p => p.diameter === ui.diameterFilter);
 
-      // Calcul en direct du delta NGF - NBR
+      const f = ui.ndcForm;
       const ngfVal = parseFloat(f.ngfDepth);
       const nbrVal = parseFloat(f.nbr);
       const autoDelta = (!isNaN(ngfVal) && !isNaN(nbrVal)) ? (ngfVal - nbrVal).toFixed(2) : '0.00';
 
-      let piles = getProjectNdcPiles();
-      if (ui.diameterFilter !== 'ALL') {
-        piles = piles.filter(p => p.diameter === ui.diameterFilter);
-      }
-
       return `
         <div class="space-y-6 animate-view">
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>
-              <span class="text-xs font-bold uppercase tracking-wider text-[#2A623D] dark:text-emerald-400">Ingénierie & Exécution Fondations Spéciales</span>
-              <h2 class="text-2xl font-extrabold mt-0.5">Note de Calcul (NDC) — Programme des Pieux</h2>
-              <p class="text-sm text-gray-500">Saisissez les paramètres de la NDC : les besoins en cages et le stock à livrer se mettent à jour automatiquement.</p>
-            </div>
+          <div>
+            <h2 class="text-2xl font-extrabold">Note de Calcul (NDC) — Saisie des Pieux</h2>
+            <p class="text-sm text-gray-500">Saisissez les paramètres de chaque pieu : les besoins et stocks à livrer se mettent à jour automatiquement</p>
           </div>
 
-          <!-- Formulaire de saisie manuelle de la Note de Calcul -->
-          <form onsubmit="handleAddNdcPile(event)" class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-5">
-            <h3 class="text-base font-bold flex items-center gap-2 text-[#1A472A] dark:text-emerald-400">
-              ${icon('calc', 'w-5 h-5')} Ajouter un pieu depuis la Note de Calcul
-            </h3>
+          ${renderDiameterFilterBar()}
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+          <!-- Formulaire de saisie NDC -->
+          <form onsubmit="handleAddNdcPile(event)" class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-4">
+            <h3 class="text-base font-bold text-[#1A472A] dark:text-emerald-400">+ Ajouter un pieu de la Note de Calcul</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-sm">
               <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">1. N° Pieu *</label>
-                <input type="text" required value="${esc(f.pileNumber)}" oninput="ui.ndcForm.pileNumber=this.value" placeholder="Ex: P06, P14..." class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">N° Pieu *</label>
+                <input type="text" required value="${esc(f.pileNumber)}" oninput="ui.ndcForm.pileNumber=this.value" placeholder="Ex: P06" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-extrabold uppercase" />
               </div>
-
               <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">2. Diamètre du pieu *</label>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Diamètre *</label>
                 <select onchange="ui.ndcForm.diameter=this.value; render();" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold">
                   ${AVAILABLE_DIAMETERS.map(d => `<option value="${d}" ${f.diameter === d ? 'selected' : ''}>${d}</option>`).join('')}
                 </select>
               </div>
-
               <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">3. Profondeur / Cote NGF (m) *</label>
-                <input type="number" step="0.01" required value="${esc(f.ngfDepth)}" oninput="ui.ndcForm.ngfDepth=this.value; render();" placeholder="Ex: 34.50" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-semibold" />
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Profondeur NGF (m) *</label>
+                <input type="number" step="0.01" required value="${esc(f.ngfDepth)}" oninput="ui.ndcForm.ngfDepth=this.value; render();" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
               </div>
-
               <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">4. Longueur du pieu (m) *</label>
-                <input type="number" step="0.1" min="1" required value="${esc(f.pileLength)}" oninput="ui.ndcForm.pileLength=this.value" placeholder="Ex: 19.0" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-semibold" />
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Longueur Pieu (m) *</label>
+                <input type="number" step="0.1" required value="${esc(f.pileLength)}" oninput="ui.ndcForm.pileLength=this.value" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">NBR (m) *</label>
+                <input type="number" step="0.01" required value="${esc(f.nbr)}" oninput="ui.ndcForm.nbr=this.value; render();" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
               </div>
             </div>
 
-            <!-- Soupape, NBR, Delta NGF - NBR -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-sm">
+              <div class="lg:col-span-2">
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Type d'armature principale *</label>
+                <div class="flex gap-2">
+                  <select onchange="ui.ndcForm.cage1Id=this.value" class="flex-1 p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold text-xs">
+                    ${refs.map(r => `<option value="${r.id}" ${f.cage1Id === r.id ? 'selected' : ''}>${esc(r.ref)} (${esc(r.diameter)})</option>`).join('')}
+                  </select>
+                  <input type="number" min="1" value="${esc(f.cage1Qty)}" oninput="ui.ndcForm.cage1Qty=this.value" class="w-16 p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-center font-bold" />
+                </div>
+              </div>
+              <div class="lg:col-span-2">
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Cage complémentaire (facultatif)</label>
+                <div class="flex gap-2">
+                  <select onchange="ui.ndcForm.cage2Id=this.value" class="flex-1 p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-xs">
+                    <option value="">— Aucune —</option>
+                    ${refs.map(r => `<option value="${r.id}" ${f.cage2Id === r.id ? 'selected' : ''}>${esc(r.ref)} (${esc(r.diameter)})</option>`).join('')}
+                  </select>
+                  <input type="number" min="0" value="${esc(f.cage2Qty)}" oninput="ui.ndcForm.cage2Qty=this.value" class="w-16 p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-center font-bold" />
+                </div>
+              </div>
               <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">5. Soupape / Recépage ?</label>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Delta NGF − NBR (m)</label>
+                <input type="number" step="0.01" value="${esc(f.deltaManual !== '' ? f.deltaManual : autoDelta)}" oninput="ui.ndcForm.deltaManual=this.value" class="w-full p-2.5 rounded-xl border border-emerald-400 bg-[#E8F1EB]/50 dark:bg-[#1A472A]/40 font-extrabold text-[#1A472A] dark:text-emerald-300 text-center" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-sm items-end">
+              <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Soupape béton ?</label>
                 <select onchange="ui.ndcForm.soupape=this.value; render();" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold">
                   <option value="OUI" ${f.soupape === 'OUI' ? 'selected' : ''}>Oui — Avec soupape</option>
                   <option value="NON" ${f.soupape === 'NON' ? 'selected' : ''}>Non — Sans soupape</option>
                 </select>
               </div>
-
               <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Hauteur à soupaper (m)</label>
-                <input type="number" step="0.05" ${f.soupape === 'NON' ? 'disabled' : ''} value="${f.soupape === 'NON' ? '0' : esc(f.soupapeHeight)}" oninput="ui.ndcForm.soupapeHeight=this.value" placeholder="Ex: 1.20" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] disabled:opacity-40 font-semibold" />
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Hauteur soupape (m)</label>
+                <input type="number" step="0.05" ${f.soupape === 'NON' ? 'disabled' : ''} value="${f.soupape === 'OUI' ? esc(f.soupapeHeight) : '0'}" oninput="ui.ndcForm.soupapeHeight=this.value" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] disabled:opacity-40 font-bold" />
               </div>
-
-              <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">6. NBR (Niveau Bas Recépage NGF) *</label>
-                <input type="number" step="0.01" required value="${esc(f.nbr)}" oninput="ui.ndcForm.nbr=this.value; render();" placeholder="Ex: 33.30" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-semibold" />
+              <div class="sm:col-span-2 flex gap-2">
+                <input type="text" value="${esc(f.notes)}" oninput="ui.ndcForm.notes=this.value" placeholder="Observation NDC (recépage, chemisage...)" class="flex-1 p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+                <button type="submit" ${!canOperate() ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white font-bold text-xs whitespace-nowrap cursor-pointer">
+                  + Enregistrer pieu NDC
+                </button>
               </div>
-
-              <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">7. Delta (NGF − NBR) en m</label>
-                <input type="number" step="0.01" value="${f.deltaManual !== '' ? esc(f.deltaManual) : autoDelta}" oninput="ui.ndcForm.deltaManual=this.value" class="w-full p-2.5 rounded-xl border-2 border-[#2A623D] bg-[#E8F1EB]/50 dark:bg-[#1A472A]/40 font-extrabold text-[#1A472A] dark:text-emerald-300" />
-              </div>
-            </div>
-
-            <!-- Type d'armature (Cage 1 + Cage 2 optionnelle) -->
-            <div class="p-4 rounded-xl bg-[#F7F9F7] dark:bg-[#101513] border border-gray-200 dark:border-gray-800 space-y-3">
-              <label class="block text-xs font-extrabold uppercase text-[#1A472A] dark:text-emerald-400">8. Type d'armature (Composition des cages du pieu)</label>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div class="flex gap-2">
-                  <select onchange="ui.ndcForm.cage1Id=this.value" class="flex-1 p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#242A26] font-bold">
-                    <option value="">-- Cage principale --</option>
-                    ${refs.map(r => `<option value="${r.id}" ${f.cage1Id === r.id ? 'selected' : ''}>${esc(r.ref)} (${esc(r.diameter)})</option>`).join('')}
-                  </select>
-                  <input type="number" min="1" max="10" value="${esc(f.cage1Qty)}" oninput="ui.ndcForm.cage1Qty=this.value" class="w-20 p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#242A26] text-center font-extrabold" title="Quantité" />
-                </div>
-
-                <div class="flex gap-2">
-                  <select onchange="ui.ndcForm.cage2Id=this.value" class="flex-1 p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#242A26] font-medium">
-                    <option value="">-- 2ème tronçon / cage (optionnel) --</option>
-                    ${refs.map(r => `<option value="${r.id}" ${f.cage2Id === r.id ? 'selected' : ''}>${esc(r.ref)} (${esc(r.diameter)})</option>`).join('')}
-                  </select>
-                  <input type="number" min="0" max="10" value="${esc(f.cage2Qty)}" oninput="ui.ndcForm.cage2Qty=this.value" class="w-20 p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#242A26] text-center font-extrabold" title="Quantité" />
-                </div>
-              </div>
-              <input type="text" value="${esc(f.notes)}" oninput="ui.ndcForm.notes=this.value" placeholder="Observations NDC (ex: tubes soniques, manchons, recépage...)" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#242A26] text-xs" />
-            </div>
-
-            <div class="flex justify-end">
-              <button type="submit" ${!canOperate() ? 'disabled' : ''} class="px-6 py-3 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white font-bold text-sm shadow-md flex items-center gap-2 cursor-pointer">
-                ${icon('plus', 'w-4 h-4')} Enregistrer le pieu dans la Note de Calcul
-              </button>
             </div>
           </form>
 
-          <!-- Filtre diamètre + Tableau des pieux de la NDC -->
-          ${renderDiameterFilterBar()}
-
+          <!-- Tableau des pieux NDC -->
           <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs overflow-x-auto">
-            <table class="w-full text-left border-collapse text-sm">
+            <table class="w-full text-left border-collapse text-xs">
               <thead>
-                <tr class="bg-[#F7F9F7] dark:bg-[#101513] text-gray-500 text-xs uppercase border-b border-gray-200 dark:border-gray-800">
-                  <th class="p-3.5">N° Pieu</th>
-                  <th class="p-3.5 text-center">Diamètre</th>
-                  <th class="p-3.5 text-center">Prof. NGF</th>
-                  <th class="p-3.5 text-center">Longueur</th>
-                  <th class="p-3.5">Type d'armature</th>
-                  <th class="p-3.5 text-center">Soupape</th>
-                  <th class="p-3.5 text-center">NBR</th>
-                  <th class="p-3.5 text-center">Delta (NGF−NBR)</th>
-                  <th class="p-3.5 text-center">Statut</th>
-                  <th class="p-3.5 text-right">Exécution</th>
+                <tr class="bg-[#F7F9F7] dark:bg-[#101513] text-gray-500 uppercase border-b border-gray-200 dark:border-gray-800">
+                  <th class="p-3">N° Pieu</th>
+                  <th class="p-3">Diamètre</th>
+                  <th class="p-3 text-center">Prof. NGF</th>
+                  <th class="p-3 text-center">Long. Pieu</th>
+                  <th class="p-3">Type(s) d'armature</th>
+                  <th class="p-3 text-center">Soupape</th>
+                  <th class="p-3 text-center">NBR</th>
+                  <th class="p-3 text-center">Delta (NGF−NBR)</th>
+                  <th class="p-3 text-center">État</th>
+                  <th class="p-3 text-right">Action Stock</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                ${piles.length === 0 ? `<tr><td colspan="10" class="p-8 text-center text-gray-500">Aucun pieu saisi pour ce filtre.</td></tr>` : piles.map(p => {
-                  const cageBadges = (p.cages || []).map(c => {
-                    const r = refMap[c.refId];
-                    return `<span class="inline-block px-2 py-0.5 rounded bg-[#E8F1EB] dark:bg-[#1A472A] text-[#1A472A] dark:text-emerald-200 text-xs font-bold mr-1 mb-1">${c.qty}× ${esc(r ? r.ref : c.refId)}</span>`;
-                  }).join('');
-
-                  return `
-                    <tr class="hover:bg-[#F7F9F7] dark:hover:bg-white/5">
-                      <td class="p-3.5 font-extrabold text-base">${esc(p.pileNumber)}</td>
-                      <td class="p-3.5 text-center font-bold">${esc(p.diameter)}</td>
-                      <td class="p-3.5 text-center font-medium">${Number(p.ngfDepth).toFixed(2)} m</td>
-                      <td class="p-3.5 text-center font-bold">${p.pileLength} m</td>
-                      <td class="p-3.5">${cageBadges}</td>
-                      <td class="p-3.5 text-center text-xs font-semibold">${p.soupape ? `<span class="text-amber-700 dark:text-amber-400">Oui (${p.soupapeHeight} m)</span>` : 'Non'}</td>
-                      <td class="p-3.5 text-center font-medium">${Number(p.nbr).toFixed(2)} m</td>
-                      <td class="p-3.5 text-center font-extrabold text-[#1A472A] dark:text-emerald-400">${Number(p.deltaNgfNbr).toFixed(2)} m</td>
-                      <td class="p-3.5 text-center">
-                        ${p.status === 'COULE'
-                          ? '<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200">Coulé (Déduit)</span>'
-                          : '<span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">À réaliser</span>'}
-                      </td>
-                      <td class="p-3.5 text-right whitespace-nowrap">
-                        ${p.status !== 'COULE' && canOperate() ? `
-                          <button onclick="markNdcPileAsCast('${p.id}')" class="px-3 py-1.5 rounded-lg bg-[#1A472A] hover:bg-[#2A623D] text-white text-xs font-bold mr-1 transition" title="Marquer coulé et sortir automatiquement les cages du stock">
-                            Couler & Déduire
-                          </button>
-                        ` : ''}
-                        ${isAdmin() ? `
-                          <button onclick="deleteNdcPile('${p.id}')" class="p-1.5 rounded-lg text-red-500 hover:bg-red-50" title="Supprimer">${icon('trash', 'w-4 h-4')}</button>
-                        ` : ''}
-                      </td>
-                    </tr>
-                  `;
-                }).join('')}
+                ${piles.length === 0 ? `<tr><td colspan="10" class="p-8 text-center text-gray-500">Aucun pieu saisi dans la Note de Calcul pour ce chantier.</td></tr>` : piles.map(p => `
+                  <tr class="hover:bg-[#F7F9F7] dark:hover:bg-white/5">
+                    <td class="p-3 font-extrabold text-sm text-[#1A472A] dark:text-emerald-400">${esc(p.pileNumber)}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-[#101513] text-white font-bold">${esc(p.diameter)}</span></td>
+                    <td class="p-3 text-center font-semibold">${p.ngfDepth} m</td>
+                    <td class="p-3 text-center font-semibold">${p.pileLength} m</td>
+                    <td class="p-3 font-bold">
+                      ${(p.cages || []).map(c => {
+                        const r = refMap[c.refId];
+                        return `<span class="inline-block px-2 py-0.5 rounded bg-[#E8F1EB] text-[#1A472A] mr-1 mb-1">${c.qty}× ${esc(r ? r.ref : c.refId)}</span>`;
+                      }).join('')}
+                    </td>
+                    <td class="p-3 text-center">${p.soupape ? `<span class="text-amber-700 font-bold">Oui (${p.soupapeHeight} m)</span>` : 'Non'}</td>
+                    <td class="p-3 text-center font-semibold">${p.nbr} m</td>
+                    <td class="p-3 text-center font-extrabold text-[#1A472A] dark:text-emerald-400">${p.deltaNgfNbr} m</td>
+                    <td class="p-3 text-center">
+                      ${p.status === 'COULE'
+                        ? '<span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 font-bold">Coulé</span>'
+                        : '<span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 font-bold">À réaliser</span>'}
+                    </td>
+                    <td class="p-3 text-right whitespace-nowrap space-x-1">
+                      ${p.status !== 'COULE' && canOperate() ? `
+                        <button onclick="markNdcPileAsCast('${p.id}')" class="px-3 py-1.5 rounded-lg bg-[#1A472A] hover:bg-[#2A623D] text-white font-bold cursor-pointer">
+                          Valider coulage (−stock)
+                        </button>
+                      ` : ''}
+                      ${isAdmin() ? `<button onclick="deleteNdcPile('${p.id}')" class="p-1.5 text-red-500 hover:bg-red-50 rounded-lg cursor-pointer">${icon('trash', 'w-4 h-4')}</button>` : ''}
+                    </td>
+                  </tr>
+                `).join('')}
               </tbody>
             </table>
           </div>
@@ -1325,12 +1503,13 @@
     function renderReceiptView() {
       const refs = getProjectRefs(false).map(computeRefStats);
       const f = ui.receipt;
+
       return `
         <div class="max-w-3xl mx-auto space-y-5 animate-view">
           <div class="flex items-center justify-between">
             <div>
               <h2 class="text-2xl font-extrabold">Nouvelle réception de cages</h2>
-              <p class="text-sm text-gray-500">Enregistrement instantané d'une livraison chantier</p>
+              <p class="text-sm text-gray-500">Enregistrement rapide d'une livraison camion sur chantier</p>
             </div>
             <button onclick="goTab('stock')" class="text-sm font-semibold text-gray-500 hover:text-black dark:hover:text-white">← Retour stock</button>
           </div>
@@ -1343,7 +1522,7 @@
               </div>
               <div>
                 <label class="block text-xs font-bold uppercase text-gray-500 mb-1">N° Bon de Livraison (BL)</label>
-                <input type="text" value="${esc(f.bl)}" oninput="ui.receipt.bl=this.value" placeholder="Ex: BL-2026-410" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+                <input type="text" value="${esc(f.bl)}" oninput="ui.receipt.bl=this.value" placeholder="Ex: BL-2026-481" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
               </div>
               <div>
                 <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Fournisseur</label>
@@ -1352,17 +1531,17 @@
             </div>
 
             <div class="space-y-3">
-              <label class="block text-sm font-bold">Cages reçues *</label>
+              <label class="block text-sm font-bold">Références de cages reçues *</label>
               ${f.lines.map((line, i) => `
                 <div class="flex flex-col sm:flex-row gap-3 p-3.5 rounded-xl bg-[#F7F9F7] dark:bg-[#101513] border border-gray-200 dark:border-gray-800">
                   <select onchange="ui.receipt.lines[${i}].refId=this.value; render();" class="flex-1 p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#242A26] font-bold text-sm">
-                    ${refs.map(r => `<option value="${r.id}" ${line.refId === r.id ? 'selected' : ''}>${esc(r.ref)} (${esc(r.diameter)}) — Stock : ${r.currentStock}</option>`).join('')}
+                    ${refs.map(r => `<option value="${r.id}" ${line.refId === r.id ? 'selected' : ''}>${esc(r.ref)} (${esc(r.diameter)}) — Stock : ${r.currentStock} | À livrer : ${r.stockToDeliver}</option>`).join('')}
                   </select>
                   <input type="number" min="1" step="1" required value="${esc(line.qty)}" oninput="ui.receipt.lines[${i}].qty=this.value" placeholder="Qté reçue" class="w-full sm:w-36 p-3 rounded-xl border-2 border-[#2A623D] bg-white dark:bg-[#242A26] text-lg font-extrabold text-center" />
-                  ${f.lines.length > 1 ? `<button type="button" onclick="ui.receipt.lines.splice(${i},1); render();" class="p-3 text-red-500 hover:bg-red-50 rounded-xl">${icon('trash', 'w-5 h-5')}</button>` : ''}
+                  ${f.lines.length > 1 ? `<button type="button" onclick="ui.receipt.lines.splice(${i},1); render();" class="p-3 text-red-500 rounded-xl">${icon('trash', 'w-5 h-5')}</button>` : ''}
                 </div>
               `).join('')}
-              <button type="button" onclick="ui.receipt.lines.push({ refId: '${refs[0] ? refs[0].id : ''}', qty: '' }); render();" class="px-4 py-2 rounded-xl border border-dashed border-[#2A623D] text-[#1A472A] dark:text-emerald-400 text-xs font-bold flex items-center gap-1.5">
+              <button type="button" onclick="ui.receipt.lines.push({ refId: '${refs[0] ? refs[0].id : ''}', qty: '' }); render();" class="px-4 py-2 rounded-xl border border-dashed border-[#2A623D] text-[#1A472A] dark:text-emerald-400 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
                 ${icon('plus', 'w-4 h-4')} + Ajouter une autre référence
               </button>
             </div>
@@ -1374,239 +1553,59 @@
 
             <div class="pt-3 border-t border-gray-200 dark:border-gray-800 flex justify-end gap-3">
               <button type="button" onclick="goTab('dashboard')" class="px-5 py-3 rounded-xl border border-gray-300 dark:border-gray-700 text-sm font-semibold">Annuler</button>
-              <button type="submit" class="px-7 py-3 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white font-bold text-sm shadow-lg">Valider la réception</button>
+              <button type="submit" class="px-7 py-3 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] text-white font-bold text-sm shadow-lg cursor-pointer">Valider la réception</button>
             </div>
           </form>
         </div>
       `;
     }
 
-    function renderUsageView() {
+    // =========================================================================
+    // 9. ONGLET CONFIGURATION : CHANTIERS & PARAMÉTRAGE GROUPÉ DES CAGES
+    // =========================================================================
+    function initBulkConfigDraft() {
       const refs = getProjectRefs(false).map(computeRefStats);
-      const piles = getProjectNdcPiles().filter(p => p.status !== 'COULE');
-      const f = ui.usage;
-
-      return `
-        <div class="max-w-3xl mx-auto space-y-5 animate-view">
-          <div class="flex items-center justify-between">
-            <div>
-              <h2 class="text-2xl font-extrabold">Sorties de stock / Cages utilisées</h2>
-              <p class="text-sm text-gray-500">Déduction des cages posées dans les forages</p>
-            </div>
-            <button onclick="goTab('stock')" class="text-sm font-semibold text-gray-500 hover:text-black dark:hover:text-white">← Retour stock</button>
-          </div>
-
-          <form onsubmit="handleUsageSubmit(event)" class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs space-y-5">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-              <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Date sortie *</label>
-                <input type="date" required value="${f.date}" onchange="ui.usage.date=this.value" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
-              </div>
-              <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">N° Pieu associé</label>
-                <input type="text" list="ndc-piles-list" value="${esc(f.pileNumber)}" oninput="ui.usage.pileNumber=this.value" placeholder="Ex: P01" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
-                <datalist id="ndc-piles-list">
-                  ${piles.map(p => `<option value="${esc(p.pileNumber)}">${esc(p.pileNumber)} (${esc(p.diameter)})</option>`).join('')}
-                </datalist>
-              </div>
-              <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Zone / Phase</label>
-                <input type="text" value="${esc(f.zone)}" oninput="ui.usage.zone=this.value" placeholder="Ex: Plot Nord" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
-              </div>
-            </div>
-
-            <div class="space-y-3">
-              <label class="block text-sm font-bold">Cages utilisées *</label>
-              ${f.lines.map((line, i) => {
-                const st = refs.find(r => r.id === line.refId);
-                return `
-                  <div class="flex flex-col sm:flex-row gap-3 p-3.5 rounded-xl bg-[#F7F9F7] dark:bg-[#101513] border border-gray-200 dark:border-gray-800">
-                    <div class="flex-1">
-                      <select onchange="ui.usage.lines[${i}].refId=this.value; render();" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#242A26] font-bold text-sm">
-                        ${refs.map(r => `<option value="${r.id}" ${line.refId === r.id ? 'selected' : ''}>${esc(r.ref)} (${esc(r.diameter)}) — Dispo : ${r.currentStock}</option>`).join('')}
-                      </select>
-                      ${st ? `<span class="text-xs mt-1 block ${st.currentStock > 0 ? 'text-emerald-600' : 'text-red-500 font-bold'}">Stock disponible : ${st.currentStock} cage(s)</span>` : ''}
-                    </div>
-                    <input type="number" min="1" max="${st ? st.currentStock : 999}" step="1" required value="${esc(line.qty)}" oninput="ui.usage.lines[${i}].qty=this.value" placeholder="Qté sortie" class="w-full sm:w-36 p-3 rounded-xl border-2 border-red-400 bg-white dark:bg-[#242A26] text-lg font-extrabold text-center self-start" />
-                    ${f.lines.length > 1 ? `<button type="button" onclick="ui.usage.lines.splice(${i},1); render();" class="p-3 text-red-500 rounded-xl self-start">${icon('trash', 'w-5 h-5')}</button>` : ''}
-                  </div>
-                `;
-              }).join('')}
-              <button type="button" onclick="ui.usage.lines.push({ refId: '${refs[0] ? refs[0].id : ''}', qty: '' }); render();" class="px-4 py-2 rounded-xl border border-dashed border-gray-400 text-xs font-bold flex items-center gap-1.5">
-                ${icon('plus', 'w-4 h-4')} + Ajouter une autre cage
-              </button>
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Observations</label>
-              <input type="text" value="${esc(f.comment)}" oninput="ui.usage.comment=this.value" placeholder="Remarques..." class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm" />
-            </div>
-
-            <div class="pt-3 border-t border-gray-200 dark:border-gray-800 flex justify-end gap-3">
-              <button type="button" onclick="goTab('dashboard')" class="px-5 py-3 rounded-xl border border-gray-300 dark:border-gray-700 text-sm font-semibold">Annuler</button>
-              <button type="submit" class="px-7 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-lg">Valider la sortie</button>
-            </div>
-          </form>
-        </div>
-      `;
+      const draft = {};
+      refs.forEach(r => {
+        draft[r.id] = {
+          diameter: r.diameter,
+          length: String(r.length),
+          initialStock: String(r.currentStock),
+          plannedNdcQty: String(r.plannedNdcQty || 0),
+          forecastQty: String(r.forecastQty || 0),
+          forecastDate: r.forecastDate || '',
+          minStock: String(r.minStock || 0),
+          zone: r.zone || ''
+        };
+      });
+      ui.bulkConfigDraft = draft;
     }
 
-    function renderHistoryView() {
-      const refMap = Object.fromEntries(state.references.map(r => [r.id, r]));
-      let mvs = getProjectMovements();
-      if (ui.historyType !== 'ALL') mvs = mvs.filter(m => m.type === ui.historyType);
-      if (ui.historySearch.trim()) {
-        const q = ui.historySearch.trim().toLowerCase();
-        mvs = mvs.filter(m => {
-          const r = refMap[m.refId] || {};
-          return (r.ref || '').toLowerCase().includes(q) || (m.user || '').toLowerCase().includes(q) || (m.bl || '').toLowerCase().includes(q) || (m.pile || '').toLowerCase().includes(q) || (m.comment || '').toLowerCase().includes(q);
-        });
-      }
+    function renderConfigView() {
+      const project = getActiveProject();
+      const refs = getProjectRefs(false).map(computeRefStats);
+      if (!ui.bulkConfigDraft) initBulkConfigDraft();
 
-      return `
-        <div class="space-y-5 animate-view">
-          <div>
-            <h2 class="text-2xl font-extrabold">Journal & Traçabilité des mouvements</h2>
-            <p class="text-sm text-gray-500">Historique immuable : aucun mouvement validé ne peut être effacé</p>
-          </div>
+      const q = ui.configSearch.trim().toLowerCase();
+      const filteredRefs = q ? refs.filter(r => r.ref.toLowerCase().includes(q) || r.diameter.toLowerCase().includes(q) || (r.zone || '').toLowerCase().includes(q)) : refs;
 
-          <div class="bg-white dark:bg-[#242A26] p-4 rounded-2xl border border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row gap-3">
-            <input type="text" value="${esc(ui.historySearch)}" oninput="ui.historySearch=this.value; render();" placeholder="Rechercher cage, BL, pieu, utilisateur..." class="flex-1 p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm" />
-            <select onchange="ui.historyType=this.value; render();" class="p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-sm font-semibold">
-              <option value="ALL">Tous les mouvements</option>
-              <option value="RECEIPT" ${ui.historyType === 'RECEIPT' ? 'selected' : ''}>Réceptions</option>
-              <option value="USAGE" ${ui.historyType === 'USAGE' ? 'selected' : ''}>Sorties / Utilisations</option>
-              <option value="ADJUSTMENT_POS" ${ui.historyType === 'ADJUSTMENT_POS' ? 'selected' : ''}>Ajustements +</option>
-              <option value="ADJUSTMENT_NEG" ${ui.historyType === 'ADJUSTMENT_NEG' ? 'selected' : ''}>Ajustements −</option>
-            </select>
-          </div>
-
-          <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-xs overflow-x-auto">
-            <table class="w-full text-left border-collapse text-sm">
-              <thead>
-                <tr class="bg-[#F7F9F7] dark:bg-[#101513] text-gray-500 text-xs uppercase border-b border-gray-200 dark:border-gray-800">
-                  <th class="p-3.5">Date & Heure</th>
-                  <th class="p-3.5">Nature</th>
-                  <th class="p-3.5">Cage</th>
-                  <th class="p-3.5 text-center">Qté</th>
-                  <th class="p-3.5 text-center">Avant → Après</th>
-                  <th class="p-3.5">Auteur</th>
-                  <th class="p-3.5">BL / Pieu / Commentaire</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                ${mvs.map(m => {
-                  const r = refMap[m.refId] || { ref: m.refId };
-                  const isPos = ['RECEIPT', 'RETURN', 'ADJUSTMENT_POS'].includes(m.type);
-                  return `
-                    <tr class="hover:bg-[#F7F9F7] dark:hover:bg-white/5">
-                      <td class="p-3.5 text-xs whitespace-nowrap">${fmtDateTime(m.date)}</td>
-                      <td class="p-3.5"><span class="px-2 py-0.5 rounded text-xs font-bold ${isPos ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'}">${isPos ? 'Entrée' : 'Sortie'}</span></td>
-                      <td class="p-3.5 font-extrabold text-[#1A472A] dark:text-emerald-400">${esc(r.ref)}</td>
-                      <td class="p-3.5 text-center font-extrabold ${isPos ? 'text-emerald-600' : 'text-red-600'}">${isPos ? '+' + m.qty : '−' + m.qty}</td>
-                      <td class="p-3.5 text-center text-xs">${m.stockBefore} → <strong>${m.stockAfter}</strong></td>
-                      <td class="p-3.5 text-xs font-semibold">${esc(m.user)}</td>
-                      <td class="p-3.5 text-xs text-gray-500">${esc([m.bl, m.pile, m.comment].filter(Boolean).join(' • ') || '—')}</td>
-                    </tr>
-                  `;
-                }).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderInventoryView() {
-      let refs = getProjectRefs(false).map(computeRefStats);
-      if (ui.diameterFilter !== 'ALL') refs = refs.filter(r => r.diameter === ui.diameterFilter);
-
-      window.validatePhysicalInventory = function () {
+      // Mise à jour des informations du chantier actif
+      window.handleUpdateActiveProject = function (e) {
+        e.preventDefault();
         if (!isAdmin()) return toast('Réservé aux Administrateurs', '', 'error');
-        const adjustments = [];
-        const lines = [];
-        const now = new Date().toISOString();
-        const user = getCurrentUser();
-
-        for (const r of refs) {
-          const entry = ui.inventoryDraft[r.id] || { counted: String(r.currentStock), justification: '' };
-          const counted = parseInt(entry.counted, 10);
-          if (isNaN(counted) || counted < 0) return toast('Erreur', `Valeur invalide pour ${r.ref}`, 'error');
-          const diff = counted - r.currentStock;
-          if (diff !== 0 && !entry.justification.trim()) {
-            return toast('Justification requise', `Indiquez le motif de l'écart (${diff}) pour ${r.ref}.`, 'warning');
-          }
-          lines.push({ ref: r.ref, theoretical: r.currentStock, counted, diff, justification: entry.justification });
-          if (diff !== 0) {
-            adjustments.push({
-              id: `MV-INV-${Date.now().toString().slice(-4)}-${r.id}`,
-              projectId: state.activeProjectId,
-              refId: r.id,
-              type: diff > 0 ? 'ADJUSTMENT_POS' : 'ADJUSTMENT_NEG',
-              qty: Math.abs(diff),
-              date: now,
-              user: user.name,
-              comment: `Inventaire physique (${r.currentStock} → ${counted}) : ${entry.justification}`
-            });
-          }
-        }
+        const fd = new FormData(e.target);
+        const name = fd.get('name').trim();
+        const code = fd.get('code').trim().toUpperCase();
+        const location = fd.get('location').trim();
+        const startDate = fd.get('startDate');
+        const status = fd.get('status');
+        if (!name || !code) return;
 
         updateState({
-          inventories: [{ id: `INV-${Date.now().toString().slice(-5)}`, projectId: state.activeProjectId, date: now, user: user.name, lines }, ...state.inventories],
-          movements: recalculateChain([...state.movements, ...adjustments])
+          projects: state.projects.map(p => p.id === project.id ? { ...p, name, code, location, startDate, status } : p)
         });
-        toast('Inventaire physique validé', `${adjustments.length} ajustement(s) enregistré(s).`);
+        toast('Paramètres du chantier enregistrés', `${name} (${code}) mis à jour.`);
       };
-
-      return `
-        <div class="space-y-5 animate-view">
-          <div>
-            <h2 class="text-2xl font-extrabold">Inventaire physique</h2>
-            <p class="text-sm text-gray-500">Rapprochement entre stock informatique et comptage réel sur parc</p>
-          </div>
-          ${renderDiameterFilterBar()}
-          <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200 dark:border-gray-800 overflow-x-auto">
-            <table class="w-full text-left border-collapse text-sm">
-              <thead>
-                <tr class="bg-[#F7F9F7] dark:bg-[#101513] text-xs uppercase text-gray-500 border-b border-gray-200 dark:border-gray-800">
-                  <th class="p-3.5">Référence</th>
-                  <th class="p-3.5 text-center">Théorique</th>
-                  <th class="p-3.5 text-center">Compté physique</th>
-                  <th class="p-3.5 text-center">Écart</th>
-                  <th class="p-3.5">Justification</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                ${refs.map(r => {
-                  const d = ui.inventoryDraft[r.id] || { counted: String(r.currentStock), justification: '' };
-                  const diff = (parseInt(d.counted, 10) || 0) - r.currentStock;
-                  return `
-                    <tr>
-                      <td class="p-3.5 font-extrabold">${esc(r.ref)} <span class="text-xs font-normal text-gray-400">(${esc(r.diameter)})</span></td>
-                      <td class="p-3.5 text-center font-bold">${r.currentStock}</td>
-                      <td class="p-3.5 text-center"><input type="number" min="0" value="${esc(d.counted)}" oninput="ui.inventoryDraft['${r.id}']={...(ui.inventoryDraft['${r.id}']||{}), counted:this.value}; render();" class="w-24 p-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-center font-bold" /></td>
-                      <td class="p-3.5 text-center font-extrabold ${diff === 0 ? 'text-gray-400' : diff > 0 ? 'text-emerald-600' : 'text-red-600'}">${diff > 0 ? '+' + diff : diff}</td>
-                      <td class="p-3.5"><input type="text" value="${esc(d.justification || '')}" oninput="ui.inventoryDraft['${r.id}']={...(ui.inventoryDraft['${r.id}']||{}), justification:this.value}" placeholder="Justification si écart..." class="w-full p-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-xs" /></td>
-                    </tr>
-                  `;
-                }).join('')}
-              </tbody>
-            </table>
-            <div class="p-4 bg-[#F7F9F7] dark:bg-[#101513] border-t border-gray-200 dark:border-gray-800 flex justify-end">
-              <button onclick="validatePhysicalInventory()" ${!isAdmin() ? 'disabled' : ''} class="px-6 py-3 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white font-bold text-sm">Valider l'inventaire</button>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // =========================================================================
-    // 9. ONGLET CONFIGURATION : CHANTIERS & CATALOGUE DES CAGES
-    // =========================================================================
-    function renderConfigView() {
-      const refs = getProjectRefs(false);
-      const q = ui.configSearch.trim().toLowerCase();
-      const filteredRefs = q ? refs.filter(r => r.ref.toLowerCase().includes(q) || r.diameter.toLowerCase().includes(q)) : refs;
 
       // Création d'un nouveau chantier (Espace Général)
       window.handleCreateProject = function (e) {
@@ -1632,6 +1631,7 @@
             diameter: item.diameter,
             cageFamily: 'AB',
             minStock: item.minStock,
+            plannedNdcQty: 0,
             forecastQty: 0,
             forecastDate: '',
             zone: item.zone,
@@ -1639,11 +1639,13 @@
           }));
         }
 
+        ui.bulkConfigDraft = null;
         updateState({
           projects: [...state.projects, newProject],
           activeProjectId: newPrjId,
           references: [...state.references, ...newRefs]
         });
+        initBulkConfigDraft();
         toast(`Chantier "${name}" créé`, 'Toutes les données sont isolées par chantier.');
       };
 
@@ -1655,69 +1657,180 @@
         const refCode = fd.get('refCode').trim();
         const diameter = fd.get('diameter');
         const length = parseFloat(fd.get('length')) || 6.0;
-        const minStock = parseInt(fd.get('minStock'), 10) || 3;
+        const initialStock = parseInt(fd.get('initialStock'), 10) || 0;
+        const plannedNdcQty = parseInt(fd.get('plannedNdcQty'), 10) || 0;
         const forecastQty = parseInt(fd.get('forecastQty'), 10) || 0;
         const forecastDate = fd.get('forecastDate') || '';
+        const minStock = parseInt(fd.get('minStock'), 10) || 3;
         const zone = fd.get('zone').trim() || 'Zone A';
 
         if (!refCode) return;
+        const newRefId = `REF-${Date.now().toString().slice(-6)}`;
         const newRef = {
-          id: `REF-${Date.now().toString().slice(-6)}`,
+          id: newRefId,
           projectId: state.activeProjectId,
           ref: refCode,
           diameter,
           length,
           cageFamily: 'AB',
           minStock,
+          plannedNdcQty,
           forecastQty,
           forecastDate,
           zone,
           status: 'ACTIVE'
         };
-        updateState({ references: [...state.references, newRef] });
+
+        const newMvs = [...state.movements];
+        if (initialStock > 0) {
+          newMvs.push({
+            id: `MV-INIT-${Date.now().toString().slice(-5)}`,
+            projectId: state.activeProjectId,
+            refId: newRefId,
+            type: 'RECEIPT',
+            qty: initialStock,
+            date: new Date().toISOString(),
+            user: getCurrentUser().name,
+            supplier: 'Stock Initial Paramétrage',
+            bl: 'STOCK-INIT',
+            comment: 'Stock initial saisi lors de la création de la référence'
+          });
+        }
+
+        ui.bulkConfigDraft = null;
+        updateState({
+          references: [...state.references, newRef],
+          movements: recalculateChain(newMvs)
+        });
+        initBulkConfigDraft();
         e.target.reset();
-        toast('Nouvelle cage ajoutée', `${refCode} (${diameter}) ajoutée au catalogue.`);
+        toast('Nouvelle cage ajoutée', `${refCode} (${diameter}) ajoutée avec stock initial = ${initialStock}.`);
       };
 
-      // Mise à jour en ligne d'une cage existante (diamètre, prévisionnel, seuil)
-      window.updateCageField = function (refId, field, value) {
+      // Enregistrement en bloc du tableau de paramétrage (Diamètres, Stocks initiaux, Prévisions NDC)
+      window.saveBulkCatalogueConfig = function () {
         if (!isAdmin()) return toast('Réservé aux Administrateurs', '', 'error');
-        updateState({
-          references: state.references.map(r => r.id === refId ? { ...r, [field]: value } : r)
+        const draft = ui.bulkConfigDraft || {};
+        const user = getCurrentUser();
+        const now = new Date().toISOString();
+        const newMvs = [...state.movements];
+        let stockAdjustmentsCount = 0;
+
+        const updatedRefs = state.references.map(r => {
+          if (r.projectId !== state.activeProjectId || r.status !== 'ACTIVE') return r;
+          const d = draft[r.id];
+          if (!d) return r;
+
+          const currentStats = computeRefStats(r);
+          const targetStock = Math.max(0, parseInt(d.initialStock, 10) || 0);
+          const diff = targetStock - currentStats.currentStock;
+
+          if (diff !== 0) {
+            stockAdjustmentsCount++;
+            newMvs.push({
+              id: `MV-CFG-${Date.now().toString().slice(-4)}-${r.id}`,
+              projectId: state.activeProjectId,
+              refId: r.id,
+              type: diff > 0 ? 'ADJUSTMENT_POS' : 'ADJUSTMENT_NEG',
+              qty: Math.abs(diff),
+              date: now,
+              user: user.name,
+              comment: currentStats.totalReceived === 0 && currentStats.totalUsed === 0
+                ? 'Paramétrage stock initial chantier'
+                : `Ajustement paramétrage (${currentStats.currentStock} → ${targetStock})`
+            });
+          }
+
+          return {
+            ...r,
+            diameter: d.diameter || r.diameter,
+            length: parseFloat(d.length) || r.length,
+            plannedNdcQty: Math.max(0, parseInt(d.plannedNdcQty, 10) || 0),
+            forecastQty: Math.max(0, parseInt(d.forecastQty, 10) || 0),
+            forecastDate: d.forecastDate || '',
+            minStock: Math.max(0, parseInt(d.minStock, 10) || 0),
+            zone: d.zone !== undefined ? d.zone.trim() : r.zone
+          };
         });
+
+        updateState({
+          references: updatedRefs,
+          movements: recalculateChain(newMvs)
+        });
+        initBulkConfigDraft();
+        toast('Paramétrage enregistré avec succès', `Catalogue mis à jour (${stockAdjustmentsCount} stock(s) initialisé(s)/ajusté(s)).`);
       };
 
       window.removeOrArchiveCage = function (refId) {
         if (!isAdmin()) return toast('Réservé aux Administrateurs', '', 'error');
         const r = state.references.find(x => x.id === refId);
         if (!r) return;
+        ui.bulkConfigDraft = null;
         updateState({
           references: state.references.map(x => x.id === refId ? { ...x, status: 'ARCHIVED' } : x)
         });
+        initBulkConfigDraft();
         toast('Cage retirée du catalogue actif', `${r.ref} a été archivée (historique conservé).`);
       };
 
       return `
         <div class="space-y-8 animate-view">
           <div>
-            <h2 class="text-2xl font-extrabold">Espace Général : Chantiers & Configuration Catalogue</h2>
-            <p class="text-sm text-gray-500">Créez vos chantiers isolés, ajoutez ou retirez des cages et associez chaque cage à son diamètre NDC</p>
+            <h2 class="text-2xl font-extrabold">Paramétrage du Chantier & Catalogue NDC</h2>
+            <p class="text-sm text-gray-500">Modifiez votre chantier, créez-en de nouveaux et renseignez en tableau vos stocks initiaux et quantités prévues NDC</p>
           </div>
 
-          <!-- 1. Création et sélection de Chantiers -->
+          <!-- 1. Paramètres du Chantier Actif & Création d'autres chantiers -->
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <form onsubmit="handleCreateProject(event)" class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-4">
-              <h3 class="text-base font-bold flex items-center gap-2 text-[#1A472A] dark:text-emerald-400">
-                ${icon('building', 'w-5 h-5')} Créer un nouveau chantier
-              </h3>
+            <form onsubmit="handleUpdateActiveProject(event)" class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 class="text-base font-bold flex items-center gap-2 text-[#1A472A] dark:text-emerald-400">
+                  ${icon('edit', 'w-5 h-5')} Paramètres du chantier actif
+                </h3>
+                <span class="text-xs font-mono px-2 py-0.5 rounded bg-[#E8F1EB] text-[#1A472A] font-bold">${esc(project.code)}</span>
+              </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                 <div>
                   <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nom du chantier *</label>
+                  <input type="text" name="name" required value="${esc(project.name)}" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Référence Affaire *</label>
+                  <input type="text" name="code" required value="${esc(project.code)}" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-mono font-bold" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Localisation</label>
+                  <input type="text" name="location" value="${esc(project.location || '')}" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Date de début</label>
+                  <input type="date" name="startDate" value="${esc(project.startDate || '')}" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+                </div>
+              </div>
+              <div class="flex items-center justify-between pt-2">
+                <select name="status" class="p-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-xs font-bold">
+                  <option value="En cours" ${project.status === 'En cours' ? 'selected' : ''}>Statut : En cours</option>
+                  <option value="Préparation" ${project.status === 'Préparation' ? 'selected' : ''}>Statut : Préparation</option>
+                  <option value="Terminé" ${project.status === 'Terminé' ? 'selected' : ''}>Statut : Terminé</option>
+                </select>
+                <button type="submit" ${!isAdmin() ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white text-xs font-bold cursor-pointer">
+                  Enregistrer le chantier
+                </button>
+              </div>
+            </form>
+
+            <form onsubmit="handleCreateProject(event)" class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-4">
+              <h3 class="text-base font-bold flex items-center gap-2 text-[#1A472A] dark:text-emerald-400">
+                ${icon('building', 'w-5 h-5')} Créer un autre chantier (${state.projects.length} actif(s))
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                <div>
+                  <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nom du nouveau chantier *</label>
                   <input type="text" name="name" required placeholder="Ex: Pont de Gennevilliers" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
                 </div>
                 <div>
                   <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Code Affaire *</label>
-                  <input type="text" name="code" required placeholder="Ex: SBFS-92-08" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+                  <input type="text" name="code" required placeholder="Ex: SB-2026-09" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
                 </div>
               </div>
               <div>
@@ -1726,38 +1839,84 @@
               </div>
               <label class="flex items-center gap-2 text-xs font-semibold cursor-pointer">
                 <input type="checkbox" name="copyCatalog" checked class="accent-[#1A472A]" />
-                Pré-charger les 35 références de cages types (AB) dans ce chantier
+                Pré-charger les 35 références de cages types (AB) à zéro dans ce chantier
               </label>
-              <button type="submit" ${!isAdmin() ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white text-xs font-bold">
-                + Créer et ouvrir le chantier
+              <button type="submit" ${!isAdmin() ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl bg-[#101513] hover:bg-[#242A26] dark:bg-white dark:text-[#101513] disabled:opacity-50 text-white text-xs font-bold cursor-pointer">
+                + Créer et basculer sur ce chantier
               </button>
             </form>
+          </div>
 
-            <div class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-3">
-              <h3 class="text-base font-bold">Chantiers enregistrés (${state.projects.length})</h3>
-              <p class="text-xs text-gray-500">Chaque chantier possède sa propre base de stocks, de mouvements et sa propre Note de Calcul.</p>
-              <div class="space-y-2 max-h-56 overflow-y-auto custom-scrollbar">
-                ${state.projects.map(p => `
-                  <div class="p-3 rounded-xl border ${p.id === state.activeProjectId ? 'border-[#1A472A] bg-[#E8F1EB]/50 dark:bg-[#1A472A]/30' : 'border-gray-200 dark:border-gray-700'} flex items-center justify-between">
-                    <div>
-                      <p class="font-bold text-sm">${esc(p.name)} <span class="text-xs font-mono text-gray-400">(${esc(p.code)})</span></p>
-                      <p class="text-xs text-gray-500">${esc(p.location || 'Localisation non précisée')}</p>
-                    </div>
-                    <button onclick="updateState({ activeProjectId: '${p.id}' }); toast('Chantier actif : ${esc(p.name)}');" class="px-3 py-1.5 rounded-lg text-xs font-bold ${p.id === state.activeProjectId ? 'bg-[#1A472A] text-white' : 'border border-gray-300 dark:border-gray-700'}">
-                      ${p.id === state.activeProjectId ? 'Actif' : 'Sélectionner'}
-                    </button>
-                  </div>
-                `).join('')}
+          <!-- 2. Saisie groupée en tableau : Stock Initial, Quantités Prévues NDC & Prévisions -->
+          <div class="bg-white dark:bg-[#242A26] rounded-2xl border-2 border-[#2A623D]/40 overflow-hidden shadow-xs">
+            <div class="p-5 border-b border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-[#E8F1EB]/40 dark:bg-[#1A472A]/20">
+              <div>
+                <h3 class="text-base font-extrabold text-[#1A472A] dark:text-emerald-400">Saisie rapide du Stock Initial & Prévisions NDC (${refs.length} références)</h3>
+                <p class="text-xs text-gray-600 dark:text-gray-400">Renseignez vos diamètres, stocks initiaux déjà présents sur parc et quantités prévues selon la Note de Calcul, puis cliquez sur « Enregistrer tout le paramétrage ».</p>
               </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <input type="text" value="${esc(ui.configSearch)}" oninput="ui.configSearch=this.value; render();" placeholder="Filtrer une cage..." class="p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-xs w-48" />
+                <button onclick="saveBulkCatalogueConfig()" ${!isAdmin() ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white text-xs font-extrabold shadow-md flex items-center gap-1.5 cursor-pointer">
+                  ${icon('check', 'w-4 h-4')} Enregistrer tout le paramétrage
+                </button>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto max-h-[540px] overflow-y-auto custom-scrollbar">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead class="bg-[#F7F9F7] dark:bg-[#101513] text-gray-500 uppercase sticky top-0 z-10 border-b border-gray-200 dark:border-gray-800">
+                  <tr>
+                    <th class="p-3">Référence Cage</th>
+                    <th class="p-3">Diamètre NDC</th>
+                    <th class="p-3">Longueur (m)</th>
+                    <th class="p-3 bg-[#E8F1EB]/60 dark:bg-[#1A472A]/30 text-[#1A472A] dark:text-emerald-300">Stock Initial / Actuel</th>
+                    <th class="p-3">Qté Prévue NDC</th>
+                    <th class="p-3">Livraison Prévis.</th>
+                    <th class="p-3">Date Prévue</th>
+                    <th class="p-3">Seuil Alerte</th>
+                    <th class="p-3">Zone Parc</th>
+                    <th class="p-3 text-right">Retirer</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                  ${filteredRefs.length === 0 ? `<tr><td colspan="10" class="p-6 text-center text-gray-500">Aucune cage dans ce chantier. Ajoutez-en une via le formulaire ci-dessous.</td></tr>` : filteredRefs.map(r => {
+                    const d = (ui.bulkConfigDraft && ui.bulkConfigDraft[r.id]) || {
+                      diameter: r.diameter, length: r.length, initialStock: r.currentStock,
+                      plannedNdcQty: r.plannedNdcQty || 0, forecastQty: r.forecastQty || 0,
+                      forecastDate: r.forecastDate || '', minStock: r.minStock || 0, zone: r.zone || ''
+                    };
+                    return `
+                      <tr class="hover:bg-[#F7F9F7] dark:hover:bg-white/5">
+                        <td class="p-2.5 font-extrabold text-sm text-[#1A472A] dark:text-emerald-400 whitespace-nowrap">${esc(r.ref)}</td>
+                        <td class="p-2.5">
+                          <select ${!isAdmin() ? 'disabled' : ''} onchange="ui.bulkConfigDraft['${r.id}'].diameter=this.value" class="p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] font-bold">
+                            ${AVAILABLE_DIAMETERS.map(dia => `<option value="${dia}" ${d.diameter === dia ? 'selected' : ''}>${dia}</option>`).join('')}
+                          </select>
+                        </td>
+                        <td class="p-2.5"><input type="number" step="0.1" ${!isAdmin() ? 'disabled' : ''} value="${esc(d.length)}" oninput="ui.bulkConfigDraft['${r.id}'].length=this.value" class="w-16 p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-center" /></td>
+                        <td class="p-2.5 bg-[#E8F1EB]/30 dark:bg-[#1A472A]/15"><input type="number" min="0" ${!isAdmin() ? 'disabled' : ''} value="${esc(d.initialStock)}" oninput="ui.bulkConfigDraft['${r.id}'].initialStock=this.value" class="w-20 p-1.5 rounded-lg border-2 border-[#2A623D] bg-white dark:bg-[#101513] text-center font-extrabold text-sm" /></td>
+                        <td class="p-2.5"><input type="number" min="0" ${!isAdmin() ? 'disabled' : ''} value="${esc(d.plannedNdcQty)}" oninput="ui.bulkConfigDraft['${r.id}'].plannedNdcQty=this.value" class="w-20 p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-center font-bold" /></td>
+                        <td class="p-2.5"><input type="number" min="0" ${!isAdmin() ? 'disabled' : ''} value="${esc(d.forecastQty)}" oninput="ui.bulkConfigDraft['${r.id}'].forecastQty=this.value" class="w-20 p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-center" /></td>
+                        <td class="p-2.5"><input type="date" ${!isAdmin() ? 'disabled' : ''} value="${esc(d.forecastDate)}" onchange="ui.bulkConfigDraft['${r.id}'].forecastDate=this.value" class="p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" /></td>
+                        <td class="p-2.5"><input type="number" min="0" ${!isAdmin() ? 'disabled' : ''} value="${esc(d.minStock)}" oninput="ui.bulkConfigDraft['${r.id}'].minStock=this.value" class="w-16 p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] text-center" /></td>
+                        <td class="p-2.5"><input type="text" ${!isAdmin() ? 'disabled' : ''} value="${esc(d.zone)}" oninput="ui.bulkConfigDraft['${r.id}'].zone=this.value" class="w-28 p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" /></td>
+                        <td class="p-2.5 text-right">
+                          ${isAdmin() ? `<button onclick="removeOrArchiveCage('${r.id}')" class="p-1.5 rounded-lg text-red-500 hover:bg-red-50 cursor-pointer" title="Retirer cette cage">${icon('trash', 'w-4 h-4')}</button>` : '—'}
+                        </td>
+                      </tr>
+                    `;
+                  }).join('')}
+                </tbody>
+              </table>
             </div>
           </div>
 
-          <!-- 2. Ajouter une nouvelle référence de cage -->
+          <!-- 3. Ajouter une nouvelle référence de cage -->
           <form onsubmit="handleAddNewCageRef(event)" class="bg-white dark:bg-[#242A26] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 space-y-4">
             <h3 class="text-base font-bold flex items-center gap-2 text-[#1A472A] dark:text-emerald-400">
               ${icon('plus', 'w-5 h-5')} Ajouter une nouvelle référence de cage au chantier actif
             </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3 text-sm">
               <div class="lg:col-span-2">
                 <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Nom / Code Cage *</label>
                 <input type="text" name="refCode" required placeholder="Ex: 4d, L=13 (AB)" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
@@ -1773,62 +1932,27 @@
                 <input type="number" step="0.1" name="length" value="9.0" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
               </div>
               <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Livraison Prévis.</label>
-                <input type="number" min="0" name="forecastQty" value="10" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Stock Initial</label>
+                <input type="number" min="0" name="initialStock" value="0" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
               </div>
               <div>
-                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Date Livraison</label>
-                <input type="date" name="forecastDate" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Qté Prévue NDC</label>
+                <input type="number" min="0" name="plannedNdcQty" value="0" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Zone Parc</label>
+                <input type="text" name="zone" value="Zone A" class="w-full p-2.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
               </div>
             </div>
+            <input type="hidden" name="minStock" value="3" />
+            <input type="hidden" name="forecastQty" value="0" />
+            <input type="hidden" name="forecastDate" value="" />
             <div class="flex justify-end">
-              <button type="submit" ${!isAdmin() ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white text-xs font-bold">
+              <button type="submit" ${!isAdmin() ? 'disabled' : ''} class="px-5 py-2.5 rounded-xl bg-[#1A472A] hover:bg-[#2A623D] disabled:opacity-50 text-white text-xs font-bold cursor-pointer">
                 + Ajouter au catalogue
               </button>
             </div>
           </form>
-
-          <!-- 3. Édition rapide du catalogue existant -->
-          <div class="bg-white dark:bg-[#242A26] rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden">
-            <div class="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <h3 class="text-base font-bold">Configuration des cages du chantier (${refs.length} références)</h3>
-              <input type="text" value="${esc(ui.configSearch)}" oninput="ui.configSearch=this.value; render();" placeholder="Filtrer..." class="p-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-xs w-64" />
-            </div>
-            <div class="overflow-x-auto max-h-[500px] overflow-y-auto custom-scrollbar">
-              <table class="w-full text-left border-collapse text-xs">
-                <thead class="bg-[#F7F9F7] dark:bg-[#101513] text-gray-500 uppercase sticky top-0">
-                  <tr>
-                    <th class="p-3">Référence Cage</th>
-                    <th class="p-3">Diamètre NDC</th>
-                    <th class="p-3">Longueur (m)</th>
-                    <th class="p-3">Seuil Alerte</th>
-                    <th class="p-3">Qté Prévisionnelle</th>
-                    <th class="p-3">Date Prévue</th>
-                    <th class="p-3 text-right">Retirer</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                  ${filteredRefs.map(r => `
-                    <tr>
-                      <td class="p-3 font-extrabold text-sm text-[#1A472A] dark:text-emerald-400">${esc(r.ref)}</td>
-                      <td class="p-3">
-                        <select ${!isAdmin() ? 'disabled' : ''} onchange="updateCageField('${r.id}', 'diameter', this.value)" class="p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] font-bold">
-                          ${AVAILABLE_DIAMETERS.map(d => `<option value="${d}" ${r.diameter === d ? 'selected' : ''}>${d}</option>`).join('')}
-                        </select>
-                      </td>
-                      <td class="p-3"><input type="number" step="0.1" ${!isAdmin() ? 'disabled' : ''} value="${r.length}" onchange="updateCageField('${r.id}', 'length', parseFloat(this.value)||0)" class="w-20 p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" /></td>
-                      <td class="p-3"><input type="number" min="0" ${!isAdmin() ? 'disabled' : ''} value="${r.minStock}" onchange="updateCageField('${r.id}', 'minStock', parseInt(this.value,10)||0)" class="w-16 p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" /></td>
-                      <td class="p-3"><input type="number" min="0" ${!isAdmin() ? 'disabled' : ''} value="${r.forecastQty || 0}" onchange="updateCageField('${r.id}', 'forecastQty', parseInt(this.value,10)||0)" class="w-20 p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513] font-bold" /></td>
-                      <td class="p-3"><input type="date" ${!isAdmin() ? 'disabled' : ''} value="${r.forecastDate || ''}" onchange="updateCageField('${r.id}', 'forecastDate', this.value)" class="p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#101513]" /></td>
-                      <td class="p-3 text-right">
-                        ${isAdmin() ? `<button onclick="removeOrArchiveCage('${r.id}')" class="p-1.5 rounded-lg text-red-500 hover:bg-red-50" title="Retirer cette cage">${icon('trash', 'w-4 h-4')}</button>` : '—'}
-                      </td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
       `;
     }
@@ -1917,6 +2041,11 @@
                 ${icon('upload', 'w-4 h-4')} Restaurer depuis un fichier de sauvegarde (.JSON)
                 <input type="file" accept=".json" class="hidden" onchange="restoreBackupJSON(this.files[0])" />
               </label>
+              ${isAdmin() ? `
+                <button onclick="resetToOnboarding()" class="px-5 py-3 rounded-xl border border-red-300 text-red-600 hover:bg-red-50 text-xs font-bold flex items-center gap-2 cursor-pointer">
+                  ${icon('trash', 'w-4 h-4')} Réinitialiser / Nouveau démarrage vierge
+                </button>
+              ` : ''}
             </div>
           </div>
 
@@ -2071,6 +2200,12 @@
     window.render = function () {
       if (state.darkMode) document.documentElement.classList.add('dark');
       else document.documentElement.classList.remove('dark');
+
+      // Si l'application n'a pas encore été initialisée par l'utilisateur, afficher l'Assistant de Démarrage Production
+      if (!state.initialized) {
+        document.getElementById('app').innerHTML = renderOnboardingScreen();
+        return;
+      }
 
       const user = getCurrentUser();
       const project = getActiveProject();
