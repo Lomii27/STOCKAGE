@@ -1584,8 +1584,15 @@
 
       window.submitOnboarding = function (e) {
         e.preventDefault();
-        const userName = ob.userName.trim();
-        const projectName = ob.projectName.trim();
+        const fd = new FormData(e.target);
+        const userName = String(fd.get('userName') || ob.userName || '').trim();
+        const userPin = String(fd.get('userPin') || ob.userPin || '1234').trim() || '1234';
+        const projectName = String(fd.get('projectName') || ob.projectName || '').trim();
+        const projectRef = String(fd.get('projectRef') || ob.projectRef || '').trim();
+        const projectLocation = String(fd.get('projectLocation') || ob.projectLocation || '').trim();
+        const projectStartDate = String(fd.get('projectStartDate') || ob.projectStartDate || todayISO());
+        const catalogMode = String(fd.get('catMode') || ob.catalogMode || 'ndc35');
+
         if (!userName || !projectName) {
           return toast('Champs obligatoires', 'Renseignez votre nom et le nom du chantier.', 'error');
         }
@@ -1597,18 +1604,18 @@
           name: userName,
           email: userName.toLowerCase().replace(/[^a-z0-9]/g, '.') + '@soletanche-bachy.com',
           role: 'ADMIN',
-          pin: (ob.userPin || '1234').trim()
+          pin: userPin
         };
         const projectObj = {
           id: projectId,
-          ref: ob.projectRef.trim() || `AFF-${new Date().getFullYear()}-001`,
+          ref: projectRef || `AFF-${new Date().getFullYear()}-001`,
           name: projectName,
-          location: ob.projectLocation.trim() || 'France',
-          startDate: ob.projectStartDate || todayISO(),
+          location: projectLocation || 'France',
+          startDate: projectStartDate,
           status: 'ACTIF'
         };
 
-        const refs = ob.catalogMode === 'ndc35' ? buildCatalogForProject(projectId) : [];
+        const refs = catalogMode === 'ndc35' ? buildCatalogForProject(projectId) : [];
 
         state = {
           initialized: true,
@@ -1652,11 +1659,11 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div class="sm:col-span-2">
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Votre Nom & Prénom *</label>
-                    <input type="text" required value="${esc(ob.userName)}" oninput="ui.onboarding.userName=this.value" placeholder="Ex: Jean-Marc Moreau" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
+                    <input type="text" name="userName" required value="${esc(ob.userName)}" oninput="ui.onboarding.userName=this.value" placeholder="Ex: Jean-Marc Moreau" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Code PIN (4 chiffres)</label>
-                    <input type="text" maxlength="6" value="${esc(ob.userPin)}" oninput="ui.onboarding.userPin=this.value" placeholder="1234" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-center font-extrabold" />
+                    <input type="text" name="userPin" maxlength="6" value="${esc(ob.userPin)}" oninput="ui.onboarding.userPin=this.value" placeholder="1234" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] text-center font-extrabold" />
                   </div>
                 </div>
               </div>
@@ -1669,21 +1676,21 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Nom du chantier *</label>
-                    <input type="text" required value="${esc(ob.projectName)}" oninput="ui.onboarding.projectName=this.value" placeholder="Ex: Ouvrage A16 — Pont de Creil" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
+                    <input type="text" name="projectName" required value="${esc(ob.projectName)}" oninput="ui.onboarding.projectName=this.value" placeholder="Ex: Ouvrage A16 — Pont de Creil" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513] font-bold" />
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Code Affaire / Référence</label>
-                    <input type="text" value="${esc(ob.projectRef)}" oninput="ui.onboarding.projectRef=this.value" placeholder="Ex: SB-2026-108" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+                    <input type="text" name="projectRef" value="${esc(ob.projectRef)}" oninput="ui.onboarding.projectRef=this.value" placeholder="Ex: SB-2026-108" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
                   </div>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Localisation / Ville</label>
-                    <input type="text" value="${esc(ob.projectLocation)}" oninput="ui.onboarding.projectLocation=this.value" placeholder="Ex: Creil (60)" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+                    <input type="text" name="projectLocation" value="${esc(ob.projectLocation)}" oninput="ui.onboarding.projectLocation=this.value" placeholder="Ex: Creil (60)" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
                   </div>
                   <div>
                     <label class="block text-xs font-bold text-gray-600 dark:text-gray-300 mb-1">Date de début</label>
-                    <input type="date" value="${esc(ob.projectStartDate)}" onchange="ui.onboarding.projectStartDate=this.value" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
+                    <input type="date" name="projectStartDate" value="${esc(ob.projectStartDate)}" onchange="ui.onboarding.projectStartDate=this.value" class="w-full p-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-[#F7F9F7] dark:bg-[#101513]" />
                   </div>
                 </div>
               </div>
@@ -1692,14 +1699,14 @@
               <div class="space-y-2.5 pt-4 border-t border-gray-200 dark:border-gray-800">
                 <h2 class="text-xs font-extrabold uppercase tracking-wider text-[#1A472A] dark:text-emerald-400">3. Base de cages d'armatures au démarrage</h2>
                 <label class="flex items-start gap-3 p-3.5 rounded-xl border ${ob.catalogMode === 'ndc35' ? 'border-[#1A472A] bg-[#E8F1EB]/60 dark:bg-[#1A472A]/20' : 'border-gray-200 dark:border-gray-800'} cursor-pointer">
-                  <input type="radio" name="catMode" checked="${ob.catalogMode === 'ndc35'}" onchange="ui.onboarding.catalogMode='ndc35'; render();" class="mt-1" />
+                  <input type="radio" name="catMode" value="ndc35" ${ob.catalogMode === 'ndc35' ? 'checked' : ''} onchange="ui.onboarding.catalogMode='ndc35'; render();" class="mt-1" />
                   <div>
                     <p class="font-extrabold">Pré-charger les 35 références types NDC (stocks à 0)</p>
                     <p class="text-xs text-gray-500">Inclut 2, L=5,5 (AB) jusqu'à G-3, L=7 (AB) avec diamètres Ø620 à Ø1220 prêts à être paramétrés.</p>
                   </div>
                 </label>
                 <label class="flex items-start gap-3 p-3.5 rounded-xl border ${ob.catalogMode === 'empty' ? 'border-[#1A472A] bg-[#E8F1EB]/60 dark:bg-[#1A472A]/20' : 'border-gray-200 dark:border-gray-800'} cursor-pointer">
-                  <input type="radio" name="catMode" ${ob.catalogMode === 'empty' ? 'checked' : ''} onchange="ui.onboarding.catalogMode='empty'; render();" class="mt-1" />
+                  <input type="radio" name="catMode" value="empty" ${ob.catalogMode === 'empty' ? 'checked' : ''} onchange="ui.onboarding.catalogMode='empty'; render();" class="mt-1" />
                   <div>
                     <p class="font-extrabold">Démarrer avec un catalogue 100 % vide</p>
                     <p class="text-xs text-gray-500">Vous créerez uniquement vos propres références de cages une par une.</p>
