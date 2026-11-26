@@ -352,18 +352,14 @@
     };
 
     // =========================================================================
-    // 4. LOGO EN HAUT À GAUCHE (VERROUILLÉ SUR GITHUB ./logo.png)
+    // 4. LOGO EN HAUT À GAUCHE (UNIQUEMENT L'IMAGE ./logo.png DE GITHUB)
     // =========================================================================
     function renderBrandLogo(compact) {
       return `
-        <div class="flex items-center gap-2.5 min-w-0">
-          <div class="${compact ? 'w-9 h-9' : 'w-11 h-11'} rounded-xl bg-white border border-gray-200/80 shadow-sm flex items-center justify-center overflow-hidden p-1 shrink-0">
-            <img src="./logo.png" alt="Logo Soletanche Bachy" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            <div style="display:none" class="w-full h-full bg-[#1A472A] text-white font-black text-xs items-center justify-center tracking-tighter">SBFS</div>
-          </div>
-          <div class="min-w-0">
-            <div class="font-black ${compact ? 'text-base' : 'text-lg'} tracking-tight leading-none">STOCAGE</div>
-            <div class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 truncate mt-0.5">Soletanche Bachy</div>
+        <div class="flex items-center">
+          <div class="${compact ? 'h-9 max-w-[140px]' : 'h-12 max-w-[190px]'} rounded-xl bg-white border border-gray-200/80 shadow-sm flex items-center justify-center overflow-hidden px-2 py-1 shrink-0">
+            <img src="./logo.png" alt="Logo" class="h-full w-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <div style="display:none" class="px-2 h-full bg-[#1A472A] text-white font-black text-xs items-center justify-center rounded-lg">LOGO</div>
           </div>
         </div>
       `;
@@ -376,12 +372,9 @@
 
       return `
         <div class="min-h-screen bg-[#101513] text-white flex flex-col justify-between p-4 sm:p-6">
-          <!-- Barre supérieure avec Logo en haut à gauche (GitHub ./logo.png) -->
-          <div class="max-w-5xl w-full mx-auto flex items-center justify-between gap-4 py-2">
+          <!-- Barre supérieure avec uniquement le Logo GitHub en haut à gauche -->
+          <div class="max-w-5xl w-full mx-auto flex items-center justify-start py-2">
             ${renderBrandLogo(false)}
-            <span class="px-3 py-1.5 rounded-xl bg-white/10 text-[11px] font-bold text-emerald-300">
-              Fondations Spéciales
-            </span>
           </div>
 
           <!-- Carte Centrale Connexion / Inscription -->
@@ -1813,9 +1806,9 @@
 
       return `
         <div class="min-h-screen flex flex-col lg:flex-row">
-          <!-- Barre latérale Ordinateur avec Logo en haut à gauche -->
+          <!-- Barre latérale Ordinateur avec uniquement le Logo GitHub en haut à gauche -->
           <aside class="hidden lg:flex lg:w-64 lg:flex-col bg-[#101513] text-white shrink-0 border-r border-white/10 no-print">
-            <div class="p-5 border-b border-white/10">
+            <div class="p-4 border-b border-white/10 flex items-center justify-start">
               ${renderBrandLogo(false)}
             </div>
             <nav class="flex-1 p-3 space-y-1 overflow-y-auto custom-scrollbar">
@@ -1839,10 +1832,10 @@
 
           <!-- Zone Principale -->
           <div class="flex-1 flex flex-col min-w-0">
-            <!-- En-tête supérieur (Logo en haut à gauche sur mobile + Sélecteur Chantier) -->
-            <header class="bg-white dark:bg-[#242A26] border-b border-gray-200/80 dark:border-white/10 px-4 sm:px-6 py-3 flex items-center justify-between gap-2 sticky top-0 z-20 no-print">
+            <!-- En-tête supérieur (Logo GitHub en haut à gauche sur mobile + Sélecteur Chantier) -->
+            <header class="bg-white dark:bg-[#242A26] border-b border-gray-200/80 dark:border-white/10 px-4 sm:px-6 py-2.5 flex items-center justify-between gap-2 sticky top-0 z-20 no-print">
               <div class="flex items-center gap-2.5 min-w-0">
-                <div class="lg:hidden bg-[#101513] text-white px-2.5 py-1.5 rounded-xl">
+                <div class="lg:hidden">
                   ${renderBrandLogo(true)}
                 </div>
                 <select onchange="switchProject(this.value)" class="px-3 py-2 rounded-xl bg-[#E8F1EB] dark:bg-[#1A472A] text-[#1A472A] dark:text-white font-extrabold text-xs truncate max-w-[180px] sm:max-w-xs">
